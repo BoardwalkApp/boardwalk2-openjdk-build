@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 . setdevkitpath.sh
-export FREETYPE_DIR=`pwd`/freetype-2.6.2/build_android-arm
+export FREETYPE_DIR=`pwd`/freetype-2.6.2/build_android-aarch64
 export CUPS_DIR=`pwd`/cups-2.2.4
 
 # My system's JDK is too old (7.0), so we add an Oracle boot JDK.
@@ -16,8 +16,8 @@ rm -rf build
 bash ./configure \
 	--enable-option-checking=fatal \
 	--build=x86_64-unknown-linux-gnu \
-	--host=arm-linux-androideabi \
-	--target=arm-linux-androideabi \
+	--host=aarch64-linux-android \
+	--target=aarch64-linux-android \
 	--disable-warnings-as-errors \
 	--enable-headless-only \
 	--with-jdk-variant=normal \
@@ -27,5 +27,5 @@ bash ./configure \
 	--with-freetype-lib=$FREETYPE_DIR/lib \
 	--with-freetype-include=$FREETYPE_DIR/include/freetype2
 
-cd build/android-arm-normal-server-release
+cd build/android-aarch64-normal-server-release
 make JOBS=4 images

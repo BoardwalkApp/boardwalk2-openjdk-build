@@ -7,8 +7,8 @@ echo "Building Freetype"
 
 cd freetype-2.6.2
 ./configure \
-	--host=arm-linux-androideabi \
-	--prefix=`pwd`/build_android-arm \
+	--host=aarch64-linux-android \
+	--prefix=`pwd`/build_android-aarch64 \
 	--without-zlib \
 	--with-png=no \
 	--with-harfbuzz=no
