@@ -11,3 +11,11 @@ export CXX=$TOOLCHAIN/bin/$TARGET-g++
 export LD=$TOOLCHAIN/bin/$TARGET-ld
 export RANLIB=$TOOLCHAIN/bin/$TARGET-ranlib
 export STRIP=$TOOLCHAIN/bin/$TARGET-strip
+
+# export BUILD_AR=$AR
+# export BUILD_AS=$AS
+# export BUILD_CC=$CC
+# export BUILD_CXX=$CXX
+# export BUILD_LD=$LD
+# export BUILD_RANLIB=$RANLIB
+# export BUILD_STRIP=$STRIP
