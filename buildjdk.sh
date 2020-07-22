@@ -13,7 +13,7 @@ then
 fi
 
 cd openjdk
-# rm -rf build
+rm -rf build
 bash ./configure \
 	--enable-option-checking=fatal \
 	--build=x86_64-unknown-linux-gnu \
