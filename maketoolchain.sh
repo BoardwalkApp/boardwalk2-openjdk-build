@@ -1,5 +1,8 @@
 #!/bin/bash
 set -e
+
+bash setdevkitpath.sh
+
 $NDK_HOME/build/tools/make-standalone-toolchain.sh \
 	--arch=arm64 \
 	--platform=android-21 \
