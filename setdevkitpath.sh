@@ -1,8 +1,8 @@
-if [[ -z "$NDK_HOME" ]]; then
-  export NDK=`pwd`/android-ndk-r10e
-else
-  export NDK="$NDK_HOME"
-fi
+# Override GitHub Actions env vars
+
+# if [[ -z "$NDK_HOME" ]]; then
+  export NDK_HOME=`pwd`/android-ndk-r10e
+# fi
 
 export NDK=$NDK_HOME
 export ANDROID_DEVKIT=$NDK/generated-toolchains/android-arm64-toolchain
