@@ -26,7 +26,14 @@ bash ./configure \
 	--with-devkit=$ANDROID_DEVKIT \
 	--with-debug-level=release \
 	--with-freetype-lib=$FREETYPE_DIR/lib \
-	--with-freetype-include=$FREETYPE_DIR/include/freetype2
+	--with-freetype-include=$FREETYPE_DIR/include/freetype2 \
+  || error_code=$?
+if [ "${error_code}" -ne 0 ]; then
+  echo "\n\nCONFIGURE ERROR, config.log:"
+  cat config.log
+  exit $error_code
+fi
+
 
 cd build/android-aarch64-normal-server-release
 make JOBS=4 images
