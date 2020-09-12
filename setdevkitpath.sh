@@ -1,9 +1,16 @@
-export NDK=`pwd`/android-ndk-r10e
+if [[ -z "$NDK_HOME" ]]; then
+  export NDK=`pwd`/android-ndk-r10e
+else
+  export NDK="$NDK_HOME"
+fi
+
+export NDK=$NDK_HOME
 export ANDROID_DEVKIT=$NDK/generated-toolchains/android-arm64-toolchain
 export TOOLCHAIN=$NDK/generated-toolchains/android-arm64-toolchain
 export TARGET=aarch64-linux-android
 
 # Configure and build.
+# Deprecated...
 export AR=$TOOLCHAIN/bin/$TARGET-ar
 export AS=$TOOLCHAIN/bin/$TARGET-as
 export CC=$TOOLCHAIN/bin/$TARGET-gcc
