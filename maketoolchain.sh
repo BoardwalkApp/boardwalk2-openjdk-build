@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-bash setdevkitpath.sh
-
+export NDK_HOME=`pwd`/android-ndk-r10e
+  
 $NDK_HOME/build/tools/make-standalone-toolchain.sh \
 	--arch=arm64 \
 	--platform=android-21 \
