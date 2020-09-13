@@ -28,14 +28,14 @@ bash ./configure \
 	--with-freetype-lib=$FREETYPE_DIR/lib \
 	--with-freetype-include=$FREETYPE_DIR/include/freetype2 \
         --x-includes=/usr/include \
-        --x-libraries=/usr/lib \
-  || error_code=$?
-if [ "${error_code}" -ne 0 ]; then
-  echo "\n\nCONFIGURE ERROR, config.log:"
-  cat config.log
-  exit $error_code
-fi
+        --x-libraries=/usr/lib
+#   || error_code=$?
+# if [ "${error_code}" -ne 0 ]; then
+#   echo "\n\nCONFIGURE ERROR, config.log:"
+#   cat config.log
+#   exit $error_code
+# fi
 
-
+mkdir -p build/android-aarch64-normal-server-release
 cd build/android-aarch64-normal-server-release
 make JOBS=4 images
