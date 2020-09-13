@@ -6,8 +6,11 @@
 
 export NDK=$NDK_HOME
 export ANDROID_DEVKIT=$NDK/generated-toolchains/android-arm64-toolchain
-export TOOLCHAIN=$NDK/generated-toolchains/android-arm64-toolchain
+export TOOLCHAIN=$ANDROID_DEVKIT
 export TARGET=aarch64-linux-android
+
+export CPPFLAGS="-I$TOOLCHAIN/sysroot/usr/include"
+export LDFLAGS='-L$TOOLCHAIN/sysroot/usr/lib'
 
 # Configure and build.
 # Deprecated...
