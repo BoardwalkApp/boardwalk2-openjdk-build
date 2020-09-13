@@ -12,7 +12,7 @@ then
 	export PATH=`pwd`/jdk1.8.0_162/bin:$PATH
 fi
 
-sudo apt -y install gcc-multilib g++-multilib
+sudo apt -y install gcc-multilib g++-multilib libxtst-dev
 
 cd openjdk
 rm -rf build
