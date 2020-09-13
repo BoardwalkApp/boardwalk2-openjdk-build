@@ -10,7 +10,7 @@ export TOOLCHAIN=$ANDROID_DEVKIT
 export TARGET=aarch64-linux-android
 
 export CPPFLAGS="-I$TOOLCHAIN/sysroot/usr/include"
-export LDFLAGS='-L$TOOLCHAIN/sysroot/usr/lib'
+export LDFLAGS="-L$TOOLCHAIN/sysroot/usr/lib"
 
 # Configure and build.
 # Deprecated...
