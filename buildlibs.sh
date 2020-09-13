@@ -15,12 +15,12 @@ cd freetype-2.6.2
 make -j4
 make install
 
-cd ..
-echo "Building CUPS"
+# cd ..
+# echo "Building CUPS"
 
-cd cups-2.2.4
-./configure CC="gcc -std=c99" \
-	--host=aarch64-linux-android \
-	--prefix=`pwd`/build_android-aarch64
-make -j4
-make install
+# cd cups-2.2.4
+# ./configure CC="gcc -std=c99" \
+# 	--host=aarch64-linux-android \
+# 	--prefix=`pwd`/build_android-aarch64
+# make -j4
+# make install
