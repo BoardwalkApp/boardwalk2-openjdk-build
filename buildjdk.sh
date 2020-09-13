@@ -12,11 +12,12 @@ then
 	export PATH=`pwd`/jdk1.8.0_162/bin:$PATH
 fi
 
+sudo apt -y install gcc-multilib g++-multilib
+
 cd openjdk
 rm -rf build
 bash ./configure \
 	--enable-option-checking=fatal \
-	--build=x86_64-unknown-linux-gnu \
 	--host=x86_64-linux-gnu \
 	--target=aarch64-linux-android \
 	--disable-warnings-as-errors \
