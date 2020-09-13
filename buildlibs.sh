@@ -19,7 +19,7 @@ cd ..
 echo "Building CUPS"
 
 cd cups-2.2.4
-./configure \
+./configure CC="gcc -std=c99" \
 	--host=aarch64-linux-android \
 	--prefix=`pwd`/build_android-aarch64
 make -j4
