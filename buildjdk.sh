@@ -11,7 +11,7 @@ then
 	export PATH=`pwd`/jdk1.8.0_162/bin:$PATH
 fi
 
-sudo apt -y install gcc-multilib g++-multilib libxtst-dev
+sudo apt -y install gcc-multilib g++-multilib libxtst-dev libasound2-dev
 
 cd openjdk
 rm -rf build
