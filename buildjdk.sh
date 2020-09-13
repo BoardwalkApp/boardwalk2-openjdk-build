@@ -27,8 +27,7 @@ bash ./configure \
 	--with-debug-level=release \
 	--with-freetype-lib=$FREETYPE_DIR/lib \
 	--with-freetype-include=$FREETYPE_DIR/include/freetype2 \
-        --x-includes=/usr/include \
-        --x-libraries=/usr/lib \
+        --without-x \
   || error_code=$?
 if [ "${error_code}" -ne 0 ]; then
   echo "\n\nCONFIGURE ERROR, config.log:"
