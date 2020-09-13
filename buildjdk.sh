@@ -17,7 +17,8 @@ cd openjdk
 rm -rf build
 bash ./configure \
 	--enable-option-checking=fatal \
-	--host=x86_64-linux-gnu \
+        --build=x86_64-unknown-linux-gnu \
+        --host=aarch64-linux-android \
 	--target=aarch64-linux-android \
 	--disable-warnings-as-errors \
 	--enable-headless-only \
