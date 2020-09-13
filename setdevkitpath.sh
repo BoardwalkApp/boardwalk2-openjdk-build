@@ -9,7 +9,7 @@ export ANDROID_DEVKIT=$NDK/generated-toolchains/android-arm64-toolchain
 export TOOLCHAIN=$ANDROID_DEVKIT
 export TARGET=aarch64-linux-android
 
-export CPPFLAGS="-I$NDK/platforms/android-21/arch-arm64/usr/include"
+export CPPFLAGS="-I$NDK/platforms/android-21/arch-arm64/usr/include -I/usr/lib"
 export LDFLAGS="-L$NDK/platforms/android-21/arch-arm64/usr/lib"
 
 # Configure and build.
