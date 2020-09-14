@@ -15,9 +15,8 @@ sudo apt -y install gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-
 
 cd openjdk
 rm -rf build
-
-#	--enable-option-checking=fatal \
 bash ./configure \
+	--enable-option-checking=fatal \
         --build=x86_64-linux-gnu \
         --host=aarch64-linux-android \
 	--target=aarch64-linux-android \
@@ -30,13 +29,13 @@ bash ./configure \
 	--with-freetype-lib=$FREETYPE_DIR/lib \
 	--with-freetype-include=$FREETYPE_DIR/include/freetype2 \
         --x-includes=/usr/include \
-        --x-libraries=/usr/lib
-#   || error_code=$?
-# if [ "${error_code}" -ne 0 ]; then
-#   echo "\n\nCONFIGURE ERROR, config.log:"
-#   cat config.log
-#   exit $error_code
-# fi
+        --x-libraries=/usr/lib \
+   || error_code=$?
+if [ "$error_code" -ne 0 ]; then
+  echo "\n\nCONFIGURE ERROR $error_code , config.log:"
+  cat config.log
+  exit $error_code
+fi
 
 mkdir -p build/android-aarch64-normal-server-release
 cd build/android-aarch64-normal-server-release
