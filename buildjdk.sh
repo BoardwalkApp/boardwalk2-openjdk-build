@@ -13,6 +13,9 @@ fi
 
 sudo apt -y install gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-dev
 
+# Attempt ignore x86 GCC options
+CFLAGS+=-Wunknown-warning
+
 cd openjdk
 rm -rf build
 bash ./configure \
