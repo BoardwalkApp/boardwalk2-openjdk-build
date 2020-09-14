@@ -15,6 +15,7 @@ sudo apt -y install gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-
 
 cd openjdk
 rm -rf build
+#	--with-toolchain-type=clang \
 bash ./configure \
 	--enable-option-checking=fatal \
         --build=x86_64-linux-gnu \
@@ -28,7 +29,6 @@ bash ./configure \
 	--with-debug-level=release \
 	--with-freetype-lib=$FREETYPE_DIR/lib \
 	--with-freetype-include=$FREETYPE_DIR/include/freetype2 \
-        --with-toolchain-type=clang \
         --x-includes=/usr/include \
         --x-libraries=/usr/lib \
    || error_code=$?
