@@ -15,11 +15,11 @@ sudo apt -y install gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-
 
 cd openjdk
 rm -rf build
+#	--host=aarch64-linux-android \
 bash ./configure \
 	--enable-option-checking=fatal \
         --build=x86_64-linux-gnu \
-        --host=aarch64-linux-android \
-	--target=aarch64-linux-android \
+	--openjdk-target=aarch64-linux-android \
 	--disable-warnings-as-errors \
 	--enable-headless-only \
 	--with-jdk-variant=normal \
@@ -35,13 +35,6 @@ bash ./configure \
 if [ "$error_code" -ne 0 ]; then
   echo "\n\nCONFIGURE ERROR $error_code , config.log:"
   cat config.log
-
-# remove later
-sudo apt -y install silversearcher-ag
-echo "--- BEGIN SEARCH ---"
-ag "\-march=i686"
-echo "--- ENDED SEARCH ---"
-
   exit $error_code
 fi
 
