@@ -154,8 +154,8 @@ AC_DEFUN_ONCE([FLAGS_SETUP_USER_SUPPLIED_FLAGS],
       EXTRA_CXXFLAGS="$EXTRA_CXXFLAGS -mthumb -march=armv7-a -mfloat-abi=softfp -mfpu=vfp -DFLOAT_ARCH=-vfp-sflt -fPIE"
       EXTRA_LDFLAGS="$EXTRA_LDFLAGS -Wl,--unresolved-symbols=ignore-all -Wl,--gc-sections -fPIE"
     elif test "x$OPENJDK_TARGET_CPU" = xarm64 || test "x$OPENJDK_TARGET_CPU" = xaarch64; then
-      EXTRA_CFLAGS="$EXTRA_CFLAGS -mthumb -march=armv8-a -fno-short-enums -D__GLIBC__ -D_GNU_SOURCE  -Wno-psabi -fPIE"
-      EXTRA_CXXFLAGS="$EXTRA_CXXFLAGS -mthumb -march=armv8-a -fPIE"
+      EXTRA_CFLAGS="$EXTRA_CFLAGS -march=armv8-a -fno-short-enums -D__GLIBC__ -D_GNU_SOURCE  -Wno-psabi -fPIE"
+      EXTRA_CXXFLAGS="$EXTRA_CXXFLAGS -march=armv8-a -fPIE"
       EXTRA_LDFLAGS="$EXTRA_LDFLAGS -Wl,--unresolved-symbols=ignore-all -Wl,--gc-sections -fPIE"
     else
       EXTRA_CFLAGS="$EXTRA_CFLAGS -fno-short-enums -D__GLIBC__ -D_GNU_SOURCE -Wno-psabi -march=i686 -msse3 -mstackrealign -mfpmath=sse -fPIE"

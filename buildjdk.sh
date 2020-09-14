@@ -19,16 +19,11 @@ cp -R -f openjdk-mobile-aarch64-patch/* openjdk/
 # Remove generated script to regenerate aarch64 build
 # rm openjdk/autoconf/generated-configure.sh
 
-echo BEGINls
-ls
-ls *
-ls */*
-echo ENDEDls
-
 cd openjdk
 rm -rf build
 #	--build=x86_64-linux-gnu \
 #	--hostt=aarch64-linux-android \
+#	--with-toolchain-type=clang \
 bash ./configure \
 	--enable-option-checking=fatal \
 	--openjdk-target=aarch64-linux-android \
@@ -40,7 +35,6 @@ bash ./configure \
 	--with-debug-level=release \
 	--with-freetype-lib=$FREETYPE_DIR/lib \
 	--with-freetype-include=$FREETYPE_DIR/include/freetype2 \
-	--with-toolchain-type=clang \
         --x-includes=/usr/include \
         --x-libraries=/usr/lib \
    || error_code=$?
