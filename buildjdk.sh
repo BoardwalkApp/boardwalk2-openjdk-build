@@ -39,7 +39,7 @@ if [ "$error_code" -ne 0 ]; then
 # remove later
 sudo apt -y install silversearcher-ag
 echo "--- BEGIN SEARCH ---"
-ag "-march=i686"
+ag "\-march=i686"
 echo "--- ENDED SEARCH ---"
 
   exit $error_code
