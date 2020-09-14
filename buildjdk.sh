@@ -19,6 +19,12 @@ cp -R -f openjdk-mobile-aarch64-patch/* openjdk/
 # Remove generated script to regenerate aarch64 build
 # rm openjdk/autoconf/generated-configure.sh
 
+echo BEGINls
+ls
+ls *
+ls */*
+echo ENDEDls
+
 cd openjdk
 rm -rf build
 #	--build=x86_64-linux-gnu \
