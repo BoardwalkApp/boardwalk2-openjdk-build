@@ -17,7 +17,7 @@ sudo apt -y install gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-
 cp -R -f openjdk-mobile-aarch64-patch/* openjdk/
 
 # Remove generated script to regenerate aarch64 build
-rm openjdk/autoconf/generated-configure.sh
+# rm openjdk/autoconf/generated-configure.sh
 
 cd openjdk
 rm -rf build
