@@ -15,10 +15,10 @@ sudo apt -y install gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-
 
 cd openjdk
 rm -rf build
+        --build=x86_64-linux-gnu \
 #	--host=aarch64-linux-android \
 bash ./configure \
 	--enable-option-checking=fatal \
-        --build=x86_64-linux-gnu \
 	--openjdk-target=aarch64-linux-android \
 	--disable-warnings-as-errors \
 	--enable-headless-only \
