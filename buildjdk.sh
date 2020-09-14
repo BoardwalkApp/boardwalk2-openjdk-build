@@ -13,13 +13,20 @@ fi
 
 sudo apt -y install gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-dev
 
+# Patch for aarch64
+cp -R -f openjdk-mobile-aarch64-patch/* openjdk/
+
+# Remove generated script to regenerate aarch64 build
+# rm openjdk/autoconf/generated-configure.sh
+
 cd openjdk
 rm -rf build
+#	--build=x86_64-linux-gnu \
+#	--hostt=aarch64-linux-android \
+#	--with-toolchain-type=clang \
 bash ./configure \
 	--enable-option-checking=fatal \
-        --build=x86_64-linux-gnu \
-        --host=aarch64-linux-android \
-	--target=aarch64-linux-android \
+	--openjdk-target=aarch64-linux-android \
 	--disable-warnings-as-errors \
 	--enable-headless-only \
 	--with-jdk-variant=normal \
