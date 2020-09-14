@@ -1,7 +1,7 @@
 # Override GitHub Actions env vars
 
 # if [[ -z "$NDK_HOME" ]]; then
-  export NDK_HOME=`pwd`/android-ndk-r10e
+  export NDK_HOME=`pwd`/android-ndk-r15
 # fi
 
 export NDK=$NDK_HOME
@@ -16,8 +16,8 @@ export LDFLAGS="-L$NDK/platforms/android-21/arch-arm64/usr/lib"
 # Deprecated...
 export AR=$TOOLCHAIN/bin/$TARGET-ar
 export AS=$TOOLCHAIN/bin/$TARGET-as
-export CC=$TOOLCHAIN/bin/$TARGET-gcc
-export CXX=$TOOLCHAIN/bin/$TARGET-g++
+export CC=$TOOLCHAIN/bin/$TARGET-clang
+export CXX=$TOOLCHAIN/bin/$TARGET-clang++
 export LD=$TOOLCHAIN/bin/$TARGET-ld
 export RANLIB=$TOOLCHAIN/bin/$TARGET-ranlib
 export STRIP=$TOOLCHAIN/bin/$TARGET-strip

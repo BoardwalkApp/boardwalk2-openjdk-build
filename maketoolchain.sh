@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-export NDK_HOME=`pwd`/android-ndk-r10e
+export NDK_HOME=`pwd`/android-ndk-r15
   
 $NDK_HOME/build/tools/make-standalone-toolchain.sh \
 	--arch=arm64 \
