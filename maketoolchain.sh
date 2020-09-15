@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-export NDK_HOME=`pwd`/android-ndk-r15
+. setdevkitpath.sh
   
-$NDK_HOME/build/tools/make-standalone-toolchain.sh \
+$NDK/build/tools/make-standalone-toolchain.sh \
 	--arch=arm64 \
 	--platform=android-21 \
 	--install-dir=$NDK_HOME/generated-toolchains/android-arm64-toolchain

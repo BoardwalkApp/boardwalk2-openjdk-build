@@ -2,7 +2,7 @@
 # duplicate of buildjdk.sh that avoids reconfiguring. Used for making changes to openjdk code.
 
 set -e
-bash setdevkitpath.sh
+. setdevkitpath.sh
 export FREETYPE_DIR=`pwd`/freetype-2.6.2/build_android-arm64
 export CUPS_DIR=`pwd`/cups-2.2.4
 

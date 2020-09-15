@@ -1,18 +1,13 @@
 # Override GitHub Actions env vars
-
-# if [[ -z "$NDK_HOME" ]]; then
-  export NDK_HOME=`pwd`/android-ndk-r15
-# fi
+export NDK_HOME=`pwd`/android-ndk-r10e
 
 export NDK=$NDK_HOME
 export ANDROID_DEVKIT=$NDK/generated-toolchains/android-arm64-toolchain
 export TOOLCHAIN=$ANDROID_DEVKIT
 export TARGET=aarch64-linux-android
 
-ANDROID_API_FLAGS="-D__ANDROID_API__=21"
-export CFLAGS="$ANDROID_API_FLAGS"
-export CPPFLAGS="$ANDROID_API_FLAGS -I$NDK/platforms/android-21/arch-arm64/usr/include -I/usr/lib"
-export LDFLAGS="$ANDROID_API_FLAGS -L$NDK/platforms/android-21/arch-arm64/usr/lib"
+export CPPFLAGS="-I$NDK/platforms/android-21/arch-arm64/usr/include -I/usr/lib"
+export LDFLAGS="-L$NDK/platforms/android-21/arch-arm64/usr/lib"
 
 # Configure and build.
 # Deprecated...

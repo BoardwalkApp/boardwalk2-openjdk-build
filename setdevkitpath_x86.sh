@@ -1,7 +1,7 @@
 # Override GitHub Actions env vars
 
 # if [[ -z "$NDK_HOME" ]]; then
-  export NDK_HOME=`pwd`/android-ndk-r15
+  export NDK_HOME=`pwd`/android-ndk-r10e
 # fi
 
 export NDK=$NDK_HOME
