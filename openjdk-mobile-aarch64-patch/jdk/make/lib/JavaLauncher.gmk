@@ -1,0 +1,113 @@
+#
+# Copyright (c) 2011, 2015, Oracle and/or its affiliates. All rights reserved.
+# DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+#
+# This code is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 2 only, as
+# published by the Free Software Foundation.  Oracle designates this
+# particular file as subject to the "Classpath" exception as provided
+# by Oracle in the LICENSE file that accompanied this code.
+#
+# This code is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+# version 2 for more details (a copy is included in the LICENSE file that
+# accompanied this code).
+#
+# You should have received a copy of the GNU General Public License version
+# 2 along with this work; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+# Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+# or visit www.oracle.com if you need additional information or have any
+# questions.
+#
+
+include $(SPEC)
+include MakeBase.gmk
+include JavaCompilation.gmk
+include NativeCompilation.gmk
+include SetupJavaCompilers.gmk
+
+#
+# Build ios JavaLauncher framework
+#
+
+ifeq (ios,$(OPENJDK_TARGET_OS))
+  JAVALAUNCHER_IOS_SRC := $(JDK_TOPDIR)/src/java.base/ios/native/JavaLauncher
+  JAVALAUNCHER_API_SRC := $(JDK_TOPDIR)/src/java.base/share/native/javalauncher_api
+  JAVALAUNCHER_INFO_PLIST := \
+    $(JDK_TOPDIR)/src/java.base/share/tools/jproject/ios/frameworks/JavaLauncher/JavaLauncher-Info.plist
+
+  JAVALAUNCHER_FRAMEWORK := $(JDK_OUTPUTDIR)/frameworks/JavaLauncher/JavaLauncher.framework
+
+  JAVALAUNCHER_HEADERS := \
+      $(JAVALAUNCHER_API_SRC)/javalauncher_api.h \
+      $(JAVALAUNCHER_IOS_SRC)/JavaLauncher.h \
+      $(JAVALAUNCHER_IOS_SRC)/JavaArgs.h
+
+  JAVALAUNCHER_SOURCES := \
+        $(addprefix $(JAVALAUNCHER_API_SRC)/, \
+            javalauncher_api.c javalauncher_api.h) \
+        $(addprefix $(JAVALAUNCHER_IOS_SRC)/, \
+            JavaLauncher.m JavaLauncher.h JavaArgs.m JavaArgs.h)
+
+  $(eval $(call SetupNativeCompilation,BUILD_JAVALAUNCHER, \
+      STATIC_LIBRARY := JavaLauncher, \
+      OBJECT_DIR := $(SUPPORT_OUTPUTDIR)/native/java.base/libjavalauncher, \
+      OUTPUT_DIR := $(SUPPORT_OUTPUTDIR)/native/java.base/libjavalauncher, \
+      SRC := $(JAVALAUNCHER_SOURCES), \
+      CFLAGS := $(CFLAGS_JDKLIB) \
+          -I$(JAVALAUNCHER_IOS_SRC) \
+          -I$(JAVALAUNCHER_API_SRC), \
+      WARNINGS_AS_ERRORS_clang := false, \
+      DEBUG_SYMBOLS := $(DEBUG_ALL_BINARIES)))
+
+  TARGETS += $(JAVALAUNCHER_FRAMEWORK)
+
+$(JAVALAUNCHER_FRAMEWORK): $(BUILD_JAVALAUNCHER)
+	@$(ECHO) $(LOG_INFO) Building JavaLauncher.framework
+	$(MKDIR) -p $(JAVALAUNCHER_FRAMEWORK)/Headers
+	$(CP) $(JAVALAUNCHER_HEADERS) $(JAVALAUNCHER_FRAMEWORK)/Headers
+	$(CP) $(JAVALAUNCHER_INFO_PLIST) $(JAVALAUNCHER_FRAMEWORK)/Info.plist
+	$(CP) $(SUPPORT_OUTPUTDIR)/native/java.base/libjavalauncher/$(LIBRARY_PREFIX)JavaLauncher$(STATIC_LIBRARY_SUFFIX) \
+	    $(JAVALAUNCHER_FRAMEWORK)/JavaLauncher
+endif
+#
+# Build android JavaLauncher jar file.
+#
+ifeq ($(OPENJDK_TARGET_OS),android)
+  OCLDVK_SRCDIR := $(JDK_TOPDIR)/src/java.base/android/classes/com/oracle/dalvik/javalauncher
+  OCLDVK_OUTPUTDIR := $(SUPPORT_OUTPUTDIR)/ocldvk
+  OCLDVK_CLASSES := $(OCLDVK_OUTPUTDIR)/classes
+  OCLDVK_JAR := $(OCLDVK_OUTPUTDIR)/lib/ext/ocldvk.jar
+
+  $(eval $(call SetupJavaCompilation,BUILD_OCLDVK_JAR, \
+      SETUP := GENERATE_JAVA5_BYTECODE, \
+      SRC := $(OCLDVK_SRCDIR), \
+      JAR := $(OCLDVK_JAR), \
+      BIN := $(OCLDVK_CLASSES)))
+
+  TARGETS += $(BUILD_OCLDVK_JAR)
+
+  OCLDVK := $(JDK_TOPDIR)/src/java.base/android/native/libocldvk
+  JAVALAUNCHER_API := $(JDK_TOPDIR)/src/java.base/share/native/javalauncher_api
+
+  $(eval $(call SetupNativeCompilation, BUILD_LIBOCLDVK, \
+      LIBRARY := ocldvk, \
+      OBJECT_DIR := $(SUPPORT_OUTPUTDIR)/native/java.base/libocldvk, \
+      OUTPUT_DIR := $(SUPPORT_OUTPUTDIR)/native/java.base/libocldvk, \
+      SRC := $(OCLDVK) $(OCLDVK)/net $(JAVALAUNCHER_API), \
+      MAPFILE := $(JDK_TOPDIR)/make/mapfiles/libocldvk/mapfile-vers, \
+      LDFLAGS := $(LDFLAGS_JDKLIB), \
+      LIBS := -llog, \
+      CFLAGS := $(CFLAGS_JDKLIB) \
+          $(OPENJDK_TARGET_CPU_JLI_CFLAGS) \
+          -I$(OCLDVK)/javalauncher \
+          -I$(JAVALAUNCHER_API) \
+          -I$(OCLDVK)/net, \
+      DEBUG_SYMBOLS := $(DEBUG_ALL_BINARIES)))
+
+  TARGETS += $(BUILD_LIBOCLDVK)
+
+endif
