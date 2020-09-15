@@ -9,8 +9,10 @@ export ANDROID_DEVKIT=$NDK/generated-toolchains/android-arm64-toolchain
 export TOOLCHAIN=$ANDROID_DEVKIT
 export TARGET=aarch64-linux-android
 
-export CPPFLAGS="-I$NDK/platforms/android-21/arch-arm64/usr/include -I/usr/lib"
-export LDFLAGS="-L$NDK/platforms/android-21/arch-arm64/usr/lib"
+ANDROID_API_FLAGS="-D__ANDROID_API__=21"
+export CFLAGS="$ANDROID_API_FLAGS"
+export CPPFLAGS="$ANDROID_API_FLAGS -I$NDK/platforms/android-21/arch-arm64/usr/include -I/usr/lib"
+export LDFLAGS="$ANDROID_API_FLAGS -L$NDK/platforms/android-21/arch-arm64/usr/lib"
 
 # Configure and build.
 # Deprecated...
