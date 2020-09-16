@@ -1,5 +1,5 @@
---- ./jdk/make/lib/Awt2dLibraries.gmk	2017-03-30 20:45:48.000000000 +0530
-+++ ./jdk/make/lib/Awt2dLibraries.gmk	2017-04-02 18:36:12.582240305 +0530
+--- ./make/lib/Awt2dLibraries.gmk	2017-03-30 20:45:48.000000000 +0530
++++ ./make/lib/Awt2dLibraries.gmk	2017-04-02 18:36:12.582240305 +0530
 @@ -145,7 +145,7 @@
    LIBAWT_DIRS += $(JDK_TOPDIR)/src/java.desktop/share/native/common/awt/utility
  endif

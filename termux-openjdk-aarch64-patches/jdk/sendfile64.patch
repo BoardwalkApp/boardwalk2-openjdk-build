@@ -1,5 +1,5 @@
---- ./jdk/src/java.base/unix/native/libnio/ch/FileChannelImpl.c	2017-05-12 23:48:01.000000000 +0530
-+++ ./jdk/src/java.base/unix/native/libnio/ch/FileChannelImpl.c	2017-05-14 22:51:02.292589382 +0530
+--- ./src/java.base/unix/native/libnio/ch/FileChannelImpl.c	2017-05-12 23:48:01.000000000 +0530
++++ ./src/java.base/unix/native/libnio/ch/FileChannelImpl.c	2017-05-14 22:51:02.292589382 +0530
 @@ -41,8 +41,6 @@
  #include <sys/sendfile.h>
  #ifdef __ANDROID__

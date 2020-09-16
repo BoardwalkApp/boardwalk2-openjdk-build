@@ -1,5 +1,5 @@
---- ./jdk/src/java.base/unix/native/libnio/fs/UnixNativeDispatcher.c	2017-03-02 21:55:47.000000000 +0530
-+++ ./jdk/src/java.base/unix/native/libnio/fs/UnixNativeDispatcher.c	2017-03-03 21:37:02.370375158 +0530
+--- ./src/java.base/unix/native/libnio/fs/UnixNativeDispatcher.c	2017-03-02 21:55:47.000000000 +0530
++++ ./src/java.base/unix/native/libnio/fs/UnixNativeDispatcher.c	2017-03-03 21:37:02.370375158 +0530
 @@ -168,40 +168,6 @@
  #endif
  static fdopendir_func* my_fdopendir_func = NULL;
