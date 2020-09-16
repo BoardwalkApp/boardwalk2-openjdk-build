@@ -8,11 +8,7 @@
 +    LIBAWT_XAWT_LIBS := $(LIBM) $(LIBDL) -ljava -ljvm -lc
  
      ifeq ($(OPENJDK_TARGET_OS), linux)
--      LIBAWT_XAWT_LIBS += -lpthread
-+      LIBAWT_XAWT_LIBS += -lc
-     endif
- 
-     ifeq ($(TOOLCHAIN_TYPE), gcc)
+       LIBAWT_XAWT_LIBS += -lpthread
 @@ -939,7 +939,7 @@
      LIBSPLASHSCREEN_LDFLAGS := -delayload:user32.dll
      LIBSPLASHSCREEN_LIBS += kernel32.lib user32.lib gdi32.lib delayimp.lib $(WIN_JAVA_LIB) jvm.lib

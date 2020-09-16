@@ -21,9 +21,9 @@ rm -rf build
 #	--build=x86_64-linux-gnu \
 #	--hostt=aarch64-linux-android \
 #	--with-toolchain-type=clang \
+#	--with-cpu-port=arm64 \
 
 bash ./configure \
-	--with-cpu-port=arm64 \
 	--enable-option-checking=fatal \
 	--openjdk-target=aarch64-linux-android \
 	--disable-warnings-as-errors \
