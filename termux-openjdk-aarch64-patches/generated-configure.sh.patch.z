@@ -1,5 +1,5 @@
 --- ./common/autoconf/generated-configure.sh    2017-04-01 23:19:09.508381398 +0530
-+++ ../generated-configure.sh   2017-04-02 17:35:37.210373866 +0530
++++ ./common/autoconf/generated-configure.sh   2017-04-02 17:35:37.210373866 +0530
 @@ -53412,14 +53412,7 @@
 
 

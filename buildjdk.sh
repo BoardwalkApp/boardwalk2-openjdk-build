@@ -16,14 +16,12 @@ sudo apt -y install gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-
 # Patch for aarch64
 # cp -R -f openjdk-mobile-aarch64-patch/* openjdk/
 
-# Remove generated script to regenerate aarch64 build
-# rm openjdk/autoconf/generated-configure.sh
-
 cd openjdk
 rm -rf build
 #	--build=x86_64-linux-gnu \
 #	--hostt=aarch64-linux-android \
 #	--with-toolchain-type=clang \
+
 bash ./configure \
 	--with-cpu-port=arm64 \
 	--enable-option-checking=fatal \
@@ -36,8 +34,8 @@ bash ./configure \
 	--with-debug-level=release \
 	--with-freetype-lib=$FREETYPE_DIR/lib \
 	--with-freetype-include=$FREETYPE_DIR/include/freetype2 \
-        --x-includes=/usr/include \
-        --x-libraries=/usr/lib \
+    --x-includes=/usr/include \
+    --x-libraries=/usr/lib \
    || error_code=$?
 if [ "$error_code" -ne 0 ]; then
   echo "\n\nCONFIGURE ERROR $error_code , config.log:"

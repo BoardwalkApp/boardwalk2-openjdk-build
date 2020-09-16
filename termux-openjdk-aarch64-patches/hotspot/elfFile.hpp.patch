@@ -1,5 +1,5 @@
---- ./hotspot/src/share/vm/utilities/elfFile.hpp	2017-05-12 23:47:58.000000000 +0530
-+++ ../elfFile.hpp	2017-05-14 12:27:21.069572447 +0530
+--- ./src/share/vm/utilities/elfFile.hpp	2017-05-12 23:47:58.000000000 +0530
++++ ./src/share/vm/utilities/elfFile.hpp	2017-05-14 12:27:21.069572447 +0530
 @@ -50,7 +50,7 @@
  typedef Elf64_Phdr      Elf_Phdr;
  typedef Elf64_Sym       Elf_Sym;
