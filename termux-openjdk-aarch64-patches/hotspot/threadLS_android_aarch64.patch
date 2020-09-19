@@ -2,7 +2,6 @@
 +++ ./src/os_cpu/linux_aarch64/vm/threadLS_linux_aarch64.s	2020-19-09 12:47:00.000000000 +0530
 
 @@ -30,10 +30,16 @@
-
  _ZN10JavaThread25aarch64_get_thread_helperEv:
         stp x29, x30, [sp, -16]!
 -       adrp x0, :tlsdesc:_ZN6Thread12_thr_currentE

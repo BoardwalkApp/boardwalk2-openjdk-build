@@ -1,0 +1,10 @@
+--- ./make/lib/Lib-java.instrument.gmk	2017-03-30 20:45:48.000000000 +0530
++++ ./make/lib/Lib-java.instrument.gmk	2020-19-09 12:04:00.000000000 +0530
+@@ -72,6 +72,7 @@
+     LIBS := $(JDKLIB_LIBS), \
+     LIBS_unix := -ljava -ljvm $(LIBZ), \
+     LIBS_linux := -ljli $(LIBDL), \
++    LIBS_android := -ljli $(LIBDL), \
+     LIBS_solaris := -ljli $(LIBDL), \
+     LIBS_aix := -liconv -ljli_static $(LIBDL), \
+     LIBS_macosx := -liconv -framework Cocoa -framework Security \
