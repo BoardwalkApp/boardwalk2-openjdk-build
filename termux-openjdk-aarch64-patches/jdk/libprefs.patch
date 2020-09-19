@@ -1,0 +1,10 @@
+--- ./make/lib/Lib-java.prefs.gmk	2017-03-30 20:45:48.000000000 +0530
++++ ./make/lib/Lib-java.prefs.gmk	2020-19-09 12:04:00.000000000 +0530
+@@ -45,6 +45,7 @@
+         $(call SET_SHARED_LIBRARY_ORIGIN), \
+     LIBS_unix := -ljvm, \
+     LIBS_linux := -ljava, \
++    LIBS_android := -ljava, \
+     LIBS_solaris := -ljava -lc, \
+     LIBS_aix := -ljava, \
+     LIBS_macosx := -framework CoreFoundation -framework Foundation, \
