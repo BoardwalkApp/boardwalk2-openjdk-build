@@ -14,7 +14,7 @@ fi
 sudo apt -y install gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-dev
 
 # Patch for aarch64
-# cp -R -f openjdk-mobile-aarch64-patch/* openjdk/
+cp -R -f override-jre-files/* openjdk/
 
 cd openjdk
 rm -rf build
