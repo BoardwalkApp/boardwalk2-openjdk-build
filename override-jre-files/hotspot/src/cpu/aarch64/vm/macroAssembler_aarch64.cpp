@@ -4656,17 +4656,9 @@ void MacroAssembler::encode_iso_array(Register src, Register dst,
 }
 
 // get_thread can be called anywhere inside generated code so we need
--// to save whatever non-callee save context might get clobbered by the
--// call to Thread::current or, indeed, the call setup code. 
--// x86 appears to save C arg registers.
--
-+// get_thread() can be called anywhere inside generated code so we
-+// need to save whatever non-callee save context might get clobbered
-+// by the call to JavaThread::aarch64_get_thread_helper() or, indeed,
-+// the call setup code.
-+//
-+// aarch64_get_thread_helper() clobbers only r0, r1, and flags.
-+//
+// to save whatever non-callee save context might get clobbered by the
+// call to Thread::current or, indeed, the call setup code. 
+// x86 appears to save C arg registers.
  void MacroAssembler::get_thread(Register dst) {
    // Save all call-clobbered regs except dst, plus r19 and r20.
    RegSet saved_regs = RegSet::range(r0, r20) + lr - dst;
