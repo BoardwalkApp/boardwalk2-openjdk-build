@@ -3,12 +3,12 @@
 
 set -e
 . setdevkitpath.sh
-export FREETYPE_DIR=`pwd`/freetype-2.6.2/build_android-arm64
+export FREETYPE_DIR=`pwd`/freetype-2.6.2/build_android-${TARGET_SHORT}
 export CUPS_DIR=`pwd`/cups-2.2.4
 
 # My system's JDK is too old (7.0), so we add an Oracle boot JDK.
 export PATH=`pwd`/jdk-9.0.4/bin:$PATH
 
 cd openjdk
-cd build/android-aarch64-normal-server-release
+cd build/android-${TARGET_JDK}-normal-server-release
 make JOBS=4 images

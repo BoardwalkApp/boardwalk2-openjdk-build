@@ -4,7 +4,7 @@ set -e
 . setdevkitpath.sh
   
 $NDK/build/tools/make-standalone-toolchain.sh \
-	--arch=arm64 \
+	--arch=${TARGET_SHORT} \
 	--platform=android-21 \
-	--install-dir=$NDK_HOME/generated-toolchains/android-arm64-toolchain
-cp devkit.info.arm64 $NDK_HOME/generated-toolchains/android-arm64-toolchain/
+	--install-dir=$NDK_HOME/generated-toolchains/android-${TARGET_SHORT}-toolchain
+cp devkit.info.${TARGET_SHORT} $NDK_HOME/generated-toolchains/android-${TARGET_SHORT}-toolchain/

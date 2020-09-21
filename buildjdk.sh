@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 . setdevkitpath.sh
-export FREETYPE_DIR=`pwd`/freetype-2.6.2/build_android-aarch64
+export FREETYPE_DIR=`pwd`/freetype-2.6.2/build_android-${TARGET_SHORT}
 export CUPS_DIR=`pwd`/cups-2.2.4
 
 # My system's JDK is too old (7.0), so we add an Oracle boot JDK.
@@ -18,14 +18,9 @@ cp -R -f override-jre-files/* openjdk/
 
 cd openjdk
 rm -rf build
-#	--build=x86_64-linux-gnu \
-#	--hostt=aarch64-linux-android \
-#	--with-toolchain-type=clang \
-#	--with-cpu-port=arm64 \
-
 bash ./configure \
 	--enable-option-checking=fatal \
-	--openjdk-target=aarch64-linux-android \
+	--openjdk-target=$TARGET \
 	--disable-warnings-as-errors \
 	--enable-headless-only \
 	--with-jdk-variant=normal \
@@ -43,6 +38,6 @@ if [ "$error_code" -ne 0 ]; then
   exit $error_code
 fi
 
-mkdir -p build/android-aarch64-normal-server-release
-cd build/android-aarch64-normal-server-release
+mkdir -p build/android-${TARGET_JDK}-normal-server-release
+cd build/android-${TARGET_JDK}-normal-server-release
 make JOBS=4 images
