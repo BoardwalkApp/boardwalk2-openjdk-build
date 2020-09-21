@@ -15,7 +15,7 @@ jobs:
         java-version: 1.8
 
     - name: Build with CI build script
-      run: bash ci_build_arch_*.sh
+      run: bash ci_build_arch_aarch64.sh
 
     - name: Upload build output
       uses: actions/upload-artifact@v2
