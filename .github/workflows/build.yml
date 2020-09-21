@@ -18,7 +18,7 @@ jobs:
       run: bash ci_build_arch_aarch64.sh
 
     - name: Upload build output
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
-        name: jre
-        path: jre.tar.xz
+        # name: jre
+        path: jre*.tar.xz
