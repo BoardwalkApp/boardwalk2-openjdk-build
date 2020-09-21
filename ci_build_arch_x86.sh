@@ -5,5 +5,5 @@ export TARGET=i686-linux-android
 export TARGET_SHORT=x86
 export TARGET_JDK=x86
 
-./ci_build_global.sh
+bash ci_build_global.sh
 
