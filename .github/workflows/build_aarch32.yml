@@ -1,4 +1,4 @@
-name: Build OpenJDK for Android aarch64
+name: Build OpenJDK for Android aarch32
 
 on: [push]
 
