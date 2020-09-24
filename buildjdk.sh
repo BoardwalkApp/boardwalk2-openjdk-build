@@ -18,8 +18,8 @@ cp -R -f override-jre-files/* openjdk/
 
 cd openjdk
 rm -rf build
-#	--enable-headless-only \
 bash ./configure \
+	--enable-headless-only \
 	--enable-option-checking=fatal \
 	--openjdk-target=$TARGET \
 	--disable-warnings-as-errors \

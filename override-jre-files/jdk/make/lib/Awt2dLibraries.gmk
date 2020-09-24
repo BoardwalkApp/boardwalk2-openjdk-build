@@ -531,7 +531,7 @@ TARGETS += $(BUILD_LIBJAVAJPEG)
 ################################################################################
 
 # Mac and Windows only use the native AWT lib, do not build libawt_headless
-ifeq ($(findstring $(OPENJDK_TARGET_OS), windows macosx),)
+ifneq ($(findstring $(OPENJDK_TARGET_OS), windows macosx),)
 
   LIBAWT_HEADLESS_DIRS := $(JDK_TOPDIR)/src/java.desktop/unix/native/libawt_headless/awt \
       $(JDK_TOPDIR)/src/java.desktop/$(OPENJDK_TARGET_OS_TYPE)/native/common/awt \
