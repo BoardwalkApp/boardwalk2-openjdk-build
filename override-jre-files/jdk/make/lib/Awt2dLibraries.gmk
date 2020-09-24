@@ -217,8 +217,8 @@ ifeq ($(OPENJDK_TARGET_OS), android)
       java2d/loops/TransformHelper.c \
       java2d/loops/ScaledBlit.c \
       java2d/pipe/Region.c \
-      java2d/loops/MaskBlit.c \
       java2d/loops/GraphicsPrimitiveMgr.c \
+      java2d/loops/MaskBlit.c \
       awt/image/BufImgSurfaceData.c \
       java2d/loops/Blit.c \
       java2d/loops/BlitBg.c \
