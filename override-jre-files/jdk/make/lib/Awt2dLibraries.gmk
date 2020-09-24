@@ -212,7 +212,7 @@ ifeq ($(OPENJDK_TARGET_OS), windows)
   LIBAWT_VERSIONINFO_RESOURCE := $(JDK_TOPDIR)/src/java.desktop/windows/native/libawt/windows/awt.rc
 endif
 
-ifeq ($(OPENJDK_TARGET_OS), android)
+# ifeq ($(OPENJDK_TARGET_OS), android)
   LIBAWT_EXFILES += \
       java2d/loops/TransformHelper.c \
       java2d/loops/ScaledBlit.c \
@@ -226,7 +226,7 @@ ifeq ($(OPENJDK_TARGET_OS), android)
       X11Color.c \
       awt_Font.c \
       fontpath.c
-endif
+# endif
 
 LIBAWT_MAPFILE := $(JDK_TOPDIR)/make/mapfiles/libawt/mapfile-vers
 ifeq ($(OPENJDK_TARGET_OS), linux)
