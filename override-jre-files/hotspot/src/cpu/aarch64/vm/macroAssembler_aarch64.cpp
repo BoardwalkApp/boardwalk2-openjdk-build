@@ -5270,20 +5270,22 @@ void MacroAssembler::char_array_compress(Register src, Register dst, Register le
 // call to Thread::current or, indeed, the call setup code. 
 // x86 appears to save C arg registers.
  void MacroAssembler::get_thread(Register dst) {
-   // Save all call-clobbered regs except dst, plus r19 and r20.
-   RegSet saved_regs = RegSet::range(r0, r20) + lr - dst;
+   // - Save all call-clobbered regs except dst, plus r19 and r20.
+   RegSet saved_regs = RegSet::range(r0, r1) + lr - dst;
+   // - RegSet saved_regs = RegSet::range(r0, r20) + lr - dst;
    // + RegSet saved_regs = RegSet::range(r0, r1) + lr - dst;
    push(saved_regs, sp);
  
-   // FIX-ME: implement
-   // return Thread::current()
+   // - FIX-ME: implement
+   // - return Thread::current()
 
-// + mov(lr, CAST_FROM_FN_PTR(address, JavaThread::aarch64_get_thread_helper));
-// + blrt(lr, 1, 0, 1);
+   // + mov(lr, CAST_FROM_FN_PTR(address, JavaThread::aarch64_get_thread_helper));
+   mov(lr, CAST_FROM_FN_PTR(address, Thread::current));
+   blrt(lr, 1, 0, 1);
    if (dst != c_rarg0) {
      mov(dst, c_rarg0);
    }
-   // restore pushed registers
+   // - restore pushed registers
    pop(saved_regs, sp);
  }
 
