@@ -1,0 +1,30 @@
+Creating support/modules_libs/jdk.security.auth/libjaas_unix.so from 1 file(s)
+In file included from /home/runner/work/android-openjdk-build-multiarch/android-openjdk-build-multiarch/openjdk/jdk/src/java.desktop/unix/native/common/awt/img_util_md.h:26:0,
+                 from /home/runner/work/android-openjdk-build-multiarch/android-openjdk-build-multiarch/openjdk/jdk/src/java.desktop/share/native/libawt/awt/image/BufImgSurfaceData.c:31:
+- /home/runner/work/android-openjdk-build-multiarch/android-openjdk-build-multiarch/openjdk/jdk/src/java.desktop/unix/native/common/awt/color.h:34:5: error: unknown type name 'XPixmapFormatValues'
+-    XPixmapFormatValues wsImageFormat;
+     ^
+In file included from /home/runner/work/android-openjdk-build-multiarch/android-openjdk-build-multiarch/openjdk/jdk/src/java.desktop/share/native/libawt/awt/image/BufImgSurfaceData.c:31:0:
+/home/runner/work/android-openjdk-build-multiarch/android-openjdk-build-multiarch/openjdk/jdk/src/java.desktop/unix/native/common/awt/img_util_md.h:32:5: error: unknown type name 'XID'
+     XID pixmap;                 /* The X11 pixmap containing the image */
+     ^
+/home/runner/work/android-openjdk-build-multiarch/android-openjdk-build-multiarch/openjdk/jdk/src/java.desktop/unix/native/common/awt/img_util_md.h:33:5: error: unknown type name 'XID'
+     XID mask;                   /* The X11 pixmap with the transparency mask */
+     ^
+/home/runner/work/android-openjdk-build-multiarch/android-openjdk-build-multiarch/openjdk/jdk/src/java.desktop/unix/native/common/awt/img_util_md.h:40:5: error: unknown type name 'XImage'
+     XImage *xim;                /* The Ximage structure for the temp buffer */
+     ^
+/home/runner/work/android-openjdk-build-multiarch/android-openjdk-build-multiarch/openjdk/jdk/src/java.desktop/unix/native/common/awt/img_util_md.h:41:5: error: unknown type name 'XImage'
+     XImage *maskim;             /* The Ximage structure for the mask */
+     ^
+/home/runner/work/android-openjdk-build-multiarch/android-openjdk-build-multiarch/openjdk/jdk/src/java.desktop/unix/native/common/awt/img_util_md.h:45:5: error: unknown type name 'Region'
+     Region curpixels;           /* The region of randomly converted pixels */
+     ^
+Awt2dLibraries.gmk:245: recipe for target '/home/runner/work/android-openjdk-build-multiarch/android-openjdk-build-multiarch/openjdk/build/android-aarch64-normal-server-release/support/native/java.desktop/libawt/BufImgSurfaceData.o' failed
+make[3]: *** [/home/runner/work/android-openjdk-build-multiarch/android-openjdk-build-multiarch/openjdk/build/android-aarch64-normal-server-release/support/native/java.desktop/libawt/BufImgSurfaceData.o] Error 1
+make/Main.gmk:221: recipe for target 'java.desktop-libs' failed
+make[2]: *** [java.desktop-libs] Error 2
+make[2]: *** Waiting for unfinished jobs....
+
+ERROR: Build failed for target 'images' in configuration 'android-aarch64-normal-server-release' (exit code 2) 
+
