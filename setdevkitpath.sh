@@ -5,7 +5,7 @@ export NDK=$NDK_HOME
 export ANDROID_DEVKIT=$NDK/generated-toolchains/android-${TARGET_SHORT}-toolchain
 export TOOLCHAIN=$ANDROID_DEVKIT
 
-export CPPFLAGS="-I$NDK/platforms/android-21/arch-${TARGET_SHORT}/usr/include -I/usr/lib"
+export CPPFLAGS="-I/usr/include -I$NDK/platforms/android-21/arch-${TARGET_SHORT}/usr/include -I/usr/lib"
 export LDFLAGS="-L$NDK/platforms/android-21/arch-${TARGET_SHORT}/usr/lib"
 
 # Configure and build.

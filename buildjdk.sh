@@ -4,6 +4,9 @@ set -e
 export FREETYPE_DIR=`pwd`/freetype-2.6.2/build_android-${TARGET_SHORT}
 export CUPS_DIR=`pwd`/cups-2.2.4
 
+export CFLAGS+="-I$CUPS_DIR"
+export CXXFLAGS+="-I$CUPS_DIR"
+
 # My system's JDK is too old (7.0), so we add an Oracle boot JDK.
 # Set "USE_SYSTEM_JDK_8=1" to use system jdk instead
 if [ -z "$USE_SYSTEM_JDK_8" ]
