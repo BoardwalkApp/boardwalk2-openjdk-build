@@ -4,6 +4,8 @@ set -e
 export FREETYPE_DIR=`pwd`/freetype-2.6.2/build_android-${TARGET_SHORT}
 export CUPS_DIR=`pwd`/cups-2.2.4
 
+export CPPFLAGS+=-I$FREETYPE_DIR -I$CUPS_DIR
+
 cp -R /usr/include/X11 $ANDROID_INCLUDE/
 # It isn't good, but need make it build anyways
 cp -R $CUPS_DIR/cups/*.h $ANDROID_INCLUDE/cups
@@ -24,6 +26,7 @@ cp -R -f override-jre-files/* openjdk/
 cd openjdk
 rm -rf build
 bash ./configure \
+	--with-extra-cflags=$CPPFLAGS \
 	--enable-headless-only \
 	--enable-option-checking=fatal \
 	--openjdk-target=$TARGET \
