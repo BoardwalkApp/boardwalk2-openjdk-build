@@ -14,7 +14,7 @@ then
 	export PATH=`pwd`/jdk1.8.0_162/bin:$PATH
 fi
 
-sudo apt -y install gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-dev
+sudo apt -y install gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-dev libx11-dev
 
 # Patch for aarch64
 cp -R -f override-jre-files/* openjdk/
