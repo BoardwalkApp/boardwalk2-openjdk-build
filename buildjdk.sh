@@ -22,6 +22,8 @@ cp -R -f override-jre-files/* openjdk/
 cd openjdk
 rm -rf build
 bash ./configure \
+    CFLAGS=$CFLAGS \
+    CXXFLAGS=$CXXFLAGS \
 	--enable-headless-only \
 	--enable-option-checking=fatal \
 	--openjdk-target=$TARGET \
