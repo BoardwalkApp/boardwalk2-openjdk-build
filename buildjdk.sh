@@ -4,8 +4,7 @@ set -e
 export FREETYPE_DIR=`pwd`/freetype-2.6.2/build_android-${TARGET_SHORT}
 export CUPS_DIR=`pwd`/cups-2.2.4
 
-export CFLAGS+="-I$CUPS_DIR -I$FREETYPE_DIR/include/freetype2 -I/usr/include"
-export CXXFLAGS=$CFLAGS
+cp -R /usr/include/X11 $ANDROID_INCLUDE/
 
 # My system's JDK is too old (7.0), so we add an Oracle boot JDK.
 # Set "USE_SYSTEM_JDK_8=1" to use system jdk instead
@@ -22,8 +21,6 @@ cp -R -f override-jre-files/* openjdk/
 cd openjdk
 rm -rf build
 bash ./configure \
-	--with-extra-cflags="$CFLAGS" \
-	--with-extra-cxxflags="$CXXFLAGS" \
 	--enable-headless-only \
 	--enable-option-checking=fatal \
 	--openjdk-target=$TARGET \
