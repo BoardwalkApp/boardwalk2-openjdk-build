@@ -8,8 +8,8 @@ export CPPFLAGS+=-I$FREETYPE_DIR -I$CUPS_DIR
 
 cp -R /usr/include/X11 $ANDROID_INCLUDE/
 # It isn't good, but need make it build anyways
-cp -R $CUPS_DIR/cups/*.h $ANDROID_INCLUDE/cups
-cp -R $CUPS_DIR/cups/*.h /usr/include/cups
+cp -R $CUPS_DIR/* $ANDROID_INCLUDE/
+# cp -R $CUPS_DIR/* /usr/include/
 
 # My system's JDK is too old (7.0), so we add an Oracle boot JDK.
 # Set "USE_SYSTEM_JDK_8=1" to use system jdk instead
