@@ -671,6 +671,7 @@ else ifeq ($(OPENJDK_TARGET_OS), macosx)
       lcdglyph.c
 else ifeq ($(OPENJDK_TARGET_OS), android)
     LIBFONTMANAGER_EXCLUDE_FILES += X11TextRenderer.c
+    
 else
   LIBFONTMANAGER_EXCLUDE_FILES += fontpath.c \
       lcdglyph.c
@@ -721,7 +722,7 @@ $(eval $(call SetupNativeCompilation,BUILD_LIBFONTMANAGER, \
     LIBS := $(BUILD_LIBFONTMANAGER_FONTLIB), \
     LIBS_unix := -lawt -ljava -ljvm $(LIBM) $(LIBCXX), \
     LIBS_linux := -lc, \
-    LIBS_android := -lc, \
+    LIBS_android := -lawt_headless -lc, \
     LIBS_solaris := -lawt_headless -lc, \
     LIBS_aix := -lawt_headless,\
     LIBS_windows := $(WIN_JAVA_LIB) advapi32.lib user32.lib gdi32.lib \
