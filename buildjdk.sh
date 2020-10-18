@@ -17,10 +17,8 @@ cd openjdk
 rm -rf build
 bash ./configure \
 	--with-extra-cflags="$CPPFLAGS" \
-	--enable-headless-only \
 	--enable-option-checking=fatal \
 	--openjdk-target=$TARGET \
-	--disable-warnings-as-errors \
 	--with-jdk-variant=normal \
 	--with-cups-include=$CUPS_DIR \
 	--with-devkit=$ANDROID_DEVKIT \
