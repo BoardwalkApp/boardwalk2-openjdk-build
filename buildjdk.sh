@@ -11,17 +11,7 @@ cp -R /usr/include/X11 $ANDROID_INCLUDE/
 # It isn't good, but need make it build anyways
 cp -R $CUPS_DIR/* $ANDROID_INCLUDE/
 
-# My system's JDK is too old (7.0), so we add an Oracle boot JDK.
-# Set "USE_SYSTEM_JDK_8=1" to use system jdk instead
-if [ -z "$USE_SYSTEM_JDK_8" ]
-then
-	export PATH=`pwd`/jdk1.8.0_162/bin:$PATH
-fi
-
 sudo apt -y install gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-dev libx11-dev
-
-# Patch for aarch64
-cp -R -f override-jre-files/* openjdk/
 
 cd openjdk
 rm -rf build
