@@ -15,8 +15,8 @@ sudo apt -y install gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-
 
 cd openjdk
 rm -rf build
+#        --host=gnu/linux
 bash ./configure \
-        --host=gnu/linux
 	--with-extra-cflags="$CPPFLAGS" \
 	--enable-option-checking=fatal \
 	--openjdk-target=$TARGET \
