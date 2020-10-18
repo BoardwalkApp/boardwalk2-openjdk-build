@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+# set -e
 . setdevkitpath.sh
 export FREETYPE_DIR=`pwd`/freetype-2.6.2/build_android-${TARGET_SHORT}
 export CUPS_DIR=`pwd`/cups-2.2.4
@@ -16,7 +16,6 @@ sudo apt -y install gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-
 cd openjdk
 rm -rf build
 bash ./configure \
-        --host=linux
 	--with-extra-cflags="$CPPFLAGS" \
 	--enable-option-checking=fatal \
 	--openjdk-target=$TARGET \
@@ -26,9 +25,10 @@ bash ./configure \
 	--with-debug-level=release \
 	--with-freetype-lib=$FREETYPE_DIR/lib \
 	--with-freetype-include=$FREETYPE_DIR/include/freetype2 \
-    --x-includes=/usr/include \
-    --x-libraries=/usr/lib \
-   || error_code=$?
+	--x-includes=/usr/include \
+	--x-libraries=/usr/lib
+
+error_code=$?
 if [ "$error_code" -ne 0 ]; then
   echo "\n\nCONFIGURE ERROR $error_code , config.log:"
   cat config.log
