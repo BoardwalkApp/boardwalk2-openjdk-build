@@ -1,4 +1,12 @@
 # Override GitHub Actions env vars
+
+if [ "$TARGET_JDK" == "aarch64" ]
+then
+  export TARGET_SHORT=arm64
+else
+  export TARGET_SHORT=$TARGET_JDK
+fi
+
 export NDK_HOME=`pwd`/android-ndk-r*
 
 export NDK=$NDK_HOME

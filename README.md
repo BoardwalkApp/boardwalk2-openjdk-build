@@ -1,10 +1,10 @@
 Based on http://openjdk.java.net/projects/mobile/android.html
 
-Download Android NDK r14 from https://developer.android.com/ndk/downloads/older_releases.html and place it in this directory
-
-(Can't automatically download because of EULA)
-
 ## Building
+
+### Setup
+- Download Android NDK r14 from https://developer.android.com/ndk/downloads/older_releases.html and place it in this directory (Can't automatically download because of EULA)
+- Rename to `android-ndk-linux-x86_64.zip`. 
 
 ### Environment variables
 <table>
@@ -45,6 +45,13 @@ Download Android NDK r14 from https://developer.android.com/ndk/downloads/older_
 
 ### Run in this directory:
 ```
-bash ci_build_global.sh
+./extractndk.sh
+./getlibs.sh
+./maketoolchain.sh
+./clonejdk.sh
+./buildlibs.sh
+./buildjdk.sh
+./removejdkdebuginfo.sh
+./tarjdk.sh
 ```
 
