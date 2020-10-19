@@ -15,6 +15,16 @@ sudo apt -y install gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-
 
 cp -R /usr/include/fontconfig $ANDROID_INCLUDE/
 
+# TODO remove :v
+cat <<EOT >> patchstat.txt
+
+#define S_IREAD S_IRUSR
+#define S_IWRITE S_IWUSR
+#define S_IEXEC S_IXUSR
+EOT
+
+cắt patchstat.txt >> $NDK_HOME/platforms/android-21/arch-$TARGET_SHORT/usr/include/sys/stat.h
+
 cd openjdk
 rm -rf build
 bash ./configure \
