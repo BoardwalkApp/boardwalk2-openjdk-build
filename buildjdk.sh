@@ -38,6 +38,6 @@ if [ "$error_code" -ne 0 ]; then
   exit $error_code
 fi
 
-mkdir -p build/android-${TARGET_JDK}-normal-server-release
-cd build/android-${TARGET_JDK}-normal-server-release
+mkdir -p build/linux-${TARGET_JDK}-normal-server-release
+cd build/linux-${TARGET_JDK}-normal-server-release
 make JOBS=4 images
