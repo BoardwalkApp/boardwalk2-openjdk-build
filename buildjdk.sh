@@ -25,6 +25,7 @@ bash ./configure \
 	--with-cups-include=$CUPS_DIR \
 	--with-devkit=$ANDROID_DEVKIT \
 	--with-debug-level=release \
+	--with-fontconfig-include=$ANDROID_INCLUDE \
 	--with-freetype-lib=$FREETYPE_DIR/lib \
 	--with-freetype-include=$FREETYPE_DIR/include/freetype2 \
 	--x-includes=/usr/include \
