@@ -11,7 +11,7 @@ cp -R /usr/include/X11 $ANDROID_INCLUDE/
 # It isn't good, but need make it build anyways
 cp -R $CUPS_DIR/* $ANDROID_INCLUDE/
 
-sudo apt -y install gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-dev libfontconfig1-dev libx11-dev
+sudo apt -y install gcc-multilib g++-multilib systemtap-sdt-devel libxtst-dev libasound2-dev libelf-dev libfontconfig1-dev libx11-dev
 
 cp -R /usr/include/fontconfig $ANDROID_INCLUDE/
 
