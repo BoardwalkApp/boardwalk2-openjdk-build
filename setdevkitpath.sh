@@ -1,5 +1,5 @@
 # Override GitHub Actions env vars
-export NDK_HOME=`pwd`/android-ndk-r10e
+export NDK_HOME=`pwd`/android-ndk-r*
 
 export NDK=$NDK_HOME
 export ANDROID_DEVKIT=$NDK/generated-toolchains/android-${TARGET_SHORT}-toolchain
