@@ -1,3 +1,5 @@
+export NDK_VERSION=r14
+
 # Override GitHub Actions env vars
 
 if [ "$TARGET_JDK" == "aarch64" ]
@@ -7,7 +9,7 @@ else
   export TARGET_SHORT=$TARGET_JDK
 fi
 
-export NDK_HOME=`pwd`/android-ndk-r*
+export NDK_HOME=`pwd`/android-ndk-$NDK_VERSION
 
 export NDK=$NDK_HOME
 export ANDROID_DEVKIT=$NDK/generated-toolchains/android-${TARGET_SHORT}-toolchain

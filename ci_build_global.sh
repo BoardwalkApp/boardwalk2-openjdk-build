@@ -3,7 +3,7 @@ set -e
 
 . setdevkitpath.sh
 
-wget -nc -nv -O android-ndk-linux-x86_64.zip "https://dl.google.com/android/repository/android-ndk-r14-linux-x86_64.zip"
+wget -nc -nv -O android-ndk-$NDK_VERSION-linux-x86_64.zip "https://dl.google.com/android/repository/android-ndk-$NDK_VERSION-linux-x86_64.zip"
 ./extractndk.sh
 ./getlibs.sh
 ./maketoolchain.sh

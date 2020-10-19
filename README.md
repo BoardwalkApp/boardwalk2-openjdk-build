@@ -4,17 +4,16 @@ Based on http://openjdk.java.net/projects/mobile/android.html
 
 ### Setup
 - Download Android NDK r14 from https://developer.android.com/ndk/downloads/older_releases.html and place it in this directory (Can't automatically download because of EULA)
-- Rename to `android-ndk-linux-x86_64.zip`. 
 
-### Environment variables
+### Architecture specific environment variables
 <table>
       <thead>
         <tr>
           <th></th>
-          <th align="center" colspan="7">Architectures</th>
+          <th align="center" colspan="7">Environment variables</th>
         </tr>
         <tr>
-          <th>Env var</th>
+          <th>Architectures</th>
           <th align="center">TARGET</th>
           <th align="center">TARGET_JDK</th>
         </tr>
@@ -45,6 +44,7 @@ Based on http://openjdk.java.net/projects/mobile/android.html
 
 ### Run in this directory:
 ```
+export NDK_VERSION=r14
 ./extractndk.sh
 ./getlibs.sh
 ./maketoolchain.sh
