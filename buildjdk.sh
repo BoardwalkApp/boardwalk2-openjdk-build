@@ -23,7 +23,7 @@ cat <<EOT >> patchstat.txt
 #define S_IEXEC S_IXUSR
 EOT
 
-cắt patchstat.txt >> $NDK_HOME/platforms/android-21/arch-$TARGET_SHORT/usr/include/sys/stat.h
+cat patchstat.txt >> $NDK_HOME/platforms/android-21/arch-$TARGET_SHORT/usr/include/sys/stat.h
 
 cd openjdk
 rm -rf build
