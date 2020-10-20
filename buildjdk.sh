@@ -15,6 +15,12 @@ sudo apt -y install systemtap-sdt-dev gcc-multilib g++-multilib libxtst-dev liba
 cp -R /usr/include/X11 $ANDROID_INCLUDE/
 cp -R /usr/include/fontconfig $ANDROID_INCLUDE/
 
+# Create dummy libraries so we won't have to remove them in OpenJDK makefiles
+mkdir dummy_libs
+ar cru dummy_libs/libpthread.a
+ar cru dummy_libs/libthread_db.a
+export LDFLAGS+="-L`pwd`/dummy_libs"
+
 cd openjdk
 rm -rf build
 bash ./configure \
