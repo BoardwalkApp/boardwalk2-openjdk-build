@@ -5,7 +5,7 @@ export FREETYPE_DIR=`pwd`/freetype-2.6.2/build_android-${TARGET_SHORT}
 export CUPS_DIR=`pwd`/cups-2.2.4
 
 # simplest to force headless:)
-export CPPFLAGS+="-I$FREETYPE_DIR -I$CUPS_DIR -DHEADLESS"
+export CPPFLAGS+=" -I$FREETYPE_DIR -I$CUPS_DIR -DHEADLESS"
 
 # It isn't good, but need make it build anyways
 cp -R $CUPS_DIR/* $ANDROID_INCLUDE/
@@ -19,12 +19,13 @@ cp -R /usr/include/fontconfig $ANDROID_INCLUDE/
 mkdir dummy_libs
 ar cru dummy_libs/libpthread.a
 ar cru dummy_libs/libthread_db.a
-export LDFLAGS+="-L`pwd`/dummy_libs"
+export LDFLAGS+=" -L`pwd`/dummy_libs"
 
 cd openjdk
 rm -rf build
 bash ./configure \
 	--with-extra-cflags="$CPPFLAGS" \
+	--with-extra-ldflags="$LDFLAGS" \
 	--enable-option-checking=fatal \
 	--openjdk-target=$TARGET \
 	--with-jdk-variant=normal \
