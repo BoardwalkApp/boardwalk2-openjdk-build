@@ -23,9 +23,9 @@ export LDFLAGS+=" -L`pwd`/dummy_libs"
 
 cd openjdk
 rm -rf build
+#	--with-extra-cxxflags="$CXXFLAGS --std=c++11" \
 bash ./configure \
 	--with-extra-cflags="$CPPFLAGS" \
-	--with-extra-cxxflags="$CXXFLAGS --std=c++11" \
 	--with-extra-ldflags="$LDFLAGS" \
 	--enable-option-checking=fatal \
 	--openjdk-target=$TARGET \
