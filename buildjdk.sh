@@ -5,7 +5,7 @@ export FREETYPE_DIR=`pwd`/freetype-2.6.2/build_android-${TARGET_SHORT}
 export CUPS_DIR=`pwd`/cups-2.2.4
 
 # simplest to force headless:)
-export CPPFLAGS+=" -I$FREETYPE_DIR -I$CUPS_DIR -DHEADLESS"
+export CPPFLAGS+=" -D__linux__=1 -I$FREETYPE_DIR -I$CUPS_DIR -DHEADLESS"
 
 # It isn't good, but need make it build anyways
 cp -R $CUPS_DIR/* $ANDROID_INCLUDE/
