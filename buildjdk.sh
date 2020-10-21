@@ -25,7 +25,7 @@ cd openjdk
 rm -rf build
 bash ./configure \
 	--with-extra-cflags="$CPPFLAGS" \
-	--with-extra-cxxflags="$CXXFLAGS --std=c++0x" \
+	--with-extra-cxxflags="$CXXFLAGS --std=c++11" \
 	--with-extra-ldflags="$LDFLAGS" \
 	--enable-option-checking=fatal \
 	--openjdk-target=$TARGET \
