@@ -12,6 +12,6 @@ cd freetype-2.6.2
 	--without-zlib \
 	--with-png=no \
 	--with-harfbuzz=no
-# make -j4
-# make install
+make -j4
+make install
 
