@@ -26,6 +26,7 @@ cd openjdk
 rm -rf build
 #	--with-extra-cxxflags="$CXXFLAGS --std=c++11" \
 bash ./configure \
+	--disable-headful \
 	--with-extra-cflags="$CPPFLAGS" \
 	--with-extra-ldflags="$LDFLAGS" \
 	--enable-option-checking=fatal \
