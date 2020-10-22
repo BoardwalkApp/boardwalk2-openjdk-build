@@ -7,6 +7,9 @@ wget -nc -nv -O android-ndk-$NDK_VERSION-linux-x86_64.zip "https://dl.google.com
 ./extractndk.sh
 ./getlibs.sh
 ./maketoolchain.sh
+
+# Some modifies to NDK to fix
+
 ./clonejdk.sh
 ./buildlibs.sh
 ./buildjdk.sh

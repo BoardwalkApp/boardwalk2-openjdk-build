@@ -12,6 +12,8 @@ cd freetype-2.6.2
 	--without-zlib \
 	--with-png=no \
 	--with-harfbuzz=no
-make -j4
+make -j4 | \
+sudo apt -y install systemtap-sdt-dev gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-dev libfontconfig1-dev libx11-dev
+
 make install
 
