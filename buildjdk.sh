@@ -20,13 +20,13 @@ ln -s /usr/include/fontconfig $ANDROID_INCLUDE/
 mkdir dummy_libs
 ar cru dummy_libs/libpthread.a
 ar cru dummy_libs/libthread_db.a
-export LDFLAGS+=" -L`pwd`/dummy_libs"
+export LDFLAGS+=" -L`pwd`/dummy_libs --warn-unresolved-symbols"
 
 cd openjdk
 rm -rf build
 #	--with-extra-cxxflags="$CXXFLAGS --std=c++11" \
-bash ./configure BUILD_HEADLESS_ONLY=1 BUILD_HEADLESS=true \
-	--disable-headful \
+#	--disable-headful \
+bash ./configure \
 	--with-extra-cflags="$CPPFLAGS" \
 	--with-extra-ldflags="$LDFLAGS" \
 	--enable-option-checking=fatal \
