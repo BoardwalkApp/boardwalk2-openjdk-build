@@ -54,4 +54,3 @@ export NDK_VERSION=r14
 ./removejdkdebuginfo.sh
 ./tarjdk.sh
 ```
-
