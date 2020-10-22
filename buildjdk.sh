@@ -20,7 +20,7 @@ ln -s /usr/include/fontconfig $ANDROID_INCLUDE/
 mkdir dummy_libs
 ar cru dummy_libs/libpthread.a
 ar cru dummy_libs/libthread_db.a
-export LDFLAGS+=" -L`pwd`/dummy_libs --warn-unresolved-symbols"
+export LDFLAGS+=" -L`pwd`/dummy_libs -Wl,--warn-unresolved-symbols"
 
 cd openjdk
 rm -rf build
