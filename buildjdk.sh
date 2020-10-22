@@ -25,7 +25,7 @@ export LDFLAGS+=" -L`pwd`/dummy_libs"
 cd openjdk
 rm -rf build
 #	--with-extra-cxxflags="$CXXFLAGS --std=c++11" \
-bash ./configure \
+bash ./configure BUILD_HEADLESS_ONLY=1 BUILD_HEADLESS=true \
 	--disable-headful \
 	--with-extra-cflags="$CPPFLAGS" \
 	--with-extra-ldflags="$LDFLAGS" \
