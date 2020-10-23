@@ -16,6 +16,11 @@ export CPPFLAGS+=" -DHEADLESS" # -I$FREETYPE_DIR -I$CUPS_DIR
 ln -s /usr/include/X11 $ANDROID_INCLUDE/
 ln -s /usr/include/fontconfig $ANDROID_INCLUDE/
 
+# TODO remove after use got client to move them permanent
+mkdir -p openjdk/jdk/src/share/native/common/unicode
+mkdir -p openjdk/jdk/src/share/native/sun/font/layout/unicode
+mv openjdk/jdk/src/share/native/sun/font/layout/unicode/* openjdk/jdk/src/share/native/common/unicode/
+
 # Create dummy libraries so we won't have to remove them in OpenJDK makefiles
 mkdir dummy_libs
 ar cru dummy_libs/libpthread.a
