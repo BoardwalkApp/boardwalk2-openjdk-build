@@ -33,6 +33,7 @@ rm -rf build
 bash ./configure \
 	--disable-headful \
 	--with-extra-cflags="$CPPFLAGS" \
+	--with-extra-cflags="$CXXFLAGS -Dchar16_t=uint16_t -Dchar32_t=uint32_t" \
 	--with-extra-ldflags="$LDFLAGS" \
 	--enable-option-checking=fatal \
 	--openjdk-target=$TARGET \
