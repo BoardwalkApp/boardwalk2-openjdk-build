@@ -5,7 +5,7 @@ export FREETYPE_DIR=`pwd`/freetype-2.6.2/build_android-${TARGET_SHORT}
 export CUPS_DIR=`pwd`/cups-2.2.4
 
 # simplest to force headless:)
-export CPPFLAGS+=" -DHEADLESS" # -I$FREETYPE_DIR -I$CUPS_DIR
+export CPPFLAGS+=" -DHEADLESS=1" # -I$FREETYPE_DIR -I$CUPS_DIR
 
 # It isn't good, but need make it build anyways
 # cp -R $CUPS_DIR/* $ANDROID_INCLUDE/
@@ -29,11 +29,10 @@ export LDFLAGS+=" -L`pwd`/dummy_libs -Wl,--warn-unresolved-symbols"
 
 cd openjdk
 rm -rf build
-#	--with-extra-cxxflags="$CXXFLAGS --std=c++11" \
+	--with-extra-cxxflags="$CXXFLAGS -Dchar16_t=uint16_t -Dchar32_t=uint32_t" \
 bash ./configure \
 	--disable-headful \
 	--with-extra-cflags="$CPPFLAGS" \
-	--with-extra-cflags="$CXXFLAGS -Dchar16_t=uint16_t -Dchar32_t=uint32_t" \
 	--with-extra-ldflags="$LDFLAGS" \
 	--enable-option-checking=fatal \
 	--openjdk-target=$TARGET \
