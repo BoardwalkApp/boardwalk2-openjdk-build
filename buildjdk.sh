@@ -29,7 +29,7 @@ export LDFLAGS+=" -L`pwd`/dummy_libs -Wl,--warn-unresolved-symbols"
 
 cd openjdk
 rm -rf build
-	--with-extra-cxxflags="$CXXFLAGS -Dchar16_t=uint16_t -Dchar32_t=uint32_t" \
+#	--with-extra-cxxflags="$CXXFLAGS -Dchar16_t=uint16_t -Dchar32_t=uint32_t" \
 bash ./configure \
 	--disable-headful \
 	--with-extra-cflags="$CPPFLAGS" \
