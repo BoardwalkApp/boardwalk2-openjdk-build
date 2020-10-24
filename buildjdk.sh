@@ -30,7 +30,7 @@ ar cru dummy_libs/libthread_db.a
 cd openjdk
 rm -rf build
 
-rm common/autoconf/generated_configure.sh
+rm common/autoconf/generated-configure.sh
 
 #	--with-extra-cxxflags="$CXXFLAGS -Dchar16_t=uint16_t -Dchar32_t=uint32_t" \
 #	--with-extra-cflags="$CPPFLAGS" \
