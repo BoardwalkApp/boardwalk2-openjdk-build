@@ -1,12 +1,12 @@
 cups-2.2.4-source.tar.gz
 freetype-2.6.2.tar.bz2
 cups-2.2.4
+dummy_libs
 freetype-2.6.2
 freetype-2.6.2-x86
 jdk-9.0.4
 jdk1.8.0_*
 openjdk
-android-ndk-r10e
-android-ndk-r10e-linux-x86_64.zip
+android-ndk-r*
 jre.tar.xz
 jreout
