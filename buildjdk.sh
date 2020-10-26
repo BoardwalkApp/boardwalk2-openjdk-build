@@ -6,7 +6,7 @@ export CUPS_DIR=`pwd`/cups-2.2.4
 
 # simplest to force headless:)
 export CFLAGS+=" -DLE_STANDALONE -DHEADLESS" # -I$FREETYPE_DIR -I$CUPS_DIR
-export LDFLAGS+=" -L$NDK/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/$TARGET -L`pwd`/dummy_libs -Wl,--warn-unresolved-symbols"
+export LDFLAGS+=" -L`pwd`/dummy_libs -Wl,--warn-unresolved-symbols"
 
 # It isn't good, but need make it build anyways
 # cp -R $CUPS_DIR/* $ANDROID_INCLUDE/
