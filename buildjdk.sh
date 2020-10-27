@@ -50,6 +50,6 @@ if [ "$error_code" -ne 0 ]; then
   exit $error_code
 fi
 
-mkdir -p build/linux-${TARGET_JDK}-normal-server-release
-cd build/linux-${TARGET_JDK}-normal-server-release
+# mkdir -p build/linux-${TARGET_JDK}-normal-server-${JDK_DEBUG_LEVEL}
+cd build/linux-${TARGET_JDK}-normal-server-${JDK_DEBUG_LEVEL}
 make JOBS=4 images
