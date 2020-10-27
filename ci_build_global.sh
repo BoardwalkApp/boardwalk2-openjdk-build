@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-export JDK_DEBUG_LEVEL=fastdebug
+export JDK_DEBUG_LEVEL=release
 
 . setdevkitpath.sh
 
