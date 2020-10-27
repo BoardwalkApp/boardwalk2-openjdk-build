@@ -37,7 +37,7 @@ bash ./configure \
 	--with-jdk-variant=normal \
 	--with-cups-include=$CUPS_DIR \
 	--with-devkit=$ANDROID_DEVKIT \
-	--with-debug-level=release \
+	--with-debug-level=$JDK_DEBUG_LEVEL \
 	--with-fontconfig-include=$ANDROID_INCLUDE \
 	--with-freetype-lib=$FREETYPE_DIR/lib \
 	--with-freetype-include=$FREETYPE_DIR/include/freetype2 \
