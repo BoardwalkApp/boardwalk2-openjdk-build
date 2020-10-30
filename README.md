@@ -1,6 +1,6 @@
 Based on http://openjdk.java.net/projects/mobile/android.html
 
-## Building
+## Building 
 
 ### Setup
 - Download Android NDK r14 from https://developer.android.com/ndk/downloads/older_releases.html and place it in this directory (Can't automatically download because of EULA)
