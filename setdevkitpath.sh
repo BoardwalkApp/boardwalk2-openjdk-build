@@ -1,4 +1,7 @@
-export NDK_VERSION=r14
+if [ -z "$NDK_VERSION" ]
+then
+  export NDK_VERSION=r18
+fi
 
 if [ -z "$JDK_DEBUG_LEVEL" ]
 then

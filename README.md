@@ -44,8 +44,10 @@ Based on http://openjdk.java.net/projects/mobile/android.html
 
 ### Run in this directory:
 ```
-export JDK_DEBUG_LEVEL=[release/fastdebug/debug]
+# If want change, set it
 export NDK_VERSION=r14
+
+export JDK_DEBUG_LEVEL=[release/fastdebug/debug]
 ./extractndk.sh
 ./getlibs.sh
 ./maketoolchain.sh
