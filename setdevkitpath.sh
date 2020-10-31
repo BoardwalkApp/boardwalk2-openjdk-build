@@ -1,7 +1,7 @@
 
 if [ -z "$NDK_VERSION" ]
 then
-  export NDK_VERSION=r18
+  export NDK_VERSION=r17
 fi
 
 if [ -z "$JDK_DEBUG_LEVEL" ]
@@ -16,16 +16,11 @@ else
   export TARGET_SHORT=$TARGET_JDK
 fi
 
-# Override GitHub Actions env var
-export ANDROID_NDK_HOME=`pwd`/android-ndk-$NDK_VERSION
-export NDK_HOME=$ANDROID_NDK_HOME
-
+# Set NDK
 export API=21
-
-export NDK=$NDK_HOME
-# export ANDROID_DEVKIT=$NDK/toolchains/android-${TARGET_SHORT}-toolchain
-export ANDROID_DEVKIT=$NDK/toolchains/llvm/prebuilt/linux-x86_64
-export TOOLCHAIN=$ANDROID_DEVKIT
+export NDK=`pwd`/android-ndk-$NDK_VERSION
+export TOOLCHAIN=$NDK/generated-toolchains/android-${TARGET_SHORT}-toolchain
+# export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/linux-x86_64
 
 export ANDROID_INCLUDE=$TOOLCHAIN/sysroot/usr/include
 

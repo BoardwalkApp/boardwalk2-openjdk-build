@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 . setdevkitpath.sh
-export PATH=$ANDROID_DEVKIT/bin:$PATH
+export PATH=$TOOLCHAIN/bin:$PATH
 
 echo "Building Freetype"
 
