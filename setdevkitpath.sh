@@ -1,3 +1,4 @@
+
 if [ -z "$NDK_VERSION" ]
 then
   export NDK_VERSION=r18
@@ -16,19 +17,22 @@ else
 fi
 
 # Override GitHub Actions env var
-export NDK_HOME=`pwd`/android-ndk-$NDK_VERSION
+export ANDROID_NDK_HOME=`pwd`/android-ndk-$NDK_VERSION
+export NDK_HOME=$ANDROID_NDK_HOME
+
+export API=21
 
 export NDK=$NDK_HOME
-export ANDROID_DEVKIT=$NDK/generated-toolchains/android-${TARGET_SHORT}-toolchain
+# export ANDROID_DEVKIT=$NDK/toolchains/android-${TARGET_SHORT}-toolchain
+export ANDROID_DEVKIT=$NDK/toolchains/llvm/prebuilt/linux-x86_64
 export TOOLCHAIN=$ANDROID_DEVKIT
 
-export ANDROID_INCLUDE=$NDK/platforms/android-21/arch-${TARGET_SHORT}/usr/include
+export ANDROID_INCLUDE=$TOOLCHAIN/sysroot/usr/include
 
-export CPPFLAGS="-I$ANDROID_INCLUDE" # -I/usr/include -I/usr/lib
-export LDFLAGS="-L$NDK/platforms/android-21/arch-${TARGET_SHORT}/usr/lib"
+export CPPFLAGS="-I$ANDROID_INCLUDE -I$ANDROID_INCLUDE/$TARGET" # -I/usr/include -I/usr/lib
+export LDFLAGS="-L$NDK/platforms/android-$API/arch-$TARGET_SHORT/usr/lib"
 
 # Configure and build.
-# Deprecated...
 export AR=$TOOLCHAIN/bin/$TARGET-ar
 export AS=$TOOLCHAIN/bin/$TARGET-as
 export CC=$TOOLCHAIN/bin/$TARGET-gcc
@@ -37,10 +41,3 @@ export LD=$TOOLCHAIN/bin/$TARGET-ld
 export RANLIB=$TOOLCHAIN/bin/$TARGET-ranlib
 export STRIP=$TOOLCHAIN/bin/$TARGET-strip
 
-# export BUILD_AR=$AR
-# export BUILD_AS=$AS
-# export BUILD_CC=$CC
-# export BUILD_CXX=$CXX
-# export BUILD_LD=$LD
-# export BUILD_RANLIB=$RANLIB
-# export BUILD_STRIP=$STRIP
