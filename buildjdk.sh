@@ -17,8 +17,6 @@ export LDFLAGS+=" -L`pwd`/dummy_libs -Wl,--warn-unresolved-symbols"
 ln -s -f /usr/include/X11 $ANDROID_INCLUDE/
 ln -s -f /usr/include/fontconfig $ANDROID_INCLUDE/
 
-ln -s -f fixmissing/procfs.h $ANDROID_INCLUDE/sys/procfs.h
-
 # Create dummy libraries so we won't have to remove them in OpenJDK makefiles
 mkdir -p dummy_libs
 ar cru dummy_libs/libpthread.a
