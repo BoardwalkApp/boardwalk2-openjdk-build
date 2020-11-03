@@ -52,4 +52,9 @@ fi
 
 # mkdir -p build/linux-${TARGET_JDK}-normal-server-${JDK_DEBUG_LEVEL}
 cd build/linux-${TARGET_JDK}-normal-server-${JDK_DEBUG_LEVEL}
-make JOBS=4 images
+make JOBS=4 images || \
+error_code=$?
+if [ "$error_code" -ne 0 ]; then
+  echo "Build failure, exited with code $error_code. Trying again."
+  make JOBS=4 images
+fi
