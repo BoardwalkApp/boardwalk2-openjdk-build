@@ -3,5 +3,6 @@
 set -e
 wget -O freetype-2.6.2.tar.bz2 https://download.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.bz2
 tar xf freetype-2.6.2.tar.bz2
+mv freetype-2.10.0 freetype-2.6.2
 wget https://github.com/apple/cups/releases/download/v2.2.4/cups-2.2.4-source.tar.gz
 tar xf cups-2.2.4-source.tar.gz
