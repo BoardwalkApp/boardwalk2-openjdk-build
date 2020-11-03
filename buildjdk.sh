@@ -1,7 +1,10 @@
 #!/bin/bash
 set -e
 . setdevkitpath.sh
-export FREETYPE_DIR=`pwd`/freetype-2.6.2/build_android-${TARGET_SHORT}
+
+sudo apt -y install systemtap-sdt-dev gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-dev libfontconfig1-dev libx11-dev
+
+export FREETYPE_DIR=`pwd`/freetype-$BUILD_FREETYPE_VERSION/build_android-${TARGET_SHORT}
 export CUPS_DIR=`pwd`/cups-2.2.4
 
 # simplest to force headless:)

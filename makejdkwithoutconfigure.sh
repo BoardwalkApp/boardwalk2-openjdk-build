@@ -3,7 +3,7 @@
 
 set -e
 . setdevkitpath.sh
-export FREETYPE_DIR=`pwd`/freetype-2.6.2/build_android-${TARGET_SHORT}
+export FREETYPE_DIR=`pwd`/freetype-${BUILD_FREETYPE_VERSION}/build_android-${TARGET_SHORT}
 export CUPS_DIR=`pwd`/cups-2.2.4
 
 cd openjdk
