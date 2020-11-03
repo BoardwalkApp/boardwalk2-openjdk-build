@@ -23,7 +23,7 @@ export TOOLCHAIN=$NDK/generated-toolchains/android-${TARGET_SHORT}-toolchain
 export ANDROID_INCLUDE=$TOOLCHAIN/sysroot/usr/include
 
 export CPPFLAGS="-I$ANDROID_INCLUDE -I$ANDROID_INCLUDE/$TARGET" # -I/usr/include -I/usr/lib
-export LDFLAGS="-L$NDK/platforms/android-$API/arch-$TARGET_SHORT/usr/lib"
+export LDFLAGS="-L$NDK/platforms/android-$API/arch-$TARGET_SHORT/usr/lib -lsupc++"
 
 # Configure and build.
 export AR=$TOOLCHAIN/bin/$TARGET-ar
