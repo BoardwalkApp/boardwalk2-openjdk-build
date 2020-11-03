@@ -5,7 +5,7 @@ export PATH=$TOOLCHAIN/bin:$PATH
 
 echo "Building Freetype"
 
-cd freetype-2.6.2
+cd freetype-2.10.0
 ./configure \
 	--host=$TARGET \
 	--prefix=`pwd`/build_android-${TARGET_SHORT} \
