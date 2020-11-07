@@ -4,7 +4,7 @@ export NDK_VERSION=r10e
 
 if [ -z "$BUILD_FREETYPE_VERSION" ]
 then
-  export BUILD_FREETYPE_VERSION="2.10.4"
+  export BUILD_FREETYPE_VERSION="2.10.0"
 fi
 
 if [ -z "$JDK_DEBUG_LEVEL" ]
