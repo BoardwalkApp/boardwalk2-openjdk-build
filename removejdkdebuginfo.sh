@@ -9,4 +9,4 @@ mv jreout/lib/${TARGET_JDK}/libfreetype.so.6 jreout/lib/${TARGET_JDK}/libfreetyp
 # find jreout -name "*.diz" | xargs -- rm
 # mv jreout/lib/${TARGET_JDK}/libfontmanager.diz.keep jreout/lib/${TARGET_JDK}/libfontmanager.diz
 
-rm jreout/lib/${TARGET_JDK}/server/libjvm.diz
+find jreout -name "libjvm.diz" | xargs -- rm
