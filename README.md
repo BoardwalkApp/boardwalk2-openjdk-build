@@ -46,7 +46,7 @@ Based on http://openjdk.java.net/projects/mobile/android.html
 ### Run in this directory:
 ```
 export BUILD_FREETYPE_VERSION=[2.6.2/.../2.10.0] # default: 2.10.0
-export JDK_DEBUG_LEVEL=[release/fastdebug/debug] # default: 2.10.0
+export JDK_DEBUG_LEVEL=[release/fastdebug/debug] # default: release
 ./extractndk.sh
 ./getlibs.sh
 ./maketoolchain.sh
