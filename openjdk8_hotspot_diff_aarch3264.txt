@@ -1,0 +1,240 @@
+
+make/Makefile:256:  ifeq ($(HS_ARCH), aarch32)
+make/defs.make:288:  SRCARCH    ?= $(ARCH/$(filter sparc sparc64 ia64 amd64 x86_64 ppc ppc64 ppc64le zero aarch32,$(ARCH)))
+make/defs.make:299:  ARCH/aarch32 = aarch32
+make/defs.make:334:  LIBARCH/aarch32 = aarch32
+make/linux/makefiles/buildtree.make:204:DATA_MODE/aarch32 = 32
+make/linux/makefiles/defs.make:117:# AArch32
+make/linux/makefiles/defs.make:118:ifeq ($(ARCH), aarch32)
+make/linux/makefiles/defs.make:120:  PLATFORM         = linux-aarch32
+make/linux/makefiles/defs.make:121:  VM_PLATFORM      = linux_aarch32
+make/linux/makefiles/defs.make:122:  HS_ARCH          = aarch32
+make/linux/makefiles/gcc.make:181:ARCHFLAG/aarch32 =
+make/linux/makefiles/rules.make:143:ifeq ($(BUILDARCH), aarch32)
+make/linux/makefiles/saproc.make:71:ifneq ($(filter-out aarch32 ia64 zero,$(SRCARCH)),)
+make/linux/platform_aarch32:3:arch = aarch32
+make/linux/platform_aarch32:5:arch_model = aarch32
+make/linux/platform_aarch32:7:os_arch = linux_aarch32
+make/linux/platform_aarch32:9:os_arch_model = linux_aarch32
+make/linux/platform_aarch32:18:sysdefs = -DLINUX -D_GNU_SOURCE -DAARCH32 -DARM -D__STDC_LIMIT_MACROS -D__STDC_CONSTANT_MACROS
+src/os/linux/vm/os_perf_linux.cpp:32:#ifdef TARGET_ARCH_aarch32
+src/os/linux/vm/os_perf_linux.cpp:33:# include "vm_version_ext_aarch32.hpp"
+src/os/solaris/vm/os_perf_solaris.cpp:33:#ifdef TARGET_ARCH_aarch32
+src/os/solaris/vm/os_perf_solaris.cpp:34:# include "vm_version_ext_aarch32.hpp"
+src/share/vm/adlc/main.cpp:250:#ifdef TARGET_ARCH_aarch32
+src/share/vm/adlc/main.cpp:251:  AD.addInclude(AD._CPP_file, "nativeInst_aarch32.hpp");
+src/share/vm/adlc/main.cpp:252:  AD.addInclude(AD._CPP_file, "vmreg_aarch32.inline.hpp");
+src/share/vm/asm/assembler.hpp:56:#ifdef TARGET_ARCH_aarch32
+src/share/vm/asm/assembler.hpp:57:# include "register_aarch32.hpp"
+src/share/vm/asm/assembler.hpp:58:# include "vm_version_aarch32.hpp"
+src/share/vm/asm/assembler.hpp:467:#ifdef TARGET_ARCH_aarch32
+src/share/vm/asm/assembler.hpp:468:# include "assembler_aarch32.hpp"
+src/share/vm/asm/assembler.inline.hpp:45:#ifdef TARGET_ARCH_aarch32
+src/share/vm/asm/assembler.inline.hpp:46:# include "assembler_aarch32.inline.hpp"
+src/share/vm/asm/codeBuffer.hpp:635:#ifdef TARGET_ARCH_aarch32
+src/share/vm/asm/codeBuffer.hpp:636:# include "codeBuffer_aarch32.hpp"
+src/share/vm/asm/macroAssembler.hpp:45:#ifdef TARGET_ARCH_aarch32
+src/share/vm/asm/macroAssembler.hpp:46:# include "macroAssembler_aarch32.hpp"
+src/share/vm/asm/macroAssembler.inline.hpp:45:#ifdef TARGET_ARCH_aarch32
+src/share/vm/asm/macroAssembler.inline.hpp:46:# include "macroAssembler_aarch32.inline.hpp"
+src/share/vm/asm/register.hpp:111:#ifdef TARGET_ARCH_aarch32
+src/share/vm/asm/register.hpp:112:# include "register_aarch32.hpp"
+src/share/vm/c1/c1_FpuStackSim.hpp:47:#ifdef TARGET_ARCH_aarch32
+src/share/vm/c1/c1_FpuStackSim.hpp:48:# include "c1_FpuStackSim_aarch32.hpp"
+src/share/vm/c1/c1_FrameMap.cpp:44:#ifdef TARGET_ARCH_aarch32
+src/share/vm/c1/c1_FrameMap.cpp:45:# include "vmreg_aarch32.inline.hpp"
+src/share/vm/c1/c1_Defs.hpp:44:#ifdef TARGET_ARCH_aarch32
+src/share/vm/c1/c1_Defs.hpp:45:# include "register_aarch32.hpp"
+src/share/vm/c1/c1_Defs.hpp:68:#ifdef TARGET_ARCH_aarch32
+src/share/vm/c1/c1_Defs.hpp:69:# include "c1_Defs_aarch32.hpp"
+src/share/vm/c1/c1_FrameMap.hpp:97:#ifdef TARGET_ARCH_aarch32
+src/share/vm/c1/c1_FrameMap.hpp:98:# include "c1_FrameMap_aarch32.hpp"
+src/share/vm/c1/c1_LIR.hpp:622:#elif defined(SPARC) || defined(AARCH32)
+src/share/vm/c1/c1_LIR.hpp:709:#ifdef AARCH32
+src/share/vm/c1/c1_LIR.hpp:717:#endif // AARCH32
+src/share/vm/c1/c1_LIR.hpp:727:#ifdef AARCH32
+src/share/vm/c1/c1_LIRAssembler.hpp:277:#ifdef TARGET_ARCH_aarch32
+src/share/vm/c1/c1_LIRAssembler.hpp:278:# include "c1_LIRAssembler_aarch32.hpp"
+src/share/vm/c1/c1_LIRAssembler.cpp:53:#ifdef TARGET_ARCH_aarch32
+src/share/vm/c1/c1_LIRAssembler.cpp:54:# include "nativeInst_aarch32.hpp"
+src/share/vm/c1/c1_LIRAssembler.cpp:55:# include "vmreg_aarch32.inline.hpp"
+src/share/vm/c1/c1_LIRGenerator.cpp:1200:#ifdef AARCH32
+src/share/vm/c1/c1_LIRGenerator.cpp:2934:#ifdef AARCH32
+src/share/vm/c1/c1_LIRGenerator.hpp:288:#ifdef AARCH32
+src/share/vm/c1/c1_LinearScan.cpp:50:#ifdef TARGET_ARCH_aarch32
+src/share/vm/c1/c1_LinearScan.cpp:51:# include "vmreg_aarch32.inline.hpp"
+src/share/vm/c1/c1_LinearScan.cpp:52:# include "vm_version_aarch32.hpp"
+src/share/vm/c1/c1_LinearScan.cpp:200:#if !defined(AARCH32) && (defined(__SOFTFP__) || defined(E500V2))
+src/share/vm/c1/c1_LinearScan.cpp:203:  return i->reg_num() >= LIR_OprDesc::vreg_base && (AARCH32_ONLY(!hasFPU() ||) (i->type() != T_FLOAT && i->type() != T_DOUBLE));
+src/share/vm/c1/c1_LinearScan.cpp:212:#if !defined(AARCH32) && (defined(__SOFTFP__) || defined(E500V2))
+src/share/vm/c1/c1_LinearScan.cpp:215:  return i->reg_num() >= LIR_OprDesc::vreg_base && (i->type() == T_FLOAT || i->type() == T_DOUBLE) AARCH32_ONLY(&& hasFPU());
+src/share/vm/c1/c1_LinearScan.cpp:2081:#if defined(AARCH32)
+src/share/vm/c1/c1_LinearScan.cpp:2097:#if defined(AARCH32)
+src/share/vm/c1/c1_LinearScan.cpp:2160:#elif defined(ARM32) || defined(AARCH32)
+src/share/vm/c1/c1_LinearScan.cpp:2749:#if defined(ARM32) || defined(AARCH32)
+src/share/vm/c1/c1_LinearScan.cpp:2751:#endif // ARM32 || AARCH32
+src/share/vm/c1/c1_LinearScan.hpp:988:#ifdef TARGET_ARCH_aarch32
+src/share/vm/c1/c1_LinearScan.hpp:989:# include "c1_LinearScan_aarch32.hpp"
+src/share/vm/c1/c1_MacroAssembler.hpp:62:#ifdef TARGET_ARCH_aarch32
+src/share/vm/c1/c1_MacroAssembler.hpp:63:# include "c1_MacroAssembler_aarch32.hpp"
+src/share/vm/c1/c1_Runtime1.cpp:1089:#if defined(ARM) && !defined(AARCH32)
+src/share/vm/c1/c1_Runtime1.cpp:1158:#ifdef AARCH32
+src/share/vm/c1/c1_Runtime1.cpp:1159:          // AArch32 have (disabled) relocation for offset, should enable it back
+src/share/vm/c1/c1_globals.hpp:41:#ifdef TARGET_ARCH_aarch32
+src/share/vm/c1/c1_globals.hpp:42:# include "c1_globals_aarch32.hpp"
+src/share/vm/classfile/bytecodeAssembler.cpp:47:#ifdef TARGET_ARCH_aarch32
+src/share/vm/classfile/bytecodeAssembler.cpp:48:# include "bytes_aarch32.hpp"
+src/share/vm/classfile/classFileStream.hpp:44:#ifdef TARGET_ARCH_aarch32
+src/share/vm/classfile/classFileStream.hpp:45:# include "bytes_aarch32.hpp"
+src/share/vm/classfile/stackMapTable.hpp:49:#ifdef TARGET_ARCH_aarch32
+src/share/vm/classfile/stackMapTable.hpp:50:# include "bytes_aarch32.hpp"
+src/share/vm/classfile/verifier.cpp:63:#ifdef TARGET_ARCH_aarch32
+src/share/vm/classfile/verifier.cpp:64:# include "bytes_aarch32.hpp"
+src/share/vm/code/codeBlob.cpp:57:#ifdef TARGET_ARCH_aarch32
+src/share/vm/code/codeBlob.cpp:58:# include "nativeInst_aarch32.hpp"
+src/share/vm/code/compiledIC.hpp:45:#ifdef TARGET_ARCH_aarch32
+src/share/vm/code/compiledIC.hpp:46:# include "nativeInst_aarch32.hpp"
+src/share/vm/code/relocInfo.hpp:433:#ifdef TARGET_ARCH_aarch32
+src/share/vm/code/relocInfo.hpp:434:# include "relocInfo_aarch32.hpp"
+src/share/vm/code/vmreg.hpp:47:#elif defined TARGET_ARCH_MODEL_aarch32
+src/share/vm/code/vmreg.hpp:48:# include "adfiles/adGlobals_aarch32.hpp"
+src/share/vm/code/vmreg.hpp:173:#ifdef TARGET_ARCH_aarch32
+src/share/vm/code/vmreg.hpp:174:# include "vmreg_aarch32.hpp"
+src/share/vm/compiler/disassembler.cpp:50:#ifdef TARGET_ARCH_aarch32
+src/share/vm/compiler/disassembler.cpp:51:# include "depChecker_aarch32.hpp"
+src/share/vm/compiler/disassembler.hpp:96:#ifdef TARGET_ARCH_aarch32
+src/share/vm/compiler/disassembler.hpp:97:# include "disassembler_aarch32.hpp"
+src/share/vm/interpreter/abstractInterpreter.hpp:43:#elif defined TARGET_ARCH_MODEL_aarch32
+src/share/vm/interpreter/abstractInterpreter.hpp:44:# include "interp_masm_aarch32.hpp"
+src/share/vm/interpreter/bytecode.hpp:46:#ifdef TARGET_ARCH_aarch32
+src/share/vm/interpreter/bytecode.hpp:47:# include "bytes_aarch32.hpp"
+src/share/vm/interpreter/bytecodeInterpreter.hpp:50:#ifdef TARGET_ARCH_aarch32
+src/share/vm/interpreter/bytecodeInterpreter.hpp:51:# include "bytes_aarch32.hpp"
+src/share/vm/interpreter/bytecodeInterpreter.hpp:607:#ifdef TARGET_ARCH_aarch32
+src/share/vm/interpreter/bytecodeInterpreter.hpp:608:# include "bytecodeInterpreter_aarch32.hpp"
+src/share/vm/interpreter/bytecodeInterpreter.inline.hpp:61:#ifdef TARGET_ARCH_aarch32
+src/share/vm/interpreter/bytecodeInterpreter.inline.hpp:62:# include "bytecodeInterpreter_aarch32.inline.hpp"
+src/share/vm/interpreter/bytecodeStream.hpp:47:#ifdef TARGET_ARCH_aarch32
+src/share/vm/interpreter/bytecodeStream.hpp:48:# include "bytes_aarch32.hpp"
+src/share/vm/interpreter/bytecodes.cpp:44:#ifdef TARGET_ARCH_aarch32
+src/share/vm/interpreter/bytecodes.cpp:45:# include "bytes_aarch32.hpp"
+src/share/vm/interpreter/bytecodes.hpp:307:#ifdef TARGET_ARCH_aarch32
+src/share/vm/interpreter/bytecodes.hpp:308:# include "bytecodes_aarch32.hpp"
+src/share/vm/interpreter/cppInterpreter.hpp:99:#ifdef TARGET_ARCH_aarch32
+src/share/vm/interpreter/cppInterpreter.hpp:100:# include "cppInterpreter_aarch32.hpp"
+src/share/vm/interpreter/cppInterpreterGenerator.hpp:65:#ifdef TARGET_ARCH_aarch32
+src/share/vm/interpreter/cppInterpreterGenerator.hpp:66:# include "cppInterpreterGenerator_aarch32.hpp"
+src/share/vm/interpreter/interpreter.hpp:164:#ifdef TARGET_ARCH_aarch32
+src/share/vm/interpreter/interpreter.hpp:165:# include "interpreter_aarch32.hpp"
+src/share/vm/interpreter/interpreterGenerator.hpp:59:#ifdef TARGET_ARCH_aarch32
+src/share/vm/interpreter/interpreterGenerator.hpp:60:# include "interpreterGenerator_aarch32.hpp"
+src/share/vm/interpreter/interpreterRuntime.cpp:74:#ifdef TARGET_ARCH_aarch32
+src/share/vm/interpreter/interpreterRuntime.cpp:75:# include "vm_version_aarch32.hpp"
+src/share/vm/interpreter/interpreterRuntime.hpp:180:#ifdef TARGET_ARCH_aarch32
+src/share/vm/interpreter/interpreterRuntime.hpp:181:# include "interpreterRT_aarch32.hpp"
+src/share/vm/interpreter/templateInterpreter.hpp:205:#ifdef TARGET_ARCH_aarch32
+src/share/vm/interpreter/templateInterpreter.hpp:206:# include "templateInterpreter_aarch32.hpp"
+src/share/vm/interpreter/templateInterpreterGenerator.hpp:104:#ifdef TARGET_ARCH_aarch32
+src/share/vm/interpreter/templateInterpreterGenerator.hpp:105:# include "templateInterpreterGenerator_aarch32.hpp"
+src/share/vm/interpreter/templateTable.hpp:41:#elif defined TARGET_ARCH_MODEL_aarch32
+src/share/vm/interpreter/templateTable.hpp:42:# include "interp_masm_aarch32.hpp"
+src/share/vm/interpreter/templateTable.hpp:368:#elif defined TARGET_ARCH_MODEL_aarch32
+src/share/vm/interpreter/templateTable.hpp:369:# include "templateTable_aarch32.hpp"
+src/share/vm/jfr/utilities/jfrBigEndian.hpp:45:#ifdef TARGET_ARCH_aarch32
+src/share/vm/jfr/utilities/jfrBigEndian.hpp:46:# include "bytes_aarch32.hpp"
+src/share/vm/jfr/utilities/jfrBigEndian.hpp:122:#elif defined(SPARC) || defined(ARM) || defined(AARCH64) || defined(AARCH32)
+src/share/vm/jfr/writers/jfrEncoders.hpp:46:#ifdef TARGET_ARCH_aarch32
+src/share/vm/jfr/writers/jfrEncoders.hpp:47:# include "bytes_aarch32.hpp"
+src/share/vm/oops/constantPool.hpp:50:#ifdef TARGET_ARCH_aarch32
+src/share/vm/oops/constantPool.hpp:51:# include "bytes_aarch32.hpp"
+src/share/vm/oops/oop.inline.hpp:60:#ifdef TARGET_ARCH_aarch32
+src/share/vm/oops/oop.inline.hpp:61:# include "bytes_aarch32.hpp"
+src/share/vm/opto/buildOopMap.cpp:50:#ifdef TARGET_ARCH_aarch32
+src/share/vm/opto/buildOopMap.cpp:51:# include "vmreg_aarch32.inline.hpp"
+src/share/vm/opto/c2_globals.hpp:41:#ifdef TARGET_ARCH_aarch32
+src/share/vm/opto/c2_globals.hpp:42:# include "c2_globals_aarch32.hpp"
+src/share/vm/opto/c2compiler.cpp:40:#elif defined TARGET_ARCH_MODEL_aarch32
+src/share/vm/opto/c2compiler.cpp:41:# include "adfiles/ad_aarch32.hpp"
+src/share/vm/opto/compile.cpp:82:#elif defined TARGET_ARCH_MODEL_aarch32
+src/share/vm/opto/compile.cpp:83:# include "adfiles/ad_aarch32.hpp"
+src/share/vm/opto/gcm.cpp:50:#elif defined TARGET_ARCH_MODEL_aarch32
+src/share/vm/opto/gcm.cpp:51:# include "adfiles/ad_aarch32.hpp"
+src/share/vm/opto/lcm.cpp:45:#elif defined TARGET_ARCH_MODEL_aarch32
+src/share/vm/opto/lcm.cpp:46:# include "adfiles/ad_aarch32.hpp"
+src/share/vm/opto/locknode.hpp:43:#elif defined TARGET_ARCH_MODEL_aarch32
+src/share/vm/opto/locknode.hpp:44:# include "adfiles/ad_aarch32.hpp"
+src/share/vm/opto/matcher.cpp:53:#elif defined TARGET_ARCH_MODEL_aarch32
+src/share/vm/opto/matcher.cpp:54:# include "adfiles/ad_aarch32.hpp"
+src/share/vm/opto/output.hpp:42:#elif defined TARGET_ARCH_MODEL_aarch32
+src/share/vm/opto/output.hpp:43:# include "adfiles/ad_aarch32.hpp"
+src/share/vm/opto/regmask.cpp:40:#elif defined TARGET_ARCH_MODEL_aarch32
+src/share/vm/opto/regmask.cpp:41:# include "adfiles/ad_aarch32.hpp"
+src/share/vm/opto/regmask.hpp:43:#elif defined TARGET_ARCH_MODEL_aarch32
+src/share/vm/opto/regmask.hpp:44:# include "adfiles/adGlobals_aarch32.hpp"
+src/share/vm/opto/runtime.cpp:83:#elif defined TARGET_ARCH_MODEL_aarch32
+src/share/vm/opto/runtime.cpp:84:# include "adfiles/ad_aarch32.hpp"
+src/share/vm/prims/jniCheck.cpp:55:#ifdef TARGET_ARCH_aarch32
+src/share/vm/prims/jniCheck.cpp:56:# include "jniTypes_aarch32.hpp"
+src/share/vm/prims/jni_md.h:42:#ifdef TARGET_ARCH_aarch32
+src/share/vm/prims/jni_md.h:43:# include "jni_aarch32.h"
+src/share/vm/prims/jvmtiClassFileReconstituter.cpp:46:#ifdef TARGET_ARCH_aarch32
+src/share/vm/prims/jvmtiClassFileReconstituter.cpp:47:# include "bytes_aarch32.hpp"
+src/share/vm/prims/methodHandles.hpp:197:#ifdef TARGET_ARCH_aarch32
+src/share/vm/prims/methodHandles.hpp:198:# include "methodHandles_aarch32.hpp"
+src/share/vm/runtime/atomic.inline.hpp:46:#ifdef TARGET_OS_ARCH_linux_aarch32
+src/share/vm/runtime/atomic.inline.hpp:47:# include "atomic_linux_aarch32.inline.hpp"
+src/share/vm/runtime/deoptimization.cpp:68:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/deoptimization.cpp:69:# include "vmreg_aarch32.inline.hpp"
+src/share/vm/runtime/deoptimization.cpp:84:#elif defined TARGET_ARCH_MODEL_aarch32
+src/share/vm/runtime/deoptimization.cpp:85:# include "adfiles/ad_aarch32.hpp"
+src/share/vm/runtime/dtraceJSDT.hpp:44:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/dtraceJSDT.hpp:45:# include "nativeInst_aarch32.hpp"
+src/share/vm/runtime/frame.cpp:64:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/frame.cpp:65:# include "nativeInst_aarch32.hpp"
+src/share/vm/runtime/frame.hpp:46:#elif defined TARGET_ARCH_MODEL_aarch32
+src/share/vm/runtime/frame.hpp:47:# include "adfiles/adGlobals_aarch32.hpp"
+src/share/vm/runtime/frame.hpp:504:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/frame.hpp:505:# include "frame_aarch32.hpp"
+src/share/vm/runtime/frame.inline.hpp:49:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/frame.inline.hpp:50:# include "jniTypes_aarch32.hpp"
+src/share/vm/runtime/frame.inline.hpp:115:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/frame.inline.hpp:116:# include "frame_aarch32.inline.hpp"
+src/share/vm/runtime/globals.hpp:55:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/globals.hpp:56:# include "globals_aarch32.hpp"
+src/share/vm/runtime/globals.hpp:88:#ifdef TARGET_OS_ARCH_linux_aarch32
+src/share/vm/runtime/globals.hpp:89:# include "globals_linux_aarch32.hpp"
+src/share/vm/runtime/globals.hpp:122:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/globals.hpp:123:# include "c1_globals_aarch32.hpp"
+src/share/vm/runtime/globals.hpp:154:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/globals.hpp:155:# include "c2_globals_aarch32.hpp"
+src/share/vm/runtime/globals.hpp:543:  NOT_AARCH32(                                                              \
+src/share/vm/runtime/icache.hpp:86:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/icache.hpp:87:# include "icache_aarch32.hpp"
+src/share/vm/runtime/java.cpp:84:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/java.cpp:85:# include "vm_version_aarch32.hpp"
+src/share/vm/runtime/javaCalls.hpp:49:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/javaCalls.hpp:50:# include "jniTypes_aarch32.hpp"
+src/share/vm/runtime/javaFrameAnchor.hpp:95:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/javaFrameAnchor.hpp:96:# include "javaFrameAnchor_aarch32.hpp"
+src/share/vm/runtime/orderAccess.inline.hpp:47:#ifdef TARGET_OS_ARCH_linux_aarch32
+src/share/vm/runtime/orderAccess.inline.hpp:48:# include "orderAccess_linux_aarch32.inline.hpp"
+src/share/vm/runtime/os.hpp:872:#ifdef TARGET_OS_ARCH_linux_aarch32
+src/share/vm/runtime/os.hpp:873:# include "os_linux_aarch32.hpp"
+src/share/vm/runtime/prefetch.inline.hpp:46:#ifdef TARGET_OS_ARCH_linux_aarch32
+src/share/vm/runtime/prefetch.inline.hpp:47:# include "prefetch_linux_aarch32.inline.hpp"
+src/share/vm/runtime/registerMap.hpp:45:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/registerMap.hpp:46:# include "register_aarch32.hpp"
+src/share/vm/runtime/registerMap.hpp:156:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/registerMap.hpp:157:# include "registerMap_aarch32.hpp"
+src/share/vm/runtime/relocator.hpp:45:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/relocator.hpp:46:# include "bytes_aarch32.hpp"
+src/share/vm/runtime/safepoint.cpp:77:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/safepoint.cpp:78:# include "nativeInst_aarch32.hpp"
+src/share/vm/runtime/safepoint.cpp:79:# include "vmreg_aarch32.inline.hpp"
+src/share/vm/runtime/sharedRuntime.cpp:81:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/sharedRuntime.cpp:82:# include "nativeInst_aarch32.hpp"
+src/share/vm/runtime/sharedRuntime.cpp:83:# include "vmreg_aarch32.inline.hpp"
+src/share/vm/runtime/stackValueCollection.cpp:42:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/stackValueCollection.cpp:43:# include "jniTypes_aarch32.hpp"
+src/share/vm/runtime/statSampler.cpp:51:#ifdef TARGET_ARCH_aarch32
+src/share/vm/runtime/statSampler.cpp:52:# include "vm_version_aarch32.hpp"
