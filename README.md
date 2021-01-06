@@ -56,4 +56,4 @@ export JDK_DEBUG_LEVEL=[release/fastdebug/debug] # default: release
 ./removejdkdebuginfo.sh
 ./tarjdk.sh
 ```
-
+e
