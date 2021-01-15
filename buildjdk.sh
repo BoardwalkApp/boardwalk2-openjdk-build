@@ -58,6 +58,11 @@ if [ "$error_code" -ne 0 ]; then
   exit $error_code
 fi
 
+if [ "$TARGET_JDK" == "aarch32" ]
+then
+  export TARGET_JDK=arm
+fi
+
 # mkdir -p build/linux-${TARGET_JDK}-normal-server-${JDK_DEBUG_LEVEL}
 cd build/linux-${TARGET_JDK}-normal-server-${JDK_DEBUG_LEVEL}
 make JOBS=4 images || \
