@@ -51,7 +51,8 @@ bash ./configure \
 	--with-extra-ldflags="$LDFLAGS" \
 	--enable-option-checking=fatal \
 	--openjdk-target=$TARGET \
-	--with-jdk-variant=$JDK_VARIANT \
+	--with-jdk-variant=normal \
+        --with-jvm-variants=$JDK_VARIANT \
 	--with-cups-include=$CUPS_DIR \
 	--with-devkit=$TOOLCHAIN \
 	--with-debug-level=$JDK_DEBUG_LEVEL \
