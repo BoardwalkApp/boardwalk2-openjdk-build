@@ -2,10 +2,10 @@
 set -e
 . setdevkitpath.sh
 
-if [ "$TARGET_JDK" == "arm" ]
-then
-  export TARGET_JDK=aarch32
-fi
+#if [ "$TARGET_JDK" == "arm" ]
+#then
+#  export TARGET_JDK=aarch32
+#fi
 
 sudo apt -y install systemtap-sdt-dev gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-dev libfontconfig1-dev libx11-dev
 
