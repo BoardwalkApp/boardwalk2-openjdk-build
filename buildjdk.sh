@@ -5,14 +5,14 @@ set -e
 if [ "$TARGET_JDK" == "arm" ]
 then
   export TARGET_JDK=aarch32
-  if [ -z "$JDK_VARIANT"]
+  if [ -z "$JVM_VARIANTS"]
   then
-    export JDK_VARIANT=client
+    export JVM_VARIANTS=client
   fi
 else
-  if [ -z "$JDK_VARIANT"]
+  if [ -z "$JVM_VARIANTS"]
   then
-    export JDK_VARIANT=server
+    export JVM_VARIANTS=server
   fi
 fi
 
@@ -52,7 +52,7 @@ bash ./configure \
 	--enable-option-checking=fatal \
 	--openjdk-target=$TARGET \
 	--with-jdk-variant=normal \
-        --with-jvm-variants=$JDK_VARIANT \
+        --with-jvm-variants=$JVM_VARIANTS \
 	--with-cups-include=$CUPS_DIR \
 	--with-devkit=$TOOLCHAIN \
 	--with-debug-level=$JDK_DEBUG_LEVEL \
@@ -68,8 +68,8 @@ if [ "$error_code" -ne 0 ]; then
   exit $error_code
 fi
 
-# mkdir -p build/linux-${TARGET_JDK}-normal-server-${JDK_DEBUG_LEVEL}
-cd build/linux-${TARGET_JDK}-normal-server-${JDK_DEBUG_LEVEL}
+# mkdir -p build/linux-${TARGET_JDK}-normal-${JVM_VARIANTS}-${JDK_DEBUG_LEVEL}
+cd build/linux-${TARGET_JDK}-normal-${JVM_VARIANTS}-${JDK_DEBUG_LEVEL}
 make JOBS=4 images || \
 error_code=$?
 if [ "$error_code" -ne 0 ]; then
