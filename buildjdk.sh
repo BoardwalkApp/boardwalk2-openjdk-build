@@ -4,6 +4,7 @@ set -e
 
 if [ "$TARGET_JDK" == "arm" ]
 then
+  export CFLAGS+=" -DDONT_COMPILE_SHENANDOAH"
   export TARGET_JDK=aarch32
   if [ -z "$JVM_VARIANTS"]
   then
@@ -51,7 +52,6 @@ bash ./configure \
 	--with-extra-ldflags="$LDFLAGS" \
 	--enable-option-checking=fatal \
 	--openjdk-target=$TARGET \
-        --disable-jvm-feature-shenandoahgc \
 	--with-jdk-variant=normal \
         --with-jvm-variants=$JVM_VARIANTS \
 	--with-cups-include=$CUPS_DIR \
