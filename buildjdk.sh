@@ -5,7 +5,7 @@ set -e
 if [ "$TARGET_JDK" == "arm" ]
 then
   export TARGET_JDK=aarch32
-  export TARGET_PHYS=aarch32-linux-gnueabihf
+  export TARGET_PHYS=aarch32-linux-gnueabi
 else
   export TARGET_PHYS=$TARGET
 fi
