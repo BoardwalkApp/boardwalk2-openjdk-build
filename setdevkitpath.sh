@@ -19,6 +19,19 @@ else
   export TARGET_SHORT=$TARGET_JDK
 fi
 
+if [ "$TARGET_JDK" == "aarch32" ]
+then
+  if [ -z "$JVM_VARIANTS"]
+  then
+    export JVM_VARIANTS=client
+  fi
+else
+  if [ -z "$JVM_VARIANTS"]
+  then
+    export JVM_VARIANTS=server
+  fi
+fi
+
 # Set NDK
 export API=21
 export NDK=`pwd`/android-ndk-$NDK_VERSION

@@ -5,15 +5,6 @@ set -e
 if [ "$TARGET_JDK" == "arm" ]
 then
   export TARGET_JDK=aarch32
-  if [ -z "$JVM_VARIANTS"]
-  then
-    export JVM_VARIANTS=client
-  fi
-else
-  if [ -z "$JVM_VARIANTS"]
-  then
-    export JVM_VARIANTS=server
-  fi
 fi
 
 sudo apt -y install systemtap-sdt-dev gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-dev libfontconfig1-dev libx11-dev
