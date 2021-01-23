@@ -5,6 +5,9 @@ set -e
 if [ "$TARGET_JDK" == "arm" ]
 then
   export TARGET_JDK=aarch32
+  export TARGET_PHYS=aarch32-linux-gnueabihf
+else
+  export TARGET_PHYS=$TARGET
 fi
 
 sudo apt -y install systemtap-sdt-dev gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-dev libfontconfig1-dev libx11-dev
@@ -41,7 +44,7 @@ bash ./configure \
 	--with-extra-cxxflags="$CFLAGS" \
 	--with-extra-ldflags="$LDFLAGS" \
 	--enable-option-checking=fatal \
-	--openjdk-target=$TARGET \
+	--openjdk-target=$TARGET_PHYS \
 	--with-jdk-variant=normal \
         --with-jvm-variants=$JVM_VARIANTS \
 	--with-cups-include=$CUPS_DIR \
