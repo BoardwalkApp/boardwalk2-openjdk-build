@@ -51,7 +51,7 @@ bash ./configure \
 	--with-extra-ldflags="$LDFLAGS" \
 	--enable-option-checking=fatal \
 	--openjdk-target=$TARGET \
-        --with-jvm-features=-shenandoahgc \
+        --disable-jvm-feature-shenandoahgc \
 	--with-jdk-variant=normal \
         --with-jvm-variants=$JVM_VARIANTS \
 	--with-cups-include=$CUPS_DIR \
