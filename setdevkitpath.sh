@@ -49,6 +49,7 @@ export AS=$TOOLCHAIN/bin/$TARGET-as
 export CC=$TOOLCHAIN/bin/$TARGET-gcc
 export CXX=$TOOLCHAIN/bin/$TARGET-g++
 export LD=$TOOLCHAIN/bin/$TARGET-ld
+export OBJCOPY=$TOOLCHAIN/bin/$TARGET-objcopy
 export RANLIB=$TOOLCHAIN/bin/$TARGET-ranlib
 export STRIP=$TOOLCHAIN/bin/$TARGET-strip
 
