@@ -6,6 +6,7 @@ if [ "$TARGET_JDK" == "arm" ]
 then
   export TARGET_JDK=aarch32
   export TARGET_PHYS=aarch32-linux-androideabi
+  export JVM_VARIANTS=client
 else
   export TARGET_PHYS=$TARGET
 fi
