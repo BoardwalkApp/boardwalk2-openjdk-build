@@ -2,6 +2,11 @@
 set -e
 rm -rf jreout || true
 
+if [ "$TARGET_JDK" == "arm" ]
+then
+  export TARGET_JDK=aarch32
+fi
+
 cp -r openjdk/build/linux-${TARGET_JDK}-normal-${JVM_VARIANTS}-${JDK_DEBUG_LEVEL}/images/j2re-image jreout
 mv jreout/lib/${TARGET_JDK}/libfreetype.so.6 jreout/lib/${TARGET_JDK}/libfreetype.so || echo "Move exit $?"
 
