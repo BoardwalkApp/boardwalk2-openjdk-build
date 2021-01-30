@@ -40,7 +40,6 @@ rm -rf build
 #	--with-extra-cxxflags="$CXXFLAGS -Dchar16_t=uint16_t -Dchar32_t=uint32_t" \
 #	--with-extra-cflags="$CPPFLAGS" \
 bash ./configure \
-	--disable-headful \
 	--with-extra-cflags="$CFLAGS" \
 	--with-extra-cxxflags="$CFLAGS" \
 	--with-extra-ldflags="$LDFLAGS" \
