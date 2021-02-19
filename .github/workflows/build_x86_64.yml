@@ -21,4 +21,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         # name: jre
-        path: jre*.tar.xz
+        path: *.tar.xz
