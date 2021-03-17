@@ -26,17 +26,17 @@ jobs:
     - name: Upload JDK build output
       uses: actions/upload-artifact@v2
       with:
-        name: jdk8
+        name: "jdk8-${{matrix.arch}}"
         path: jdk8*.tar.xz
 
     - name: Upload JRE build output
       uses: actions/upload-artifact@v2
       with:
-        name: jre
+        name: 'jre8-${{matrix.arch}}'
         path: jre8*.tar.xz
 
     - name: Upload JRE debuginfo build output
       uses: actions/upload-artifact@v2
       with:
-        name: debuginfo_jre8
+        name: "jre8-debuginfo-${{matrix.arch}}"
         path: dizout
