@@ -20,6 +20,11 @@ export CUPS_DIR=`pwd`/cups-2.2.4
 export CFLAGS+=" -DDONT_COMPILE_SHENANDOAH -DLE_STANDALONE" # -I$FREETYPE_DIR -I$CUPS_DIR
 export LDFLAGS+=" -L`pwd`/dummy_libs -Wl,--warn-unresolved-symbols"
 
+# if [ "$TARGET_JDK" == "aarch32" ] || [ "$TARGET_JDK" == "aarch64" ]
+# then
+#   export CFLAGS+=" -march=armv7-a+neon"
+# fi
+
 # It isn't good, but need make it build anyways
 # cp -R $CUPS_DIR/* $ANDROID_INCLUDE/
 
@@ -44,7 +49,6 @@ bash ./configure \
 	--with-extra-cxxflags="$CFLAGS" \
 	--with-extra-ldflags="$LDFLAGS" \
 	--enable-option-checking=fatal \
-        --enable-arm-neon=always \
 	--openjdk-target=$TARGET_PHYS \
 	--with-jdk-variant=normal \
         --with-jvm-variants=$JVM_VARIANTS \
