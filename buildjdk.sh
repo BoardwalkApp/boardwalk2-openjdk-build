@@ -44,6 +44,7 @@ bash ./configure \
 	--with-extra-cxxflags="$CFLAGS" \
 	--with-extra-ldflags="$LDFLAGS" \
 	--enable-option-checking=fatal \
+        --enable-arm-neon=always \
 	--openjdk-target=$TARGET_PHYS \
 	--with-jdk-variant=normal \
         --with-jvm-variants=$JVM_VARIANTS \
