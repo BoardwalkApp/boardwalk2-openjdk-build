@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 
-# cleanup ELF stuff
 unset AR AS CC CXX LD OBJCOPY RANLIB STRIP CPPFLAGS LDFLAGS
 git clone https://github.com/termux/termux-elf-cleaner
 cd termux-elf-cleaner
