@@ -17,7 +17,8 @@ findexec() { find $1 -type f -name "*" -not -name "*.o" -exec sh -c '
       #!*/ocamlrun*)exit0;;
     esac
 exit 1
-' sh {} \; -print }
+' sh {} \; -print
+}
 
 findexec jreout | xargs -- ./termux-elf-cleaner/termux-elf-cleaner
 findexec jdkout | xargs -- ./termux-elf-cleaner/termux-elf-cleaner
