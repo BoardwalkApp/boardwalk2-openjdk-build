@@ -1,8 +1,7 @@
 #!/bin/bash
 set -e
 
-# cleanup ELF stuff
-unset AR AS CC CXX LD OBJCOPY RANLIB STRIP 
+unset AR AS CC CXX LD OBJCOPY RANLIB STRIP CPPFLAGS LDFLAGS
 git clone https://github.com/termux/termux-elf-cleaner
 cd termux-elf-cleaner
 make CFLAGS=__ANDROID_API__=24 termux-elf-cleaner
@@ -11,8 +10,18 @@ cd ..
 
 mv jre_override/lib/* jreout/lib/
 
-find jreout -name "*.so" | xargs -- ./termux-elf-cleaner/termux-elf-cleaner
-find jdkout -name "*.so" | xargs -- ./termux-elf-cleaner/termux-elf-cleaner
+findexec() { find $1 -type f -name "*" -not -name "*.o" -exec sh -c '
+    case "$(head -n 1 "$1")" in
+      ?ELF*) exit 0;;
+      MZ*) exit 0;;
+      #!*/ocamlrun*)exit0;;
+    esac
+exit 1
+' sh {} \; -print
+}
+
+findexec jreout | xargs -- ./termux-elf-cleaner/termux-elf-cleaner
+findexec jdkout | xargs -- ./termux-elf-cleaner/termux-elf-cleaner
 
 cd jreout
 tar cJf ../jre8-${TARGET_SHORT}-`date +%Y%m%d`-${JDK_DEBUG_LEVEL}.tar.xz .
