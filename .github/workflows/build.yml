@@ -65,23 +65,7 @@ jobs:
         name: jre8-x86_64
         path: pojav
     - name: Repack JRE
-      run: |
-            cd pojav
-            mkdir work
-            mkdir work1
-            cd work
-            jrepath=$GITHUB_WORKSPACE/pojav/jre8-pojav
-            mkdir -p $jrepath
-            work=$jrepath/../work
-            work1=$jrepath/../work1
-            makearch () { echo "Making $2..."; cd $work; tar xf $(ls ../jre8-$2-*release.tar.xz) > /dev/null 2>&1; mv bin $work1/;  mkdir -p $work1/lib; mv lib/$1 $work1/lib/; mv lib/jexec $work1/lib/; tar cJf bin-$2.tar.xz -C $work1 . > /dev/null 2>&1; mv bin-$2.tar.xz $jrepath/; rm -rf $work/*; rm -rf $work1/*; }
-            makeuni () { echo "Making universal..."; cd $work; tar xf $(ls ../jre8-arm64-*release.tar.xz) > /dev/null 2>&1; rm -rf bin; rm -rf lib/aarch64; rm lib/jexec; tar cJf universal.tar.xz * > /dev/null 2>&1; mv universal.tar.xz $jrepath/; rm -rf $work/*; }
-            makeuni
-            makearch aarch32 arm
-            makearch aarch64 arm64
-            makearch i386 x86
-            makearch amd64 x86_64
-            echo $GITHUB_SHA>$jrepath/version
+      run: bash "repackjre.sh" $GITHUB_WORKSPACE/pojav $GITHUB_WORKSPACE/pojav/jre8-pojav
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
