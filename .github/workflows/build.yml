@@ -41,6 +41,7 @@ jobs:
         name: "jre8-debuginfo-${{matrix.arch}}"
         path: dizout
   pojav:
+    needs: build
     runs-on: ubuntu-20.04
     steps:
     - name: Get jre8-aarch32
