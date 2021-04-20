@@ -1,6 +1,6 @@
 name: Build OpenJDK for Android
 
-on: [push]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
@@ -40,3 +40,36 @@ jobs:
       with:
         name: "jre8-debuginfo-${{matrix.arch}}"
         path: dizout
+  pojav:
+    needs: build
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Get jre8-aarch32
+      uses: actions/download-artifact@v2
+      with:
+        name: jre8-aarch32
+        path: pojav
+    - name: Get jre8-aarch64
+      uses: actions/download-artifact@v2
+      with:
+        name: jre8-aarch64
+        path: pojav
+    - name: Get jre8-x86
+      uses: actions/download-artifact@v2
+      with:
+        name: jre8-x86
+        path: pojav
+    - name: Get jre8-x86_64
+      uses: actions/download-artifact@v2
+      with:
+        name: jre8-x86_64
+        path: pojav
+    - name: Repack JRE
+      run: bash "repackjre.sh" $GITHUB_WORKSPACE/pojav $GITHUB_WORKSPACE/pojav/jre8-pojav
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+          name: jre8-pojav
+          path: pojav/jre8-pojav/*
