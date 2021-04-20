@@ -31,7 +31,7 @@ makearch amd64 x86_64
 # if running under GitHub Actions, write commit sha, else formatted system date
 if [ -n "$GITHUB_SHA" ]
 then
-$GITHUB_SHA>$out/version
+echo $GITHUB_SHA>"$out"/version
 else
-date +%Y%m%d>"$out/version"
+date +%Y%m%d>"$out"/version
 fi
