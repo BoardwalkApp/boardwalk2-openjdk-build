@@ -3,14 +3,9 @@ name: Build OpenJDK for Android
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  build:
-    strategy:
-      matrix:
-        arch: [ "aarch32", "aarch64", "x86", "x86_64" ]
-      fail-fast: false
-
-    name: "Build ${{matrix.arch}}"
-    runs-on: ubuntu-20.04
+  build_iosport:
+    name: "Build for iOS aarch64"
+    runs-on: self-hosted
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -21,24 +16,25 @@ jobs:
         java-version: 1.7
 
     - name: Build with CI build script
-      run: bash "ci_build_arch_${{matrix.arch}}.sh"
-
+      run: |
+        export BUILD_IOS=1
+        bash "ci_build_arch_aarch64.sh"
     - name: Upload JDK build output
       uses: actions/upload-artifact@v2
       with:
-        name: "jdk8-${{matrix.arch}}"
+        name: "jdk8-ios-${{matrix.arch}}"
         path: jdk8*.tar.xz
 
     - name: Upload JRE build output
       uses: actions/upload-artifact@v2
       with:
-        name: 'jre8-${{matrix.arch}}'
+        name: 'jre8-ios-${{matrix.arch}}'
         path: jre8*.tar.xz
 
     - name: Upload JRE debuginfo build output
       uses: actions/upload-artifact@v2
       with:
-        name: "jre8-debuginfo-${{matrix.arch}}"
+        name: "jre8-ios-debuginfo-${{matrix.arch}}"
         path: dizout
   pojav:
     needs: build
