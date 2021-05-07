@@ -5,3 +5,4 @@ wget https://download.savannah.gnu.org/releases/freetype/freetype-$BUILD_FREETYP
 tar xf freetype-$BUILD_FREETYPE_VERSION.tar.bz2
 wget https://github.com/apple/cups/releases/download/v2.2.4/cups-2.2.4-source.tar.gz
 tar xf cups-2.2.4-source.tar.gz
+rm cups-2.2.4-source.tar.gz freetype-$BUILD_FREETYPE_VERSION.tar.bz2
