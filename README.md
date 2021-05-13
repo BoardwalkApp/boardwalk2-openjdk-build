@@ -8,6 +8,7 @@ Based on http://openjdk.java.net/projects/mobile/android.html
 - **Warning**: Do not attempt to build use newer or older NDK, it will lead to compilation errors.
 
 #### iOS
+- Switch to `bsdaarch64` branch.
 - You should get latest Xcode (tested with Xcode 12).
 
 ### Platform and architecture specific environment variables
