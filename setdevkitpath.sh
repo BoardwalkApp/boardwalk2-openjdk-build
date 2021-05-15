@@ -4,7 +4,7 @@ export NDK_VERSION=r10e
 
 if [ -z "$BUILD_FREETYPE_VERSION" ]
 then
-  export BUILD_FREETYPE_VERSION="2.10.0"
+  export BUILD_FREETYPE_VERSION="2.10.4"
 fi
 
 if [ -z "$JDK_DEBUG_LEVEL" ]
@@ -22,18 +22,36 @@ fi
 if [ "$TARGET_JDK" == "aarch32" ] || [ "$TARGET_JDK" == "arm" ]
 then
   echo "VM variant: client"
-  if [ -z "$JVM_VARIANTS"]
+  if [ -z "$JVM_VARIANTS" ]
   then
     export JVM_VARIANTS=client
   fi
 else
   echo "VM variant: server"
-  if [ -z "$JVM_VARIANTS"]
+  if [ -z "$JVM_VARIANTS" ]
   then
     export JVM_VARIANTS=server
   fi
 fi
 
+if [ "$BUILD_IOS" == "1" ]; then
+  export JVM_PLATFORM=macosx
+
+  export thecc=$(xcrun -find -sdk iphoneos clang)
+  export thecxx=$(xcrun -find -sdk iphoneos clang++)
+  export thesysroot=$(xcrun --sdk iphoneos --show-sdk-path)
+
+  export thehostcxx=$PWD/macos-host-cc
+  export CC=$PWD/ios-arm64-clang
+  export CXX=$PWD/ios-arm64-clang++
+  export LD=$(xcrun -find -sdk iphoneos ld)
+
+  export HOTSPOT_DISABLE_DTRACE_PROBES=1
+
+  export ANDROID_INCLUDE=$PWD/ios-missing-include
+else
+
+export JVM_PLATFORM=linux
 # Set NDK
 export API=21
 export NDK=`pwd`/android-ndk-$NDK_VERSION
@@ -54,4 +72,4 @@ export LD=$TOOLCHAIN/bin/$TARGET-ld
 export OBJCOPY=$TOOLCHAIN/bin/$TARGET-objcopy
 export RANLIB=$TOOLCHAIN/bin/$TARGET-ranlib
 export STRIP=$TOOLCHAIN/bin/$TARGET-strip
-
+fi
