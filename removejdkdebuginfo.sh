@@ -2,12 +2,12 @@
 set -e
 rm -rf jreout || true
 
-imagespath=openjdk/build/${JVM_PLATFORM}-${TARGET_JDK}-normal-${JVM_VARIANTS}-${JDK_DEBUG_LEVEL}/images
-
 if [ "$TARGET_JDK" == "arm" ]
 then
   export TARGET_JDK=aarch32
 fi
+
+imagespath=openjdk/build/${JVM_PLATFORM}-${TARGET_JDK}-normal-${JVM_VARIANTS}-${JDK_DEBUG_LEVEL}/images
 
 mkdir dizout
 
