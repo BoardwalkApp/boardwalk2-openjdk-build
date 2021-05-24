@@ -40,6 +40,7 @@ if [ "$BUILD_IOS" == "1" ]; then
   export thecc=$(xcrun -find -sdk iphoneos clang)
   export thecxx=$(xcrun -find -sdk iphoneos clang++)
   export thesysroot=$(xcrun --sdk iphoneos --show-sdk-path)
+  export themacsysroot=$(xcrun --sdk macosx --show-sdk-path)
 
   export thehostcxx=$PWD/macos-host-cc
   export CC=$PWD/ios-arm64-clang

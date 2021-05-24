@@ -11,8 +11,8 @@ else
   export TARGET_PHYS=$TARGET
 fi
 
-export FREETYPE_DIR=`pwd`/freetype-$BUILD_FREETYPE_VERSION/build_android-$TARGET_SHORT
-export CUPS_DIR=`pwd`/cups-2.2.4
+export FREETYPE_DIR=$PWD/freetype-$BUILD_FREETYPE_VERSION/build_android-$TARGET_SHORT
+export CUPS_DIR=$PWD/cups-2.2.4
 export CFLAGS+=" -DLE_STANDALONE" # -I$FREETYPE_DIR -I$CUPS_DI
 
 # if [ "$TARGET_JDK" == "aarch32" ] || [ "$TARGET_JDK" == "aarch64" ]
@@ -42,13 +42,12 @@ if [ "$BUILD_IOS" != "1" ]; then
 else
   ln -s -f /opt/X11/include/X11 $ANDROID_INCLUDE/
   platform_args=--with-toolchain-type=clang
-  AUTOCONF_x11arg="--with-x=/opt/X11/include/X11 --disable-precompiled-headers"
-
+  AUTOCONF_x11arg="--with-x=/opt/X11/include/X11 --disable-precompiled-headers --prefix=/usr/lib"
   sameflags="-arch arm64 -isysroot $thesysroot -miphoneos-version-min=12.0 -DHEADLESS=1 -I$PWD/ios-missing-include -Wno-implicit-function-declaration"
   export CFLAGS+=" $sameflags"
   export CXXFLAGS="$sameflags"
 
-  brew install xquartz
+  HOMEBREW_NO_AUTO_UPDATE=1 brew install xquartz
 fi
 
 # fix building libjawt
