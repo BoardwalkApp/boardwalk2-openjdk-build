@@ -47,7 +47,7 @@ else
   export CFLAGS+=" $sameflags"
   export CXXFLAGS="$sameflags"
 
-  HOMEBREW_NO_AUTO_UPDATE=1 brew install xquartz
+  HOMEBREW_NO_AUTO_UPDATE=1 brew install ldid xquartz
 fi
 
 # fix building libjawt

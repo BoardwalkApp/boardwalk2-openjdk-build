@@ -1,19 +1,20 @@
 #!/bin/bash
 set -e
-rm -rf jreout || true
 
-if [ "$TARGET_JDK" == "arm" ]
-then
+if [ "$TARGET_JDK" == "arm" ]; then
   export TARGET_JDK=aarch32
 fi
 
 imagespath=openjdk/build/${JVM_PLATFORM}-${TARGET_JDK}-normal-${JVM_VARIANTS}-${JDK_DEBUG_LEVEL}/images
 
+rm -rf dizout jreout jdkout
 mkdir dizout
 
 if [ "$BUILD_IOS" == "1" ]; then
-  find $imagespath -name "*.dylib" -exec ldid -S ios-sign-entitlements.xml {} \;
-  find $imagespath -name "bin" -exec ldid -S ios-sign-entitlements.xml {}/* \;
+  find $imagespath -name "*.dylib" -exec ldid -Sios-sign-entitlements.xml {} \;
+  for bindir in $(find $imagespath -name "bin"); do
+    ldid -Sios-sign-entitlements.xml ${bindir}/*
+  done
 fi
 
 cp -r $imagespath/j2re-image jreout
