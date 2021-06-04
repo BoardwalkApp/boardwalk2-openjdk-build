@@ -65,7 +65,6 @@ bash ./configure \
     --with-extra-cxxflags="$CFLAGS" \
     --with-extra-ldflags="$LDFLAGS" \
     --enable-option-checking=fatal \
-    --with-jdk-variant=normal \
     --with-jvm-variants=$JVM_VARIANTS \
     --with-cups-include=$CUPS_DIR \
     --with-devkit=$TOOLCHAIN \
