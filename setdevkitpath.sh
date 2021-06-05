@@ -67,8 +67,8 @@ export LDFLAGS="-L$NDK/platforms/android-$API/arch-$TARGET_SHORT/usr/lib"
 # Configure and build.
 export AR=$TOOLCHAIN/bin/$TARGET-ar
 export AS=$TOOLCHAIN/bin/$TARGET-as
-export CC=$TOOLCHAIN/bin/$TARGET-gcc
-export CXX=$TOOLCHAIN/bin/$TARGET-g++
+export CC=$TOOLCHAIN/bin/$TARGET-clang
+export CXX=$TOOLCHAIN/bin/$TARGET-clang++
 export LD=$TOOLCHAIN/bin/$TARGET-ld
 export OBJCOPY=$TOOLCHAIN/bin/$TARGET-objcopy
 export RANLIB=$TOOLCHAIN/bin/$TARGET-ranlib
