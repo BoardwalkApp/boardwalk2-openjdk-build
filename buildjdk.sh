@@ -64,6 +64,7 @@ bash ./configure \
     --with-extra-cflags="$CFLAGS" \
     --with-extra-cxxflags="$CFLAGS" \
     --with-extra-ldflags="$LDFLAGS" \
+    --disable-warnings-as-errors \
     --enable-option-checking=fatal \
     --with-toolchain-type=clang \
     --with-jvm-variants=$JVM_VARIANTS \
