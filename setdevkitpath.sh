@@ -52,7 +52,7 @@ if [ "$BUILD_IOS" == "1" ]; then
   export ANDROID_INCLUDE=$PWD/ios-missing-include
 else
 
-export JVM_PLATFORM=android
+export JVM_PLATFORM=linux
 # Set NDK
 export API=21
 export NDK=`pwd`/android-ndk-$NDK_VERSION
