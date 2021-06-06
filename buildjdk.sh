@@ -2,7 +2,7 @@
 set -e
 . setdevkitpath.sh
 
-if [ "$TARGET_JDK" == "arm" ]
+if [ "$TARGET_JDK" == "arm_DISABLEDCHECK" ]
 then
   export TARGET_JDK=aarch32
   export TARGET_PHYS=aarch32-linux-androideabi
