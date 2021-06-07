@@ -67,7 +67,6 @@ bash ./configure \
     --disable-warnings-as-errors \
     --enable-option-checking=fatal \
     --disable-precompiled-headers \
-    --with-toolchain-type=clang \
     --with-jvm-variants=$JVM_VARIANTS \
     --with-cups-include=$CUPS_DIR \
     --with-devkit=$TOOLCHAIN \
