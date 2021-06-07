@@ -64,9 +64,10 @@ bash ./configure \
     --with-extra-cflags="$CFLAGS" \
     --with-extra-cxxflags="$CFLAGS" \
     --with-extra-ldflags="$LDFLAGS" \
+    --disable-precompiled-headers \
     --disable-warnings-as-errors \
     --enable-option-checking=fatal \
-    --disable-precompiled-headers \
+    --with-toolchain-type=clang \
     --with-jvm-variants=$JVM_VARIANTS \
     --with-cups-include=$CUPS_DIR \
     --with-devkit=$TOOLCHAIN \
