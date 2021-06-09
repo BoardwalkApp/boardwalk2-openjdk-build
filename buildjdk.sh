@@ -33,7 +33,7 @@ if [ "$BUILD_IOS" != "1" ]; then
 
   export LDFLAGS+=" -L$PWD/dummy_libs"
 
-  sudo apt -y install systemtap-sdt-dev clang libxtst-dev libasound2-dev libelf-dev libfontconfig1-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libxtst-dev libxt-dev
+  sudo apt -y install systemtap-sdt-dev libxtst-dev libasound2-dev libelf-dev libfontconfig1-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libxtst-dev libxt-dev
 
 # Create dummy libraries so we won't have to remove them in OpenJDK makefiles
   mkdir -p dummy_libs
@@ -70,7 +70,6 @@ bash ./configure \
     --disable-precompiled-headers \
     --disable-warnings-as-errors \
     --enable-option-checking=fatal \
-    --with-toolchain-type=clang \
     --with-jvm-variants=$JVM_VARIANTS \
     --with-cups-include=$CUPS_DIR \
     --with-devkit=$TOOLCHAIN \
