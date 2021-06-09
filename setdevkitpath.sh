@@ -74,3 +74,8 @@ export OBJCOPY=$TOOLCHAIN/bin/$TARGET-objcopy
 export RANLIB=$TOOLCHAIN/bin/$TARGET-ranlib
 export STRIP=$TOOLCHAIN/bin/$TARGET-strip
 fi
+echo "--- GCC time ---"
+$CC --version
+echo "--- G++ time ---"
+$CXX --version
+exit 1
