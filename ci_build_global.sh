@@ -19,6 +19,12 @@ else
   chmod +x macos-host-cc
 fi
 
+echo "--- GCC time ---"
+$CC --version
+echo "--- G++ time ---"
+$CXX --version
+exit 1
+
 # Some modifies to NDK to fix
 
 ./getlibs.sh
