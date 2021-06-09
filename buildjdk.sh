@@ -5,7 +5,6 @@ set -e
 if [ "$TARGET_JDK" == "arm_DISABLEDCHECK" ]
 then
   export TARGET_JDK=aarch32
-  export TARGET_PHYS=aarch32-linux-androideabi
   export JVM_VARIANTS=client
 else
   export TARGET_PHYS=$TARGET
@@ -73,7 +72,6 @@ bash ./configure \
     --disable-warnings-as-errors \
     --enable-option-checking=fatal \
     --with-jvm-variants=$JVM_VARIANTS \
-    --with-toolchain-type=clang \
     --with-cups-include=$CUPS_DIR \
     --with-devkit=$TOOLCHAIN \
     --with-debug-level=$JDK_DEBUG_LEVEL \
