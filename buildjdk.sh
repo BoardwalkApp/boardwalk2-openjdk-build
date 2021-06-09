@@ -2,8 +2,6 @@
 set -e
 . setdevkitpath.sh
 
-$thecc --version
-
 if [ "$TARGET_JDK" == "arm" ]
 then
   export TARGET_JDK=aarch32
