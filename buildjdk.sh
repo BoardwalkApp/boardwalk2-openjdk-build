@@ -71,6 +71,7 @@ bash ./configure \
     --disable-precompiled-headers \
     --disable-warnings-as-errors \
     --enable-option-checking=fatal \
+    --with-toolchain-type=gcc \
     --with-jvm-variants=$JVM_VARIANTS \
     --with-cups-include=$CUPS_DIR \
     --with-devkit=$TOOLCHAIN \
