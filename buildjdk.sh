@@ -27,6 +27,8 @@ export CFLAGS+=" -DLE_STANDALONE -DANDROID" # -I$FREETYPE_DIR -I$CUPS_DI
 # cp -R /usr/include/fontconfig $ANDROID_INCLUDE/
 
 if [ "$BUILD_IOS" != "1" ]; then
+  chmod +x android-wrapped-clang
+  chmod +x android-wrapped-clang++
   ln -s -f /usr/include/X11 $ANDROID_INCLUDE/
   ln -s -f /usr/include/fontconfig $ANDROID_INCLUDE/
   AUTOCONF_x11arg="--x-includes=$ANDROID_INCLUDE/X11"

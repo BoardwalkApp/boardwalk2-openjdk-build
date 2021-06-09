@@ -55,7 +55,7 @@ else
 export JVM_PLATFORM=linux
 # Set NDK
 export API=21
-export NDK=`pwd`/android-ndk-$NDK_VERSION
+export NDK=$PWD/android-ndk-$NDK_VERSION
 export TOOLCHAIN=$NDK/generated-toolchains/android-${TARGET_SHORT}-toolchain
 # export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/linux-x86_64
 
@@ -64,11 +64,14 @@ export ANDROID_INCLUDE=$TOOLCHAIN/sysroot/usr/include
 export CPPFLAGS="-I$ANDROID_INCLUDE -I$ANDROID_INCLUDE/$TARGET" # -I/usr/include -I/usr/lib
 export LDFLAGS="-L$NDK/platforms/android-$API/arch-$TARGET_SHORT/usr/lib"
 
+export thecc=$TOOLCHAIN/bin/$TARGET-clang
+export thecxx=$TOOLCHAIN/bin/$TARGET-clang++
+
 # Configure and build.
 export AR=$TOOLCHAIN/bin/$TARGET-ar
 export AS=$TOOLCHAIN/bin/$TARGET-as
-export CC=$TOOLCHAIN/bin/$TARGET-gcc
-export CXX=$TOOLCHAIN/bin/$TARGET-g++
+export CC=$PWD/android-wrapped-clang
+export CXX=$PWD/android-wrapped-clang++
 export LD=$TOOLCHAIN/bin/$TARGET-ld
 export OBJCOPY=$TOOLCHAIN/bin/$TARGET-objcopy
 export RANLIB=$TOOLCHAIN/bin/$TARGET-ranlib
