@@ -73,6 +73,7 @@ bash ./configure \
     --disable-warnings-as-errors \
     --enable-option-checking=fatal \
     --with-jvm-variants=$JVM_VARIANTS \
+    --with-toolchain-type=clang \
     --with-cups-include=$CUPS_DIR \
     --with-devkit=$TOOLCHAIN \
     --with-debug-level=$JDK_DEBUG_LEVEL \
