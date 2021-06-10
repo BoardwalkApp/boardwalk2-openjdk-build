@@ -5,6 +5,7 @@ if [ "$1" = "--version" ]; then
   echo "This is free software; see the source for copying conditions.  There is NO"
   echo "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
 else
-  theargs="${@/-fno-var-tracking-assignments/}"
-  exec $thecxx "$theargs"
+  # theargs=
+  exec "${@/-fno-var-tracking-assignments/}"
+  # exec $thecxx "$theargs"
 fi
