@@ -1,11 +1,13 @@
 #!/bin/bash
 set -e
 
+. setdevkitpath.sh
+
 if [ "$TARGET_JDK" == "arm" ]; then
   export TARGET_JDK=aarch32
 fi
 
-imagespath=openjdk/build/${JVM_PLATFORM}-${TARGET_JDK}-normal-${JVM_VARIANTS}-${JDK_DEBUG_LEVEL}/images
+imagespath=openjdk/build/${JVM_PLATFORM}-${TARGET_JDK}-${JVM_VARIANTS}-${JDK_DEBUG_LEVEL}/images
 
 rm -rf dizout jreout jdkout
 mkdir dizout
@@ -17,13 +19,19 @@ if [ "$BUILD_IOS" == "1" ]; then
   done
 fi
 
-cp -r $imagespath/j2re-image jreout
-cp -r $imagespath/j2sdk-image jdkout
+cp -r $imagespath/jdk jdkout
 
-mv jdkout/lib/${TARGET_JDK}/libfreetype.so.6 jdkout/lib/${TARGET_JDK}/libfreetype.so || echo "Move exit $?"
-mv jdkout/lib/${TARGET_JDK}/libfreetype.dylib.6 jdkout/lib/${TARGET_JDK}/libfreetype.dylib || echo "Move exit $?"
-mv jreout/lib/${TARGET_JDK}/libfreetype.so.6 jreout/lib/${TARGET_JDK}/libfreetype.so || echo "Move exit $?"
-mv jreout/lib/${TARGET_JDK}/libfreetype.dylib.6 jreout/lib/${TARGET_JDK}/libfreetype.dylib || echo "Move exit $?"
+# JDK no longer create separate JRE image, so we have to create one manually.
+mkdir -p jreout/bin
+cp jdkout/bin/{java,jfr,keytool,rmid,rmiregistry} jreout/bin/
+cp -r jdkout/{conf,legal,lib,man} jreout/
+rm jreout/lib/src.zip
+
+mv jdkout/lib/libfreetype.so.6 jdkout/lib/libfreetype.so || echo "Move exit $?"
+mv jdkout/lib/libfreetype.dylib.6 jdkout/lib/libfreetype.dylib || echo "Move exit $?"
+mv jreout/lib/libfreetype.so.6 jreout/lib/
+libfreetype.so || echo "Move exit $?"
+mv jreout/lib/libfreetype.dylib.6 jreout/lib/libfreetype.dylib || echo "Move exit $?"
 
 # mv jreout/lib/${TARGET_JDK}/libfontmanager.diz jreout/lib/${TARGET_JDK}/libfontmanager.diz.keep
 # find jreout -name "*.diz" | xargs -- rm
