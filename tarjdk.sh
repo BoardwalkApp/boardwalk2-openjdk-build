@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+. setdevkitpath.sh
 
 if [ "$BUILD_IOS" != "1" ]; then
 
