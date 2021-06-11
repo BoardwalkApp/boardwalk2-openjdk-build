@@ -26,8 +26,8 @@ mv jreout/lib/${TARGET_JDK}/libfreetype.so.6 jreout/lib/${TARGET_JDK}/libfreetyp
 mv jreout/lib/${TARGET_JDK}/libfreetype.dylib.6 jreout/lib/${TARGET_JDK}/libfreetype.dylib || echo "Move exit $?"
 
 # mv jreout/lib/${TARGET_JDK}/libfontmanager.diz jreout/lib/${TARGET_JDK}/libfontmanager.diz.keep
-# find jreout -name "*.diz" | xargs -- rm
+# find jreout -name "*.debuginfo" | xargs -- rm
 # mv jreout/lib/${TARGET_JDK}/libfontmanager.diz.keep jreout/lib/${TARGET_JDK}/libfontmanager.diz
 
-find jdkout -name "*.diz" | xargs -- rm
-find jreout -name "*.diz" -exec mv {}   dizout/ \;
+find jdkout -name "*.debuginfo" | xargs -- rm
+find jreout -name "*.debuginfo" -exec mv {}   dizout/ \;
