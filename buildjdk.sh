@@ -61,7 +61,6 @@ cd openjdk
 #   --with-extra-cxxflags="$CXXFLAGS -Dchar16_t=uint16_t -Dchar32_t=uint32_t" \
 #   --with-extra-cflags="$CPPFLAGS" \
 #   --with-sysroot="$(xcrun --sdk iphoneos --show-sdk-path)" \
-#   --enable-headless-only=yes \
 
 bash ./configure \
     --openjdk-target=$TARGET_PHYS \
@@ -71,6 +70,7 @@ bash ./configure \
     --disable-precompiled-headers \
     --disable-warnings-as-errors \
     --enable-option-checking=fatal \
+    --enable-headless-only=yes \
     --with-toolchain-type=gcc \
     --with-jvm-variants=$JVM_VARIANTS \
     --with-cups-include=$CUPS_DIR \
