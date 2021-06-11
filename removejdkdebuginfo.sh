@@ -19,6 +19,8 @@ if [ "$BUILD_IOS" == "1" ]; then
   done
 fi
 
+cp freetype-$BUILD_FREETYPE_VERSION/build_android-$TARGET_SHORT/lib/libfreetype.so $imagespath/jdk/lib/
+
 cp -r $imagespath/jdk jdkout
 
 # JDK no longer create separate JRE image, so we have to create one manually.
