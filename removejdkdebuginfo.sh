@@ -24,7 +24,7 @@ cp -r $imagespath/jdk jdkout
 # JDK no longer create separate JRE image, so we have to create one manually.
 mkdir -p jreout/bin
 cp jdkout/bin/{java,jfr,keytool,rmiregistry} jreout/bin/
-cp -r jdkout/{conf,legal,lib,man} jreout/
+cp -r jdkout/{conf,legal,lib,man,release} jreout/
 rm jreout/lib/src.zip
 
 mv jdkout/lib/libfreetype.so.6 jdkout/lib/libfreetype.so || echo "Move exit $?"
