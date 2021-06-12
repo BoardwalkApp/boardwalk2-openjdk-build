@@ -23,17 +23,17 @@ jobs:
     - name: Upload JDK build output
       uses: actions/upload-artifact@v2
       with:
-        name: "jdk16-${{matrix.arch}}"
-        path: jdk16*.tar.xz
+        name: "jdk17-${{matrix.arch}}"
+        path: jdk17*.tar.xz
     - name: Upload JRE build output
       uses: actions/upload-artifact@v2
       with:
-        name: 'jre16-${{matrix.arch}}'
-        path: jre16*.tar.xz
+        name: 'jre17-${{matrix.arch}}'
+        path: jre17*.tar.xz
     - name: Upload JRE debuginfo build output
       uses: actions/upload-artifact@v2
       with:
-        name: "jre16-debuginfo-${{matrix.arch}}"
+        name: "jre17-debuginfo-${{matrix.arch}}"
         path: dizout
 
   pojav:
@@ -42,30 +42,30 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-    - name: Get jre16-aarch32
+    - name: Get jre17-aarch32
       uses: actions/download-artifact@v2
       with:
-        name: jre16-aarch32
+        name: jre17-aarch32
         path: pojav
-    - name: Get jre16-aarch64
+    - name: Get jre17-aarch64
       uses: actions/download-artifact@v2
       with:
-        name: jre16-aarch64
+        name: jre17-aarch64
         path: pojav
-    - name: Get jre16-x86
+    - name: Get jre17-x86
       uses: actions/download-artifact@v2
       with:
-        name: jre16-x86
+        name: jre17-x86
         path: pojav
-    - name: Get jre16-x86_64
+    - name: Get jre17-x86_64
       uses: actions/download-artifact@v2
       with:
-        name: jre16-x86_64
+        name: jre17-x86_64
         path: pojav
     - name: Repack JRE
-      run: bash "repackjre.sh" $GITHUB_WORKSPACE/pojav $GITHUB_WORKSPACE/pojav/jre16-pojav
+      run: bash "repackjre.sh" $GITHUB_WORKSPACE/pojav $GITHUB_WORKSPACE/pojav/jre17-pojav
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-          name: jre16-pojav
-          path: pojav/jre8-pojav/*
+          name: jre17-pojav
+          path: pojav/jre17-pojav/*
