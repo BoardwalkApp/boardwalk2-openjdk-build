@@ -29,12 +29,6 @@ cp jdkout/bin/{java,jfr,keytool,rmiregistry} jreout/bin/
 cp -r jdkout/{conf,legal,lib,man,release} jreout/
 rm jreout/lib/src.zip
 
-mv jdkout/lib/libfreetype.so.6 jdkout/lib/libfreetype.so || echo "Move exit $?"
-mv jdkout/lib/libfreetype.dylib.6 jdkout/lib/libfreetype.dylib || echo "Move exit $?"
-mv jreout/lib/libfreetype.so.6 jreout/lib/
-libfreetype.so || echo "Move exit $?"
-mv jreout/lib/libfreetype.dylib.6 jreout/lib/libfreetype.dylib || echo "Move exit $?"
-
 # mv jreout/lib/${TARGET_JDK}/libfontmanager.diz jreout/lib/${TARGET_JDK}/libfontmanager.diz.keep
 # find jreout -name "*.debuginfo" | xargs -- rm
 # mv jreout/lib/${TARGET_JDK}/libfontmanager.diz.keep jreout/lib/${TARGET_JDK}/libfontmanager.diz
