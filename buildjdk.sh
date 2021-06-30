@@ -2,13 +2,6 @@
 set -e
 . setdevkitpath.sh
 
-if [ "$TARGET_JDK" == "arm_DISABLEDCHECK" ]
-then
-  export JVM_VARIANTS=client
-else
-  export TARGET_PHYS=$TARGET
-fi
-
 export FREETYPE_DIR=$PWD/freetype-$BUILD_FREETYPE_VERSION/build_android-$TARGET_SHORT
 export CUPS_DIR=$PWD/cups-2.2.4
 export CFLAGS+=" -DLE_STANDALONE -DANDROID" # -I$FREETYPE_DIR -I$CUPS_DI
@@ -62,7 +55,7 @@ cd openjdk
 #   --with-sysroot="$(xcrun --sdk iphoneos --show-sdk-path)" \
 
 bash ./configure \
-    --openjdk-target=$TARGET_PHYS \
+    --openjdk-target=$TARGET \
     --with-extra-cflags="$CFLAGS" \
     --with-extra-cxxflags="$CFLAGS" \
     --with-extra-ldflags="$LDFLAGS" \
