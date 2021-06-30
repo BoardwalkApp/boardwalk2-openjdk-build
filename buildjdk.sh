@@ -40,7 +40,7 @@ if [ "$BUILD_IOS" != "1" ]; then
   ar cru dummy_libs/libthread_db.a
 else
   ln -s -f /opt/X11/include/X11 $ANDROID_INCLUDE/
-  platform_args=--with-toolchain-type=clang
+  platform_args="--with-toolchain-type=clang"
   AUTOCONF_x11arg="--with-x=/opt/X11/include/X11 --disable-precompiled-headers --prefix=/usr/lib"
   sameflags="-arch arm64 -isysroot $thesysroot -miphoneos-version-min=12.0 -DHEADLESS=1 -I$PWD/ios-missing-include -Wno-implicit-function-declaration"
   export CFLAGS+=" $sameflags"
