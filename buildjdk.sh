@@ -4,7 +4,6 @@ set -e
 
 if [ "$TARGET_JDK" == "arm_DISABLEDCHECK" ]
 then
-  export TARGET_JDK=aarch32
   export JVM_VARIANTS=client
 else
   export TARGET_PHYS=$TARGET
