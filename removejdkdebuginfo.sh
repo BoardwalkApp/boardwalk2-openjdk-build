@@ -10,13 +10,6 @@ imagespath=openjdk/build/${JVM_PLATFORM}-${TARGET_JDK}-normal-${JVM_VARIANTS}-${
 rm -rf dizout jreout jdkout
 mkdir dizout
 
-if [ "$BUILD_IOS" == "1" ]; then
-  find $imagespath -name "*.dylib" -exec ldid -Sios-sign-entitlements.xml {} \;
-  for bindir in $(find $imagespath -name "bin"); do
-    ldid -Sios-sign-entitlements.xml ${bindir}/*
-  done
-fi
-
 cp -r $imagespath/j2re-image jreout
 cp -r $imagespath/j2sdk-image jdkout
 
@@ -29,5 +22,16 @@ mv jreout/lib/${TARGET_JDK}/libfreetype.dylib.6 jreout/lib/${TARGET_JDK}/libfree
 # find jreout -name "*.diz" | xargs -- rm
 # mv jreout/lib/${TARGET_JDK}/libfontmanager.diz.keep jreout/lib/${TARGET_JDK}/libfontmanager.diz
 
-find jdkout -name "*.diz" | xargs -- rm
-find jreout -name "*.diz" -exec mv {}   dizout/ \;
+find jreout -name "*.diz" -delete
+find jdkout -name "*.diz" -exec mv {} dizout/ \;
+
+if [ "$BUILD_IOS" == "1" ]; then
+  newlibpath=/usr/lib/jvm/java-8-openjdk/lib
+  for dafile in $(find j*out -name "*.dylib"); do
+    install_name_tool -add_rpath $newlibpath/server -add_rpath $newlibpath/jli \
+      -add_rpath $newlibpath $changecmd $dafile
+    ldid -Sios-sign-entitlements.xml $dafile
+  done
+  ldid -Sios-sign-entitlements.xml jreout/bin/*
+  ldid -Sios-sign-entitlements.xml jdkout/jre/bin/*
+fi
