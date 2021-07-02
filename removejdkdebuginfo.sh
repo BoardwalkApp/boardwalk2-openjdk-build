@@ -34,5 +34,6 @@ if [ "$BUILD_IOS" == "1" ]; then
     ldid -Sios-sign-entitlements.xml $dafile
   done
   ldid -Sios-sign-entitlements.xml jreout/bin/*
+  ldid -Sios-sign-entitlements.xml jdkout/bin/*
   ldid -Sios-sign-entitlements.xml jdkout/jre/bin/*
 fi
