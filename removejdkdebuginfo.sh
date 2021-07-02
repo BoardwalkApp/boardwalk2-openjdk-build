@@ -26,10 +26,11 @@ find jreout -name "*.diz" -delete
 find jdkout -name "*.diz" -exec mv {} dizout/ \;
 
 if [ "$BUILD_IOS" == "1" ]; then
-  newlibpath=/usr/lib/jvm/java-8-openjdk/lib
+  JAVA_HOME=/usr/lib/jvm/java-8-openjdk
   for dafile in $(find j*out -name "*.dylib"); do
-    install_name_tool -add_rpath $newlibpath/server -add_rpath $newlibpath/jli \
-      -add_rpath $newlibpath $changecmd $dafile
+    install_name_tool -add_rpath $JAVA_HOME/lib/server -add_rpath $JAVA_HOME/lib/jli \
+      -add_rpath $JAVA_HOME/lib -add_rpath $JAVA_HOME/jre/lib/server -add_rpath $JAVA_HOME/jre/lib/jli \
+      -add_rpath $JAVA_HOME/jre/lib $changecmd $dafile
     ldid -Sios-sign-entitlements.xml $dafile
   done
   ldid -Sios-sign-entitlements.xml jreout/bin/*
