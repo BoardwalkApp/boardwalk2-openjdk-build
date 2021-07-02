@@ -30,7 +30,7 @@ if [ "$BUILD_IOS" == "1" ]; then
   for dafile in $(find j*out -name "*.dylib"); do
     install_name_tool -add_rpath $JAVA_HOME/lib/server -add_rpath $JAVA_HOME/lib/jli \
       -add_rpath $JAVA_HOME/lib -add_rpath $JAVA_HOME/jre/lib/server -add_rpath $JAVA_HOME/jre/lib/jli \
-      -add_rpath $JAVA_HOME/jre/lib $changecmd $dafile
+      -add_rpath $JAVA_HOME/jre/lib $dafile
     ldid -Sios-sign-entitlements.xml $dafile
   done
   ldid -Sios-sign-entitlements.xml jreout/bin/*
