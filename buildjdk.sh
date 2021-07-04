@@ -38,7 +38,6 @@ if [ "$BUILD_IOS" != "1" ]; then
   mkdir -p dummy_libs
   ar cru dummy_libs/libpthread.a
   ar cru dummy_libs/libthread_db.a
-  cd openjdk ** git switch aarch64-shenandoah-jdk8u272-b10 && cd ..
 else
   ln -s -f /opt/X11/include/X11 $ANDROID_INCLUDE/
   platform_args="--with-toolchain-type=clang"
@@ -48,7 +47,6 @@ else
   export CXXFLAGS="$sameflags"
 
   HOMEBREW_NO_AUTO_UPDATE=1 brew install ldid xquartz
-  cd openjdk && git switch ios && cd ..
 fi
 
 # fix building libjawt
