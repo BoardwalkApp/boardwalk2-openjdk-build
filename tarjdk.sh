@@ -25,8 +25,8 @@ findexec jdkout | xargs -- ./termux-elf-cleaner/termux-elf-cleaner
 
 fi
 
-cp -R jre_override/lib/* jreout/lib/
-cp -R jre_override/lib/* jdkout/jre/lib
+sudo cp -R jre_override/lib/* jreout/lib/
+sudo cp -R jre_override/lib/* jdkout/jre/lib
 
 cd jreout
 tar cJf ../jre8-${TARGET_SHORT}-`date +%Y%m%d`-${JDK_DEBUG_LEVEL}.tar.xz .
