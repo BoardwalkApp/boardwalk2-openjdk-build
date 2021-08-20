@@ -13,7 +13,7 @@ fi
 
 export FREETYPE_DIR=$PWD/freetype-$BUILD_FREETYPE_VERSION/build_android-$TARGET_SHORT
 export CUPS_DIR=$PWD/cups-2.2.4
-export CFLAGS+=" -DLE_STANDALONE -Os" # -I$FREETYPE_DIR -I$CUPS_DI
+export CFLAGS+=" -DLE_STANDALONE -O2" # -I$FREETYPE_DIR -I$CUPS_DI
 
 # if [ "$TARGET_JDK" == "aarch32" ] || [ "$TARGET_JDK" == "aarch64" ]
 # then
