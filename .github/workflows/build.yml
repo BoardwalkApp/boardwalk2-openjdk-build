@@ -39,6 +39,7 @@ jobs:
   build_iosport:
     name: "Build for iOS aarch64"
     runs-on: macOS-latest
+    continue-on-error: true
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
