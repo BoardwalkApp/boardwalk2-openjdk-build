@@ -26,6 +26,12 @@ then
   then
     export JVM_VARIANTS=client
   fi
+elif [ "$BUILD_IOS" == "1" ]; then
+  echo "VM variant: server,zero"
+  if [ -z "$JVM_VARIANTS" ]
+  then
+    export JVM_VARIANTS="server,zero"
+  fi
 else
   echo "VM variant: server"
   if [ -z "$JVM_VARIANTS" ]
