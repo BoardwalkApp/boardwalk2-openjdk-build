@@ -30,7 +30,7 @@ elif [ "$BUILD_IOS" == "1" ]; then
   echo "VM variant: server,zero"
   if [ -z "$JVM_VARIANTS" ]
   then
-    export JVM_VARIANTS="server,zero"
+    export JVM_VARIANTS="serverANDzero"
   fi
 else
   echo "VM variant: server"
