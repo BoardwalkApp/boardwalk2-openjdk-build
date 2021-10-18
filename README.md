@@ -80,3 +80,4 @@ export JVM_VARIANTS=[client/server] # default: client (aarch32), server (other a
 ./removejdkdebuginfo.sh
 ./tarjdk.sh
 ```
+
