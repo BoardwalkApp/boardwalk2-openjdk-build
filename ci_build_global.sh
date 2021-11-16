@@ -2,7 +2,7 @@
 set -e
 . setdevkitpath.sh
 
-export JDK_DEBUG_LEVEL=release
+export JDK_DEBUG_LEVEL=slowdebug
 
 if [ "$BUILD_IOS" != "1" ]; then
   sudo apt update
