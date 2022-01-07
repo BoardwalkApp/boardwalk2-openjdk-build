@@ -6,7 +6,7 @@ jobs:
   build_android:
     strategy:
       matrix:
-        arch: ["aarch32", "aarch64", "x86", "x86_64"]
+        arch: ["aarch64"]
       fail-fast: false
 
     name: "Build for Android ${{matrix.arch}}"
@@ -42,25 +42,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Get jre17-aarch32
-        uses: actions/download-artifact@v2
-        with:
-          name: jre17-aarch32
-          path: pojav
       - name: Get jre17-aarch64
         uses: actions/download-artifact@v2
         with:
           name: jre17-aarch64
-          path: pojav
-      - name: Get jre17-x86
-        uses: actions/download-artifact@v2
-        with:
-          name: jre17-x86
-          path: pojav
-      - name: Get jre17-x86_64
-        uses: actions/download-artifact@v2
-        with:
-          name: jre17-x86_64
           path: pojav
       - name: Repack JRE
         run: bash "repackjre.sh" $GITHUB_WORKSPACE/pojav $GITHUB_WORKSPACE/pojav/jre17-pojav
