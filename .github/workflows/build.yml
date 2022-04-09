@@ -1,6 +1,9 @@
 name: Build OpenJDK 8 for Android and iOS
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   build_android:
