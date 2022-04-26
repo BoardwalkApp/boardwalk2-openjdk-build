@@ -48,7 +48,7 @@ else
   sameflags="-arch arm64 -isysroot $thesysroot -miphoneos-version-min=12.0 -DHEADLESS=1 -I$PWD/ios-missing-include -Wno-implicit-function-declaration"
   export CFLAGS+=" $sameflags"
   export CXXFLAGS="$sameflags"
-  export LDFLAGS+=" -platform_version 12.0.0 14.5"
+  export LDFLAGS+=" -Wl,-platform_version,12.0.0,14.5"
 
   HOMEBREW_NO_AUTO_UPDATE=1 brew install ldid xquartz
 fi
