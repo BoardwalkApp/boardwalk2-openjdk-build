@@ -18,7 +18,7 @@ if [ "$BUILD_IOS" == "1" ]; then
     --with-brotli=no \
     --with-png=no \
     --with-harfbuzz=no \
-    "CFLAGS=-arch arm64 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -O2 -Wreturn-type -Wunused-variable -fmessage-length=0 -fvisibility=hidden -miphoneos-version-min=12.0 -I$thesysroot/usr/include/libxml2/ -isysroot $thesysroot" \
+    "CFLAGS=-arch arm64 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -Os -Wreturn-type -Wunused-variable -fmessage-length=0 -fvisibility=hidden -miphoneos-version-min=12.0 -I$thesysroot/usr/include/libxml2/ -isysroot $thesysroot" \
     AR=/usr/bin/ar \
     "LDFLAGS=$LDFLAGS" \
     || error_code=$?
