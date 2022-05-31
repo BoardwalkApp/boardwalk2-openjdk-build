@@ -14,11 +14,7 @@ mkdir -p $work
 mkdir -p $work1
 mkdir -p "$out"
 
-compress_jars(){
-  #TODO Fix the ARMv7 unpacker200 executable
-  #find ./ -name '*.jar' -execdir pack200 -S-1 -g -G -E9 {}.pack {} \;
-  #find ./ -name '*.jar' -execdir rm {} \;
-}
+
 
 # here comes a not-so-complicated functions to easily make desired arch
 ## Usage: makearch [jre_libs_dir_name] [name_in_tarball]
@@ -77,7 +73,7 @@ makeuni () {
   rm man/ja_JP.UTF-8/man1/rmid.1
   rm man/ja_JP.UTF-8/man1/tnameserv.1
   
-  compress_jars
+  
   tar cJf universal.tar.xz * > /dev/null 2>&1;
   mv universal.tar.xz "$out"/;
   rm -rf "$work"/*;
