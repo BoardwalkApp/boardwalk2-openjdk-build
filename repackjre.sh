@@ -24,7 +24,7 @@ compress_jars(){
 makearch () {
   echo "Making $2...";
   cd "$work";
-  tar xf $(find "$in" -name jre8-$2-*release.tar.xz) > /dev/null 2>&1;
+  tar xf -9e --threads=0 $(find "$in" -name jre8-$2-*release.tar.xz) > /dev/null 2>&1;
   mv release "$work1"/;
   mv bin "$work1"/;
   mkdir -p "$work1"/lib;
