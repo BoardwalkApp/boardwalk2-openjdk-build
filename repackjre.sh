@@ -61,23 +61,7 @@ makeuni () {
   
   #find ./lib/ext ! -name 'zipfs.jar' -type f -exec rm -f {} +
   rm -rf lib/jfr
-  rm lib/jfr.jar
-  rm man/man1/servertool.1
-  rm man/man1/javaws.1
-  rm man/man1/policytool.1
-  rm man/man1/orbd.1
-  rm man/man1/rmiregistry.1
-  rm man/man1/keytool.1
-  rm man/man1/rmid.1
-  rm man/man1/tnameserv.1
-  rm man/ja_JP.UTF-8/man1/servertool.1
-  rm man/ja_JP.UTF-8/man1/javaws.1
-  rm man/ja_JP.UTF-8/man1/policytool.1
-  rm man/ja_JP.UTF-8/man1/orbd.1
-  rm man/ja_JP.UTF-8/man1/rmiregistry.1
-  rm man/ja_JP.UTF-8/man1/keytool.1
-  rm man/ja_JP.UTF-8/man1/rmid.1
-  rm man/ja_JP.UTF-8/man1/tnameserv.1
+  rm -rf man
   
   compress_jars
   XZ_OPT="-9e --threads=0" tar cJf universal.tar.xz * > /dev/null 2>&1;
