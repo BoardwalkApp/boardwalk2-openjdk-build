@@ -1,3 +1,6 @@
+#!/bin/bash
+set -e
+
 ## Usage:
 ## ./repackjre.sh [path_to_normal_jre_tarballs] [output_path]
 
@@ -24,7 +27,7 @@ compress_jars(){
 makearch () {
   echo "Making $2...";
   cd "$work";
-  tar xf -9e --threads=0 $(find "$in" -name jre8-$2-*release.tar.xz) > /dev/null 2>&1;
+  tar xf $(find "$in" -name jre8-$2-*release.tar.xz) > /dev/null;
   mv release "$work1"/;
   mv bin "$work1"/;
   mkdir -p "$work1"/lib;
@@ -41,7 +44,7 @@ makearch () {
   
   
   
-  tar cJf bin-$2.tar.xz -C "$work1" . > /dev/null 2>&1;
+  XZ_OPT="-9e --threads=0" tar cJf bin-$2.tar.xz -C "$work1" . > /dev/null 2>&1;
   mv bin-$2.tar.xz "$out"/;
   rm -rf "$work"/*; 
   rm -rf "$work1"/*; 
@@ -51,7 +54,7 @@ makearch () {
 makeuni () { 
   echo "Making universal...";
   cd "$work";
-  tar xf $(find "$in" -name jre8-arm64-*release.tar.xz) > /dev/null 2>&1; rm -rf bin;
+  tar xf $(find "$in" -name jre8-arm64-*release.tar.xz) > /dev/null; rm -rf bin;
   rm -rf lib/aarch64;
   rm lib/jexec;
   rm release;
@@ -77,7 +80,7 @@ makeuni () {
   rm man/ja_JP.UTF-8/man1/tnameserv.1
   
   compress_jars
-  tar cJf universal.tar.xz * > /dev/null 2>&1;
+  XZ_OPT="-9e --threads=0" tar cJf universal.tar.xz * > /dev/null 2>&1;
   mv universal.tar.xz "$out"/;
   rm -rf "$work"/*;
 }
