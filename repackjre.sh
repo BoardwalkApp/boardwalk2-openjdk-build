@@ -28,12 +28,8 @@ makearch () {
   echo "Making $2...";
   cd "$work";
   tar xf $(find "$in" -name jre8-$2-*release.tar.xz) > /dev/null;
-  mv release "$work1"/;
-  mv bin "$work1"/;
-  mkdir -p "$work1"/lib;
-  mv lib/$1 "$work1"/lib/;
-  mv lib/jexec "$work1"/lib/;
   
+  # Remove unused stuff before moving it
   rm bin/rmid
   rm bin/keytool
   rm bin/rmiregistry
@@ -41,6 +37,14 @@ makearch () {
   rm bin/policytool
   rm bin/orbd
   rm bin/servertool
+  
+  mv release "$work1"/;
+  mv bin "$work1"/;
+  mkdir -p "$work1"/lib;
+  mv lib/$1 "$work1"/lib/;
+  mv lib/jexec "$work1"/lib/;
+  
+
   
   
   
