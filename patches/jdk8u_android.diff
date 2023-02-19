@@ -2700,6 +2700,20 @@ index 3ce8e92cc3..af2601b8eb 100644
  #define ELF_ST_TYPE ELF32_ST_TYPE
  #endif
  #endif
+diff --git a/jdk/make/CompileDemos.gmk b/jdk/make/CompileDemos.gmk
+index 6c5eb432..c2ed8740 100644
+--- a/jdk/make/CompileDemos.gmk
++++ b/jdk/make/CompileDemos.gmk
+@@ -327,7 +327,8 @@ $(eval $(call SetupJVMTIDemo,hprof, java_crw_demo, \
+
+ $(eval $(call SetupJVMTIDemo,minst, agent_util java_crw_demo))
+ $(eval $(call SetupJVMTIDemo,mtrace, agent_util java_crw_demo))
+-$(eval $(call SetupJVMTIDemo,waiters, agent_util, , C++))
++# FIXME(Android): undefined reference to __gxx_personality_v0
++#$(eval $(call SetupJVMTIDemo,waiters, agent_util, , C++))
+ $(eval $(call SetupJVMTIDemo,versionCheck, agent_util))
+
+ ##################################################################################################
 diff --git a/jdk/make/CompileLaunchers.gmk b/jdk/make/CompileLaunchers.gmk
 index 1f414e2e05..110d531b9d 100644
 --- a/jdk/make/CompileLaunchers.gmk

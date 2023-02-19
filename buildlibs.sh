@@ -29,6 +29,7 @@ else
     --host=$TARGET \
     --prefix=`pwd`/build_android-${TARGET_SHORT} \
     --without-zlib \
+    --with-brotli=no \
     --with-png=no \
     --with-harfbuzz=no $EXTRA_ARGS \
     || error_code=$?

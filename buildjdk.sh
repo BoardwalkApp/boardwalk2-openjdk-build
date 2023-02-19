@@ -61,7 +61,8 @@ ln -s -f $CUPS_DIR/cups $ANDROID_INCLUDE/
 cd openjdk
 
 # Apply patches
-git apply --reject --whitespace=fix ../patches/jdk8u_android.diff
+git reset --hard
+git apply --reject --whitespace=fix ../patches/jdk8u_android.diff || echo "git apply failed"
 
 #   --with-extra-cxxflags="$CXXFLAGS -Dchar16_t=uint16_t -Dchar32_t=uint32_t" \
 #   --with-extra-cflags="$CPPFLAGS" \
