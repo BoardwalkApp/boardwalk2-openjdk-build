@@ -56,8 +56,12 @@ fi
 # fix building libjawt
 ln -s -f $CUPS_DIR/cups $ANDROID_INCLUDE/
 
+FREEMARKER=$PWD/freemarker-2.3.8/lib/freemarker.jar
+
 cd openjdk
-#rm -rf build
+
+# Apply patches
+git apply patches/jdk8u_android.diff
 
 #   --with-extra-cxxflags="$CXXFLAGS -Dchar16_t=uint16_t -Dchar32_t=uint32_t" \
 #   --with-extra-cflags="$CPPFLAGS" \
@@ -71,6 +75,7 @@ bash ./configure \
     --with-extra-cflags="$CFLAGS" \
     --with-extra-cxxflags="$CFLAGS" \
     --with-extra-ldflags="$LDFLAGS" \
+    --with-freemarker-jar=$FREEMARKER \
     --enable-option-checking=fatal \
     --with-jdk-variant=normal \
     --with-jvm-variants="${JVM_VARIANTS/AND/,}" \
@@ -81,6 +86,7 @@ bash ./configure \
     --with-fontconfig-include=$ANDROID_INCLUDE \
     --with-freetype-lib=$FREETYPE_DIR/lib \
     --with-freetype-include=$FREETYPE_DIR/include/freetype2 \
+    --with-toolchain-type=clang \
     $AUTOCONF_x11arg $AUTOCONF_EXTRA_ARGS \
     --x-libraries=/usr/lib \
         $platform_args || \

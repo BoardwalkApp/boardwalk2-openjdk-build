@@ -9,7 +9,8 @@ jobs:
   build_android:
     strategy:
       matrix:
-        arch: [ "aarch32", "aarch64", "x86", "x86_64" ]
+        # TODO: aarch32
+        arch: [ "aarch64", "x86", "x86_64" ]
       fail-fast: false
 
     name: "Build for Android ${{matrix.arch}}"
@@ -37,42 +38,6 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: "jre8-debuginfo-${{matrix.arch}}"
-        path: dizout
-
-  build_iosport:
-    name: "Build for iOS aarch64"
-    runs-on: macOS-latest
-    continue-on-error: true
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: set up JDK 1.7
-      uses: actions/setup-java@v1
-      with:
-        java-version: 1.7
-
-    - name: Build with CI build script
-      run: |
-        export BUILD_IOS=1
-        bash "ci_build_arch_aarch64.sh"
-
-    - name: Upload JDK build output
-      uses: actions/upload-artifact@v2
-      with:
-        name: "jdk8-ios-aarch64"
-        path: jdk8*.tar.xz
-
-    - name: Upload JRE build output
-      uses: actions/upload-artifact@v2
-      with:
-        name: 'jre8-ios-aarch64'
-        path: jre8*.tar.xz
-
-    - name: Upload JRE debuginfo build output
-      uses: actions/upload-artifact@v2
-      with:
-        name: "jre8-ios-debuginfo-aarch64"
         path: dizout
 
   pojav:
