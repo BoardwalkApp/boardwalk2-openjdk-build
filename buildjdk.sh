@@ -61,7 +61,7 @@ FREEMARKER=$PWD/freemarker-2.3.8/lib/freemarker.jar
 cd openjdk
 
 # Apply patches
-git apply patches/jdk8u_android.diff
+git apply --reject --whitespace=fix patches/jdk8u_android.diff
 
 #   --with-extra-cxxflags="$CXXFLAGS -Dchar16_t=uint16_t -Dchar32_t=uint32_t" \
 #   --with-extra-cflags="$CPPFLAGS" \
