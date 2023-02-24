@@ -64,11 +64,9 @@ cd openjdk
 if [ "$BUILD_IOS" != "1" ]; then
   git reset --hard
   git apply --reject --whitespace=fix ../patches/jdk8u_android.diff || echo "git apply failed (universal patch set)"
-  if [ "$TARGET_JDK" == "arm" ]; then
-    #TODO: make separate aarch32 patch set
-  else
+  if [ "$TARGET_JDK" != "arm" ]; then
     git apply --reject --whitespace=fix ../patches/jdk8u_android_main.diff || echo "git apply failed (main non-universal patch set)"
-  fi
+  fi #TODO: make separate aarch32 patch set
 fi
 
 #   --with-extra-cxxflags="$CXXFLAGS -Dchar16_t=uint16_t -Dchar32_t=uint32_t" \
