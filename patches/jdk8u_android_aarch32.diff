@@ -9,7 +9,7 @@ index d3a9f240..410693bf 100644
 -# include <syscall.h>
  # include <sys/sysinfo.h>
 -#ifndef __UCLIBC__
-+#if !defined(__UCLIBC__) || !defined(__ANDROID__)
++#if !defined(__UCLIBC__) && !defined(__ANDROID__)
  # include <gnu/libc-version.h>
  #endif
  # include <sys/ipc.h>
@@ -27,7 +27,7 @@ index d3a9f240..410693bf 100644
  // load symbol from base version instead.
  void* os::Linux::libnuma_dlsym(void* handle, const char *name) {
 -#ifndef __UCLIBC__
-+#if !defined(__UCLIBC__) || !defined(__ANDROID__)
++#if !defined(__UCLIBC__) && !defined(__ANDROID__)
    void *f = dlvsym(handle, name, "libnuma_1.1");
    if (f == NULL) {
      f = dlsym(handle, name);
@@ -36,7 +36,7 @@ index d3a9f240..410693bf 100644
  // so just return the system wide load average.
  int os::loadavg(double loadavg[], int nelem) {
 -#ifndef __UCLIBC__
-+#if !defined(__UCLIBC__) || !defined(__ANDROID__)
++#if !defined(__UCLIBC__) && !defined(__ANDROID__)
    return ::getloadavg(loadavg, nelem);
  #else
    return -1;
