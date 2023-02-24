@@ -60820,6 +60820,15 @@ diff --git a/jdk/src/solaris/native/sun/awt/awt_LoadLibrary.c b/jdk/src/solaris/
 index 5948302713..76755e98aa 100644
 --- a/jdk/src/solaris/native/sun/awt/awt_LoadLibrary.c
 +++ b/jdk/src/solaris/native/sun/awt/awt_LoadLibrary.c
+@@ -30,6 +30,8 @@
+ #include <jni.h>
+ #include <jni_util.h>
+ #include <jvm.h>
++#include <stdbool.h>
++#include <assert.h>
+ #include "gdefs.h"
+ 
+ #include <sys/param.h>
 @@ -93,6 +93,29 @@ JNIEXPORT jboolean JNICALL AWTIsHeadless() {
    #define DEFAULT_PATH XAWT_PATH
    #define HEADLESS_PATH "/libawt_headless.so"
