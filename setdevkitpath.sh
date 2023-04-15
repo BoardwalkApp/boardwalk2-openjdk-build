@@ -19,7 +19,7 @@ else
   export TARGET_SHORT=$TARGET_JDK
 fi
 
-if [ "$TARGET_JDK" == "aarch32" ] || [ "$TARGET_JDK" == "arm" ]
+if [ "$TARGET_JDK" == "aarch32" ] || [ "$TARGET_JDK" == "arm" ] || [ "$TARGET_JDK" == "x86" ]
 then
   echo "VM variant: client"
   if [ -z "$JVM_VARIANTS" ]
