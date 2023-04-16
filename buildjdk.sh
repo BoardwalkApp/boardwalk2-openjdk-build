@@ -68,7 +68,10 @@ if [ "$BUILD_IOS" != "1" ]; then
     git apply --reject --whitespace=fix ../patches/jdk8u_android_main.diff || echo "git apply failed (main non-universal patch set)"
   else
     git apply --reject --whitespace=fix ../patches/jdk8u_android_aarch32.diff || echo "git apply failed (aarch32 non-universal patch set)"
-  fi #TODO: make separate aarch32 patch set
+  fi
+  if [ "$TARGET_JDK" == "x86" ]; then
+    git apply --reject --whitespace=fix ../patches/jdk8u_android_page_trap_fix.diff || echo "git apply failed (x86 page trap fix)"
+  fi
 fi
 
 #   --with-extra-cxxflags="$CXXFLAGS -Dchar16_t=uint16_t -Dchar32_t=uint32_t" \
