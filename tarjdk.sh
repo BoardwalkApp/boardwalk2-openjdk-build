@@ -1,10 +1,10 @@
 #!/bin/bash
 set -e
 
-if [ "$BUILD_IOS" != "1" ]; then
+if [[ "$BUILD_IOS" != "1" ]]; then
 
 unset AR AS CC CXX LD OBJCOPY RANLIB STRIP CPPFLAGS LDFLAGS
-git clone https://github.com/termux/termux-elf-cleaner
+git clone --depth 1 -b 'v2.2.0' https://github.com/termux/termux-elf-cleaner
 cd termux-elf-cleaner
 autoreconf --install
 bash configure

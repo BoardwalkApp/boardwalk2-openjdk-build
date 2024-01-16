@@ -2,7 +2,7 @@
 set -e
 . setdevkitpath.sh
 
-if [ "$TARGET_JDK" == "arm" ]
+if [[ "$TARGET_JDK" == "arm" ]]
 then
   export TARGET_JDK=aarch32
   export TARGET_PHYS=aarch32-linux-androideabi
@@ -15,7 +15,7 @@ export FREETYPE_DIR=$PWD/freetype-$BUILD_FREETYPE_VERSION/build_android-$TARGET_
 export CUPS_DIR=$PWD/cups-2.2.4
 export CFLAGS+=" -DLE_STANDALONE" # -I$FREETYPE_DIR -I$CUPS_DI
 
-# if [ "$TARGET_JDK" == "aarch32" ] || [ "$TARGET_JDK" == "aarch64" ]
+# if [[ "$TARGET_JDK" == "aarch32" ]] || [[ "$TARGET_JDK" == "aarch64" ]]
 # then
 #   export CFLAGS+=" -march=armv7-a+neon"
 # fi
@@ -26,7 +26,7 @@ export CFLAGS+=" -DLE_STANDALONE" # -I$FREETYPE_DIR -I$CUPS_DI
 # cp -R /usr/include/X11 $ANDROID_INCLUDE/
 # cp -R /usr/include/fontconfig $ANDROID_INCLUDE/
 
-if [ "$BUILD_IOS" != "1" ]; then
+if [[ "$BUILD_IOS" != "1" ]]; then
   export CFLAGS+=" -O3 -D__ANDROID__"
 
   ln -s -f /usr/include/X11 $ANDROID_INCLUDE/
@@ -35,7 +35,6 @@ if [ "$BUILD_IOS" != "1" ]; then
 
   export LDFLAGS+=" -L`pwd`/dummy_libs"
 
-  sudo apt -y install systemtap-sdt-dev gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-dev libfontconfig1-dev libx11-dev
 # Create dummy libraries so we won't have to remove them in OpenJDK makefiles
   mkdir -p dummy_libs
   ar cru dummy_libs/libpthread.a
@@ -61,15 +60,15 @@ ln -s -f $CUPS_DIR/cups $ANDROID_INCLUDE/
 cd openjdk
 
 # Apply patches
-if [ "$BUILD_IOS" != "1" ]; then
+if [[ "$BUILD_IOS" != "1" ]]; then
   git reset --hard
   git apply --reject --whitespace=fix ../patches/jdk8u_android.diff || echo "git apply failed (universal patch set)"
-  if [ "$TARGET_JDK" != "aarch32" ]; then
+  if [[ "$TARGET_JDK" != "aarch32" ]]; then
     git apply --reject --whitespace=fix ../patches/jdk8u_android_main.diff || echo "git apply failed (main non-universal patch set)"
   else
     git apply --reject --whitespace=fix ../patches/jdk8u_android_aarch32.diff || echo "git apply failed (aarch32 non-universal patch set)"
   fi
-  if [ "$TARGET_JDK" == "x86" ]; then
+  if [[ "$TARGET_JDK" == "x86" ]]; then
     git apply --reject --whitespace=fix ../patches/jdk8u_android_page_trap_fix.diff || echo "git apply failed (x86 page trap fix)"
   fi
 fi
@@ -102,7 +101,7 @@ bash ./configure \
     --x-libraries=/usr/lib \
         $platform_args || \
 error_code=$?
-if [ "$error_code" -ne 0 ]; then
+if [[ "$error_code" -ne 0 ]]; then
   echo "\n\nCONFIGURE ERROR $error_code , config.log:"
   cat config.log
   exit $error_code
@@ -111,7 +110,7 @@ fi
 cd build/${JVM_PLATFORM}-${TARGET_JDK}-normal-${JVM_VARIANTS}-${JDK_DEBUG_LEVEL}
 make JOBS=4 images || \
 error_code=$?
-if [ "$error_code" -ne 0 ]; then
+if [[ "$error_code" -ne 0 ]]; then
   echo "Build failure, exited with code $error_code. Trying again."
   make JOBS=4 images
 fi

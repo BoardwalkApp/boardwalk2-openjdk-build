@@ -5,7 +5,7 @@ cd freetype-$BUILD_FREETYPE_VERSION
 
 echo "Building Freetype"
 
-if [ "$BUILD_IOS" == "1" ]; then
+if [[ "$BUILD_IOS" == "1" ]]; then
   LDFLAGS=-"arch arm64 -isysroot $thesysroot -miphoneos-version-min=12.0"
 
   export CC=$thecc
@@ -34,7 +34,7 @@ else
     --with-harfbuzz=no $EXTRA_ARGS \
     || error_code=$?
 fi
-if [ "$error_code" -ne 0 ]; then
+if [[ "$error_code" -ne 0 ]]; then
   echo "\n\nCONFIGURE ERROR $error_code , config.log:"
   cat config.log
   exit $error_code
@@ -43,6 +43,6 @@ fi
 CFLAGS=-fno-rtti CXXFLAGS=-fno-rtti make -j4
 make install
 
-if [ -f "${namefreetype}.a" ]; then
+if [[ -f "${namefreetype}.a" ]]; then
   clang -fPIC -shared $LDFLAGS -lbz2 -Wl,-all_load ${namefreetype}.a -o ${namefreetype}.dylib
 fi

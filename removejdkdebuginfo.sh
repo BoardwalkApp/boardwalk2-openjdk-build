@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-if [ "$TARGET_JDK" == "arm" ]; then
+if [[ "$TARGET_JDK" == "arm" ]]; then
   export TARGET_JDK=aarch32
 fi
 
@@ -13,7 +13,7 @@ mkdir dizout
 cp -r $imagespath/j2re-image jreout
 cp -r $imagespath/j2sdk-image jdkout
 
-if [ "$TARGET_JDK" == "x86" ]; then
+if [[ "$TARGET_JDK" == "x86" ]]; then
   export TARGET_JDK=i386
 fi
 
@@ -29,7 +29,7 @@ mv jreout/lib/libfreetype.dylib.6 jreout/lib/libfreetype.dylib || echo "Move exi
 find jreout -name "*.diz" -delete
 find jdkout -name "*.diz" -exec mv {} dizout/ \;
 
-if [ "$BUILD_IOS" == "1" ]; then
+if [[ "$BUILD_IOS" == "1" ]]; then
   install_name_tool -id @rpath/libfreetype.dylib jdkout/jre/lib/libfreetype.dylib
   install_name_tool -id @rpath/libfreetype.dylib jreout/lib/libfreetype.dylib
   install_name_tool -change build_android-arm64/lib/libfreetype.dylib @rpath/libfreetype.dylib jdkout/jre/lib/libfontmanager.dylib
