@@ -1,24 +1,86 @@
-name: Build JDK for ARM
+name: Build OpenJDK 8 for Android
 
-on: [push]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 1 */2 *'
 
 jobs:
-  build:
-    runs-on: ubuntu-18.04
+  build_android:
+    strategy:
+      matrix:
+        arch: [ "aarch32", "aarch64", "x86", "x86_64" ]
+      fail-fast: false
+
+    name: "Build for Android ${{matrix.arch}}"
+    runs-on: ubuntu-22.04
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: set up JDK 1.8
-      uses: actions/setup-java@v1
+      uses: actions/checkout@v4
+    - name: set up JDK 1.7
+      uses: actions/setup-java@v4
       with:
-        java-version: 1.8
-
+        java-version: 7
+        distribution: zulu
+    - name: Install build dependencies
+      run: |
+        sudo apt update
+        sudo apt -y install autoconf python3 python-is-python3 unzip zip systemtap-sdt-dev gcc-multilib g++-multilib libxtst-dev libasound2-dev libelf-dev libfontconfig1-dev libx11-dev
     - name: Build with CI build script
-      run: ./ci_build.sh
-
-    - name: Upload build output
-      uses: actions/upload-artifact@v1
+      run: bash "ci_build_arch_${{matrix.arch}}.sh"
+    - name: Upload JDK build output
+      uses: actions/upload-artifact@v4
       with:
-        name: jre
-        path: jre.tar.xz
+        name: "jdk8-${{matrix.arch}}"
+        path: jdk8*.tar.xz
+
+    - name: Setup tmate session if failed
+      if: ${{ failure() }}
+      uses: mxschmitt/action-tmate@v3
+
+    - name: Upload JRE build output
+      uses: actions/upload-artifact@v4
+      with:
+        name: 'jre8-${{matrix.arch}}'
+        path: jre8*.tar.xz
+    - name: Upload JRE debuginfo build output
+      uses: actions/upload-artifact@v4
+      with:
+        name: "jre8-debuginfo-${{matrix.arch}}"
+        path: dizout
+
+  pojav:
+    needs: build_android
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Get jre8-aarch32
+      uses: actions/download-artifact@v4
+      with:
+        name: jre8-aarch32
+        path: pojav
+    - name: Get jre8-aarch64
+      uses: actions/download-artifact@v4
+      with:
+        name: jre8-aarch64
+        path: pojav
+    - name: Get jre8-x86
+      uses: actions/download-artifact@v4
+      with:
+        name: jre8-x86
+        path: pojav
+    - name: Get jre8-x86_64
+      uses: actions/download-artifact@v4
+      with:
+        name: jre8-x86_64
+        path: pojav
+    - name: Repack JRE
+      run: bash "repackjre.sh" $GITHUB_WORKSPACE/pojav $GITHUB_WORKSPACE/pojav/jre8-pojav
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+          name: jre8-pojav
+          path: pojav/jre8-pojav/*

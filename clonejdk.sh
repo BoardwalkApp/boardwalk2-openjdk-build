@@ -1,5 +1,11 @@
 #!/bin/bash
 set -e
-hg clone http://hg.openjdk.java.net/mobile/jdk9 openjdk
-cd openjdk
-bash ./get_source.sh
+if [[ "$TARGET_JDK" == "arm" ]]; then
+git clone --depth 1 https://github.com/openjdk/aarch32-port-jdk8u openjdk
+elif [[ "$BUILD_IOS" == "1" ]]; then
+git clone --depth 1 --branch ios https://github.com/PojavLauncherTeam/openjdk-multiarch-jdk8u openjdk
+else
+# Use aarch32 repo because it also has aarch64
+
+git clone --depth 1 https://github.com/openjdk/jdk8u openjdk
+fi
