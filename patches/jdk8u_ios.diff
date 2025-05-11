@@ -1,0 +1,2025 @@
+diff --git a/common/autoconf/build-aux/config.sub b/common/autoconf/build-aux/config.sub
+index a665b00f..eed57c77 100644
+--- a/common/autoconf/build-aux/config.sub
++++ b/common/autoconf/build-aux/config.sub
+@@ -35,7 +35,8 @@ if echo $* | grep linux-musl >/dev/null ; then
+ fi
+ 
+ # First, filter out everything that doesn't begin with "aarch64-"
+-if ! echo $* | grep '^aarch64-' >/dev/null ; then
++# or the mobile platforms (ios and android)
++if ! echo $* | egrep "^aarch64-|-ios" >/dev/null ; then
+     . $DIR/autoconf-config.sub "$@"
+     # autoconf-config.sub exits, so we never reach here, but just in
+     # case we do:
+@@ -43,9 +44,13 @@ if ! echo $* | grep '^aarch64-' >/dev/null ; then
+ fi
+ 
+ while test $# -gt 0 ; do
+-    case $1 in 
++    case $1 in
+         -- )   # Stop option processing
+             shift; break ;;
++        *-ios* )
++            echo $1
++            exit
++            ;;
+         aarch64-* )
+             config=`echo $1 | sed 's/^aarch64-/arm-/'`
+             sub_args="$sub_args $config"
+diff --git a/common/autoconf/flags.m4 b/common/autoconf/flags.m4
+index e2e0c5a6..c5493ebe 100644
+--- a/common/autoconf/flags.m4
++++ b/common/autoconf/flags.m4
+@@ -729,8 +729,8 @@ AC_DEFUN_ONCE([FLAGS_SETUP_COMPILER_FLAGS_FOR_JDK],
+       # The macro takes the version with no dots, ex: 1070
+       # Let the flags variables get resolved in make for easier override on make
+       # command line.
+-      CCXXFLAGS_JDK="$CCXXFLAGS_JDK -DMAC_OS_X_VERSION_MAX_ALLOWED=\$(subst .,,\$(MACOSX_VERSION_MIN)) -mmacosx-version-min=\$(MACOSX_VERSION_MIN)"
+-      LDFLAGS_JDK="$LDFLAGS_JDK -mmacosx-version-min=\$(MACOSX_VERSION_MIN)"
++      CCXXFLAGS_JDK="$CCXXFLAGS_JDK -DMAC_OS_X_VERSION_MAX_ALLOWED=\$(subst .,,\$(MACOSX_VERSION_MIN)) -miphoneos-version-min=\$(MACOSX_VERSION_MIN)"
++      LDFLAGS_JDK="$LDFLAGS_JDK -miphoneos-version-min=\$(MACOSX_VERSION_MIN)"
+     elif test "x$TOOLCHAIN_TYPE" = xclang; then
+       # FIXME: This needs to be exported in spec.gmk due to closed legacy code.
+       # FIXME: clean this up, and/or move it elsewhere.
+@@ -750,8 +750,8 @@ AC_DEFUN_ONCE([FLAGS_SETUP_COMPILER_FLAGS_FOR_JDK],
+       # The macro takes the version with no dots, ex: 1070
+       # Let the flags variables get resolved in make for easier override on make
+       # command line.
+-      CCXXFLAGS_JDK="$CCXXFLAGS_JDK -DMAC_OS_X_VERSION_MIN_REQUIRED=\$(subst .,,\$(MACOSX_VERSION_MIN)) -DMAC_OS_X_VERSION_MAX_ALLOWED=\$(subst .,,\$(MACOSX_VERSION_MIN)) -mmacosx-version-min=\$(MACOSX_VERSION_MIN)"
+-      LDFLAGS_JDK="$LDFLAGS_JDK -mmacosx-version-min=\$(MACOSX_VERSION_MIN)"
++      CCXXFLAGS_JDK="$CCXXFLAGS_JDK -DMAC_OS_X_VERSION_MIN_REQUIRED=\$(subst .,,\$(MACOSX_VERSION_MIN)) -DMAC_OS_X_VERSION_MAX_ALLOWED=\$(subst .,,\$(MACOSX_VERSION_MIN)) -miphoneos-version-min=\$(MACOSX_VERSION_MIN)"
++      LDFLAGS_JDK="$LDFLAGS_JDK -miphoneos-version-min=\$(MACOSX_VERSION_MIN)"
+     fi
+   fi
+ 
+diff --git a/common/autoconf/generated-configure.sh b/common/autoconf/generated-configure.sh
+index a6973629..3365acaa 100644
+--- a/common/autoconf/generated-configure.sh
++++ b/common/autoconf/generated-configure.sh
+@@ -15651,7 +15651,7 @@ printf "%s\n" "$COMPILE_TYPE" >&6; }
+       OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -DLIBARCH32NAME='\"i386\"' -DLIBARCH64NAME='\"amd64\"'"
+     fi
+   elif test "x$OPENJDK_TARGET_OS" = xmacosx && test "x$TOOLCHAIN_TYPE" = xclang ; then
+-    OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -stdlib=libc++ -mmacosx-version-min=\$(MACOSX_VERSION_MIN)"
++    OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -stdlib=libc++ -miphoneos-version-min=\$(MACOSX_VERSION_MIN)"
+   fi
+ 
+ 
+@@ -15679,7 +15679,7 @@ printf "%s\n" "$COMPILE_TYPE" >&6; }
+       ADD_LP64="-D_LP64=1"
+     fi
+   elif test "x$OPENJDK_TARGET_OS" = xmacosx && test "x$TOOLCHAIN_TYPE" = xclang ; then
+-    OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -mmacosx-version-min=\$(MACOSX_VERSION_MIN)"
++    OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -miphoneos-version-min=\$(MACOSX_VERSION_MIN)"
+   fi
+   LP64=$A_LP64
+ 
+@@ -45706,8 +45706,8 @@ printf "%s\n" "$supports" >&6; }
+       # The macro takes the version with no dots, ex: 1070
+       # Let the flags variables get resolved in make for easier override on make
+       # command line.
+-      CCXXFLAGS_JDK="$CCXXFLAGS_JDK -DMAC_OS_X_VERSION_MAX_ALLOWED=\$(subst .,,\$(MACOSX_VERSION_MIN)) -mmacosx-version-min=\$(MACOSX_VERSION_MIN)"
+-      LDFLAGS_JDK="$LDFLAGS_JDK -mmacosx-version-min=\$(MACOSX_VERSION_MIN)"
++      CCXXFLAGS_JDK="$CCXXFLAGS_JDK -DMAC_OS_X_VERSION_MAX_ALLOWED=\$(subst .,,\$(MACOSX_VERSION_MIN)) -miphoneos-version-min=\$(MACOSX_VERSION_MIN)"
++      LDFLAGS_JDK="$LDFLAGS_JDK -miphoneos-version-min=\$(MACOSX_VERSION_MIN)"
+     elif test "x$TOOLCHAIN_TYPE" = xclang; then
+       # FIXME: This needs to be exported in spec.gmk due to closed legacy code.
+       # FIXME: clean this up, and/or move it elsewhere.
+@@ -45727,8 +45727,8 @@ printf "%s\n" "$supports" >&6; }
+       # The macro takes the version with no dots, ex: 1070
+       # Let the flags variables get resolved in make for easier override on make
+       # command line.
+-      CCXXFLAGS_JDK="$CCXXFLAGS_JDK -DMAC_OS_X_VERSION_MIN_REQUIRED=\$(subst .,,\$(MACOSX_VERSION_MIN)) -DMAC_OS_X_VERSION_MAX_ALLOWED=\$(subst .,,\$(MACOSX_VERSION_MIN)) -mmacosx-version-min=\$(MACOSX_VERSION_MIN)"
+-      LDFLAGS_JDK="$LDFLAGS_JDK -mmacosx-version-min=\$(MACOSX_VERSION_MIN)"
++      CCXXFLAGS_JDK="$CCXXFLAGS_JDK -DMAC_OS_X_VERSION_MIN_REQUIRED=\$(subst .,,\$(MACOSX_VERSION_MIN)) -DMAC_OS_X_VERSION_MAX_ALLOWED=\$(subst .,,\$(MACOSX_VERSION_MIN)) -miphoneos-version-min=\$(MACOSX_VERSION_MIN)"
++      LDFLAGS_JDK="$LDFLAGS_JDK -miphoneos-version-min=\$(MACOSX_VERSION_MIN)"
+     fi
+   fi
+ 
+diff --git a/common/autoconf/platform.m4 b/common/autoconf/platform.m4
+index 2cf39678..cf8e880a 100644
+--- a/common/autoconf/platform.m4
++++ b/common/autoconf/platform.m4
+@@ -388,7 +388,7 @@ AC_DEFUN([PLATFORM_SETUP_LEGACY_VARS],
+       OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -DLIBARCH32NAME='\"i386\"' -DLIBARCH64NAME='\"amd64\"'"
+     fi
+   elif test "x$OPENJDK_TARGET_OS" = xmacosx && test "x$TOOLCHAIN_TYPE" = xclang ; then
+-    OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -stdlib=libc++ -mmacosx-version-min=\$(MACOSX_VERSION_MIN)"
++    OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -stdlib=libc++ -miphoneos-version-min=\$(MACOSX_VERSION_MIN)"
+   fi
+   AC_SUBST(OPENJDK_TARGET_CPU_JLI_CFLAGS)
+ 
+@@ -416,7 +416,7 @@ AC_DEFUN([PLATFORM_SETUP_LEGACY_VARS],
+       ADD_LP64="-D_LP64=1"
+     fi
+   elif test "x$OPENJDK_TARGET_OS" = xmacosx && test "x$TOOLCHAIN_TYPE" = xclang ; then
+-    OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -mmacosx-version-min=\$(MACOSX_VERSION_MIN)"
++    OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -miphoneos-version-min=\$(MACOSX_VERSION_MIN)"
+   fi
+   AC_SUBST(LP64,$A_LP64)
+ 
+diff --git a/hotspot/agent/src/os/bsd/BsdDebuggerLocal.c b/hotspot/agent/src/os/bsd/BsdDebuggerLocal.c
+index 85b07f76..75bdc756 100644
+--- a/hotspot/agent/src/os/bsd/BsdDebuggerLocal.c
++++ b/hotspot/agent/src/os/bsd/BsdDebuggerLocal.c
+@@ -38,6 +38,10 @@
+ #include "sun_jvm_hotspot_debugger_amd64_AMD64ThreadContext.h"
+ #endif
+ 
++#ifdef aarch64
++#include "sun_jvm_hotspot_debugger_aarch64_AARCH64ThreadContext.h"
++#endif
++
+ #if defined(sparc) || defined(sparcv9)
+ #include "sun_jvm_hotspot_debugger_sparc_SPARCThreadContext.h"
+ #endif
+@@ -304,6 +308,9 @@ JNIEXPORT jlongArray JNICALL Java_sun_jvm_hotspot_debugger_bsd_BsdDebuggerLocal_
+ #ifdef amd64
+ #define NPRGREG sun_jvm_hotspot_debugger_amd64_AMD64ThreadContext_NPRGREG
+ #endif
++#ifdef aarch64
++#define NPRGREG sun_jvm_hotspot_debugger_aarch64_AARCH64ThreadContext_NPRGREG
++#endif
+ #if defined(sparc) || defined(sparcv9)
+ #define NPRGREG sun_jvm_hotspot_debugger_sparc_SPARCThreadContext_NPRGREG
+ #endif
+@@ -407,6 +414,16 @@ JNIEXPORT jlongArray JNICALL Java_sun_jvm_hotspot_debugger_bsd_BsdDebuggerLocal_
+   regs[REG_INDEX(R_O7)]  = gregs.u_regs[14];
+ #endif /* sparc */
+ 
++#if defined(aarch64)
++#define REG_INDEX(reg) sun_jvm_hotspot_debugger_aarch64_AARCH64ThreadContext_##reg
++   {
++     int i;
++     for (i = 0; i < 31; i++)
++       regs[i] = gregs.x[i];
++     regs[REG_INDEX(SP)] = gregs.sp;
++     regs[REG_INDEX(PC)] = gregs.elr;
++   }
++#endif /* aarch64 */
+ 
+   (*env)->ReleaseLongArrayElements(env, array, regs, JNI_COMMIT);
+   return array;
+diff --git a/hotspot/agent/src/os/bsd/Makefile b/hotspot/agent/src/os/bsd/Makefile
+index af22b597..4de4565b 100644
+--- a/hotspot/agent/src/os/bsd/Makefile
++++ b/hotspot/agent/src/os/bsd/Makefile
+@@ -51,7 +51,7 @@ SOURCES  = symtab.c     \
+ OBJS    = $(SOURCES:.c=.o)
+ OBJSPLUS = MacosxDebuggerLocal.o sadis.o $(OBJS)
+ EXTINCLUDE = -I.
+-EXTCFLAGS = -m64 -D__APPLE__ -framework JavaNativeFoundation
++EXTCFLAGS = -m64 -D__APPLE__
+ FOUNDATIONFLAGS = -framework Foundation -framework JavaNativeFoundation -framework Security -framework CoreFoundation
+ LIBSA = $(ARCH)/libsaproc.dylib
+ endif   # Darwin
+@@ -70,7 +70,8 @@ MacosxDebuggerLocal.o: MacosxDebuggerLocal.m
+ 	echo "OS="$(OS)
+ 	$(JAVAH) -jni -classpath ../../../build/classes  \
+ 		sun.jvm.hotspot.debugger.x86.X86ThreadContext \
+-		sun.jvm.hotspot.debugger.amd64.AMD64ThreadContext
++		sun.jvm.hotspot.debugger.amd64.AMD64ThreadContext  \
++        sun.jvm.hotspot.debugger.aarch64.AARCH64ThreadContext
+ 	$(GCC) $(CFLAGS) $(FOUNDATIONFLAGS) $<
+ 
+ sadis.o: ../../share/native/sadis.c
+diff --git a/hotspot/agent/src/os/bsd/libproc_impl.h b/hotspot/agent/src/os/bsd/libproc_impl.h
+index 0d3fd166..916a2fff 100644
+--- a/hotspot/agent/src/os/bsd/libproc_impl.h
++++ b/hotspot/agent/src/os/bsd/libproc_impl.h
+@@ -1,5 +1,6 @@
+ /*
+- * Copyright (c) 2003, 2013, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2003, 2021, Oracle and/or its affiliates. All rights reserved.
++ * Copyright (c) 2021, Azul Systems, Inc. All rights reserved.
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+  *
+  * This code is free software; you can redistribute it and/or modify it
+@@ -30,6 +31,16 @@
+ #include "libproc.h"
+ #include "symtab.h"
+ 
++#define UNSUPPORTED_ARCH "Unsupported architecture!"
++
++#if defined(__x86_64__) && !defined(amd64)
++#define amd64 1
++#endif
++
++#if defined(__arm64__) && !defined(aarch64)
++#define aarch64 1
++#endif
++
+ #ifdef __APPLE__
+ #include <inttypes.h>     // for PRIx64, 32, ...
+ #include <pthread.h>
+diff --git a/hotspot/agent/src/os/bsd/ps_core.c b/hotspot/agent/src/os/bsd/ps_core.c
+index 8fc6adb3..8b5369a8 100644
+--- a/hotspot/agent/src/os/bsd/ps_core.c
++++ b/hotspot/agent/src/os/bsd/ps_core.c
+@@ -22,6 +22,7 @@
+  *
+  */
+ 
++#include <inttypes.h>     // for PRIx64, 32, ...
+ #include <jni.h>
+ #include <unistd.h>
+ #include <fcntl.h>
+@@ -1160,6 +1161,42 @@ static bool core_handle_prstatus(struct ps_prochandle* ph, const char* buf, size
+       //print_debug("\tfs = 0x%lx\n", newthr->regs.fs);
+       //print_debug("\tgs = 0x%lx\n", newthr->regs.gs);
+ #endif
++
++#ifdef aarch64
++      print_debug("\tr0 = 0x%lx\n", newthr->regs.r_r0);
++      print_debug("\tr1 = 0x%lx\n", newthr->regs.r_r1);
++      print_debug("\tr2 = 0x%lx\n", newthr->regs.r_r2);
++      print_debug("\tr3 = 0x%lx\n", newthr->regs.r_r3);
++      print_debug("\tr4 = 0x%lx\n", newthr->regs.r_r4);
++      print_debug("\tr5 = 0x%lx\n", newthr->regs.r_r5);
++      print_debug("\tr6 = 0x%lx\n", newthr->regs.r_r6);
++      print_debug("\tr7 = 0x%lx\n", newthr->regs.r_r7);
++      print_debug("\tr8 = 0x%lx\n", newthr->regs.r_r8);
++      print_debug("\tr9 = 0x%lx\n", newthr->regs.r_r9);
++      print_debug("\tr10 = 0x%lx\n", newthr->regs.r_r10);
++      print_debug("\tr11 = 0x%lx\n", newthr->regs.r_r11);
++      print_debug("\tr12 = 0x%lx\n", newthr->regs.r_r12);
++      print_debug("\tr13 = 0x%lx\n", newthr->regs.r_r13);
++      print_debug("\tr14 = 0x%lx\n", newthr->regs.r_r14);
++      print_debug("\tr15 = 0x%lx\n", newthr->regs.r_r15);
++      print_debug("\tr16 = 0x%lx\n", newthr->regs.r_r16);
++      print_debug("\tr17 = 0x%lx\n", newthr->regs.r_r17);
++      print_debug("\tr18 = 0x%lx\n", newthr->regs.r_r18);
++      print_debug("\tr19 = 0x%lx\n", newthr->regs.r_r19);
++      print_debug("\tr20 = 0x%lx\n", newthr->regs.r_r20);
++      print_debug("\tr21 = 0x%lx\n", newthr->regs.r_r21);
++      print_debug("\tr22 = 0x%lx\n", newthr->regs.r_r22);
++      print_debug("\tr23 = 0x%lx\n", newthr->regs.r_r23);
++      print_debug("\tr24 = 0x%lx\n", newthr->regs.r_r24);
++      print_debug("\tr25 = 0x%lx\n", newthr->regs.r_r25);
++      print_debug("\tr26 = 0x%lx\n", newthr->regs.r_r26);
++      print_debug("\tr27 = 0x%lx\n", newthr->regs.r_r27);
++      print_debug("\tr28 = 0x%lx\n", newthr->regs.r_r28);
++      print_debug("\tfp = 0x%lx\n", newthr->regs.r_fp);
++      print_debug("\tlr = 0x%lx\n", newthr->regs.r_lr);
++      print_debug("\tsp = 0x%lx\n", newthr->regs.r_sp);
++      print_debug("\tpc = 0x%lx\n", newthr->regs.r_pc);
++#endif
+    }
+ 
+    return true;
+diff --git a/hotspot/make/bsd/makefiles/gcc.make b/hotspot/make/bsd/makefiles/gcc.make
+index b45dd47a..fd94ee45 100644
+--- a/hotspot/make/bsd/makefiles/gcc.make
++++ b/hotspot/make/bsd/makefiles/gcc.make
+@@ -248,7 +248,8 @@ endif
+ 
+ # Compiler warnings are treated as errors
+ ifneq ($(COMPILER_WARNINGS_FATAL),false)
+-  WARNINGS_ARE_ERRORS = -Werror
++  # WARNINGS_ARE_ERRORS = -Werror
++  WARNINGS_ARE_ERRORS = -Werror=implicit-function-declaration
+ endif
+ 
+ ifeq ($(USE_CLANG), true)
+@@ -318,7 +319,7 @@ ifeq ($(USE_CLANG), true)
+   # Known to fail with clang <= 7.0; 
+   # do no optimize these on later clang until verified
+   OPT_CFLAGS/loopTransform.o += $(OPT_CFLAGS/NOOPT)
+-  OPT_CFLAGS/unsafe.o += -O1
++  OPT_CFLAGS/unsafe.o += $(OPT_CFLAGS/NOOPT)
+ else
+   # 6835796. Problem in GCC 4.3.0 with mulnode.o optimized compilation.
+   ifeq ($(shell expr $(CC_VER_MAJOR) = 4 \& $(CC_VER_MINOR) = 3), 1)
+@@ -348,10 +349,17 @@ ifeq ($(OS_VENDOR), Darwin)
+     MACOSX_VERSION_MIN=10.7.0
+   endif
+   # The macro takes the version with no dots, ex: 1070
+-  CFLAGS += -DMAC_OS_X_VERSION_MIN_REQUIRED=$(subst .,,$(MACOSX_VERSION_MIN)) \
++  CFLAGS_TMP = -DMAC_OS_X_VERSION_MIN_REQUIRED=$(subst .,,$(MACOSX_VERSION_MIN)) \
+             -DMAC_OS_X_VERSION_MAX_ALLOWED=$(subst .,,$(MACOSX_VERSION_MIN)) \
+-            -mmacosx-version-min=$(MACOSX_VERSION_MIN)
+-  LFLAGS += -mmacosx-version-min=$(MACOSX_VERSION_MIN)
++            -miphoneos-version-min=$(MACOSX_VERSION_MIN)
++  LFLAGS_TMP = -miphoneos-version-min=$(MACOSX_VERSION_MIN)
++  ifdef CROSS_COMPILE_ARCH
++    HOSTCC  += $(CFLAGS_TMP)
++    HOSTCXX += $(CFLAGS_TMP)
++  else
++    CFLAGS += $(CFLAGS_TMP)
++    LFLAGS += -mmacosx-version-min=$(MACOSX_VERSION_MIN)
++  endif
+ endif
+ 
+ 
+diff --git a/hotspot/make/bsd/makefiles/rules.make b/hotspot/make/bsd/makefiles/rules.make
+index 31c2e094..dfb1b228 100644
+--- a/hotspot/make/bsd/makefiles/rules.make
++++ b/hotspot/make/bsd/makefiles/rules.make
+@@ -52,6 +52,8 @@ PREPROCESS.CXX   = $(CXX_COMPILE) -E
+ # cross compiling the jvm with c2 requires host compilers to build
+ # adlc tool
+ 
++# iOS build hack
++HOSTCXX := ${thehostcxx}
+ HOST.CXX_COMPILE      = $(HOSTCXX) $(CXXFLAGS) $(CFLAGS)
+ HOST.COMPILE.CXX      = $(HOST.CXX_COMPILE) -c
+ HOST.LINK_NOPROF.CXX  = $(HOSTCXX) $(LFLAGS) $(AOUT_FLAGS)
+diff --git a/hotspot/make/bsd/makefiles/saproc.make b/hotspot/make/bsd/makefiles/saproc.make
+index 5c837895..284cb2eb 100644
+--- a/hotspot/make/bsd/makefiles/saproc.make
++++ b/hotspot/make/bsd/makefiles/saproc.make
+@@ -66,7 +66,6 @@ else
+     SASRCFILES = $(DARWIN_NON_STUB_SASRCFILES)
+     SALIBS = -g \
+              -framework Foundation \
+-             -framework JavaNativeFoundation \
+              -framework Security \
+              -framework CoreFoundation
+     #objc compiler blows up on -march=i586, perhaps it should not be included in the macosx intel 32-bit C++ compiles?
+diff --git a/hotspot/src/cpu/aarch64/vm/icache_aarch64.hpp b/hotspot/src/cpu/aarch64/vm/icache_aarch64.hpp
+index 9479eaea..249915d8 100644
+--- a/hotspot/src/cpu/aarch64/vm/icache_aarch64.hpp
++++ b/hotspot/src/cpu/aarch64/vm/icache_aarch64.hpp
+@@ -27,6 +27,13 @@
+ #ifndef CPU_AARCH64_VM_ICACHE_AARCH64_HPP
+ #define CPU_AARCH64_VM_ICACHE_AARCH64_HPP
+ 
++#ifdef __APPLE__
++#include <libkern/OSCacheControl.h>
++
++#define __clear_cache(start, end) \
++    sys_icache_invalidate(start, (char*)end - (char*)start);
++#endif
++
+ // Interface for updating the instruction cache.  Whenever the VM
+ // modifies code, part of the processor instruction cache potentially
+ // has to be flushed.
+diff --git a/hotspot/src/os/bsd/vm/os_bsd.cpp b/hotspot/src/os/bsd/vm/os_bsd.cpp
+index bc8fccbd..522ea6a4 100644
+--- a/hotspot/src/os/bsd/vm/os_bsd.cpp
++++ b/hotspot/src/os/bsd/vm/os_bsd.cpp
+@@ -952,6 +952,14 @@ extern "C" Thread* get_thread() {
+   return ThreadLocalStorage::thread();
+ }
+ 
++//////////////////////////////////////////////////////////////////////////////
++// primordial thread
++
++// Check if current thread is the primordial thread, similar to Solaris thr_main.
++bool os::is_primordial_thread(void) {
++  return pthread_main_np();
++}
++
+ 
+ ////////////////////////////////////////////////////////////////////////////////
+ // time support
+@@ -2208,7 +2216,7 @@ static void warn_fail_commit_memory(char* addr, size_t size, bool exec,
+ //       left at the time of mmap(). This could be a potential
+ //       problem.
+ bool os::pd_commit_memory(char* addr, size_t size, bool exec) {
+-  int prot = exec ? PROT_READ|PROT_WRITE|PROT_EXEC : PROT_READ|PROT_WRITE;
++  int prot = /* exec ? PROT_READ|PROT_WRITE|PROT_EXEC : */ PROT_READ|PROT_WRITE;
+ #if defined( __OpenBSD__)
+   // XXX: Work-around mmap/MAP_FIXED bug temporarily on OpenBSD
+   if (::mprotect(addr, size, prot) == 0) {
+@@ -2341,12 +2349,14 @@ static char* anon_mmap(char* requested_addr, size_t bytes, bool fixed, bool exec
+   int flags;
+ 
+   flags = MAP_PRIVATE | MAP_NORESERVE | MAP_ANONYMOUS;
++/*
+ #ifdef __APPLE__
+   if (executable) {
+     guarantee(!fixed, "MAP_JIT (for execute) is incompatible with MAP_FIXED");
+     flags |= MAP_JIT;
+   }
+ #endif
++*/
+   if (fixed) {
+     assert((uintptr_t)requested_addr % os::Bsd::page_size() == 0, "unaligned address");
+     flags |= MAP_FIXED;
+@@ -2413,6 +2423,7 @@ bool os::protect_memory(char* addr, size_t bytes, ProtType prot,
+   case MEM_PROT_READ: p = PROT_READ; break;
+   case MEM_PROT_RW:   p = PROT_READ|PROT_WRITE; break;
+   case MEM_PROT_RWX:  p = PROT_READ|PROT_WRITE|PROT_EXEC; break;
++  case MEM_PROT_RX:   p = PROT_READ|PROT_EXEC; break;
+   default:
+     ShouldNotReachHere();
+   }
+diff --git a/hotspot/src/os_cpu/bsd_aarch64/vm/os_bsd_aarch64.cpp b/hotspot/src/os_cpu/bsd_aarch64/vm/os_bsd_aarch64.cpp
+index 25919960..2b221c63 100644
+--- a/hotspot/src/os_cpu/bsd_aarch64/vm/os_bsd_aarch64.cpp
++++ b/hotspot/src/os_cpu/bsd_aarch64/vm/os_bsd_aarch64.cpp
+@@ -211,6 +211,30 @@ JVM_handle_bsd_signal(int sig,
+                         int abort_if_unrecognized) {
+   ucontext_t* uc = (ucontext_t*) ucVoid;
+ 
++  if (sig == SIGBUS) {
++    address addr = os::Bsd::ucontext_get_pc(uc);
++    //address addr = (address) info->si_addr;
++    //if (addr >= os::GLOBAL_CODE_CACHE_ADDR && addr < os::GLOBAL_CODE_CACHE_ADDR + 0x270000) {
++    //  return !mprotect(os::GLOBAL_CODE_CACHE_ADDR, 0x270000, PROT_READ | PROT_EXEC);
++    //} else if (addr >= os::GLOBAL_CODE_CACHE_ADDR + 0x270000 && addr < os::GLOBAL_CODE_CACHE_ADDR + 0x270000*2) {
++    //  return !mprotect(os::GLOBAL_CODE_CACHE_ADDR + 0x270000, 0x270000, PROT_READ | PROT_EXEC);
++    if (addr >= os::GLOBAL_CODE_CACHE_ADDR && addr < os::GLOBAL_CODE_CACHE_ADDR + os::GLOBAL_CODE_CACHE_SIZE && addr == info->si_addr) {
++      return !mprotect((address) ((uintptr_t)addr & -PAGE_SIZE), PAGE_SIZE, PROT_READ | PROT_EXEC);
++    } else { // if (t->is_Compiler_thread() || t->is_VM_thread()) {
++      return !mprotect((address) ((uintptr_t)info->si_addr & -PAGE_SIZE), PAGE_SIZE, PROT_READ | PROT_WRITE);
++    }
++  }
++/*
++  if (addr >= os::GLOBAL_CODE_CACHE_ADDR - os::GLOBAL_CODE_CACHE_DIFF && addr < os::GLOBAL_CODE_CACHE_ADDR) {
++    uc->context_pc = (uint64_t)addr + os::GLOBAL_CODE_CACHE_DIFF;
++    return 1;
++  } else if (addr >= os::GLOBAL_CODE_CACHE_ADDR && addr < os::GLOBAL_CODE_CACHE_ADDR + os::GLOBAL_CODE_CACHE_DIFF) {
++    // try again
++    uc->context_pc = (uint64_t)addr - os::GLOBAL_CODE_CACHE_DIFF;
++    return 1;
++  }
++*/
++
+   Thread* t = ThreadLocalStorage::get_thread_slow();
+ 
+   // Must do this before SignalHandlerMark, if crash protection installed we will longjmp away
+diff --git a/hotspot/src/os_cpu/bsd_aarch64/vm/os_bsd_aarch64.hpp b/hotspot/src/os_cpu/bsd_aarch64/vm/os_bsd_aarch64.hpp
+index 49b579d5..1344de99 100644
+--- a/hotspot/src/os_cpu/bsd_aarch64/vm/os_bsd_aarch64.hpp
++++ b/hotspot/src/os_cpu/bsd_aarch64/vm/os_bsd_aarch64.hpp
+@@ -26,6 +26,11 @@
+ #ifndef OS_CPU_BSD_AARCH64_VM_OS_BSD_AARCH64_HPP
+ #define OS_CPU_BSD_AARCH64_VM_OS_BSD_AARCH64_HPP
+ 
++#include <sys/mman.h>
++#include "tcg-apple-jit.h"
++
++  //extern "C" int mprotect(void *addr, size_t len, int prot);
++
+   static void setup_fpu();
+ 
+   static bool is_allocatable(size_t bytes);
+@@ -42,10 +47,18 @@
+ private:
+ 
+   static void current_thread_enable_wx_impl(WXMode mode) {
+-#pragma clang diagnostic push
+-#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+-    pthread_jit_write_protect_np(mode == WXExec ? true : false);
+-#pragma clang diagnostic pop
++// #pragma clang diagnostic push
++// #pragma clang diagnostic ignored "-Wunguarded-availability-new"
++    // pthread_jit_write_protect_np(mode == WXExec ? true : false);
++    // jit_write_protect(mode == WXExec);
++/*
++    if (mode == WXExec) {
++      mprotect(os::GLOBAL_CODE_CACHE_ADDR, os::GLOBAL_CODE_CACHE_SIZE, PROT_READ | PROT_EXEC);
++    } else {
++      mprotect(os::GLOBAL_CODE_CACHE_ADDR, os::GLOBAL_CODE_CACHE_SIZE, PROT_READ | PROT_WRITE);
++    }
++*/
++// #pragma clang diagnostic pop
+   }
+ 
+ public:
+diff --git a/hotspot/src/os_cpu/bsd_aarch64/vm/tcg-apple-jit.h b/hotspot/src/os_cpu/bsd_aarch64/vm/tcg-apple-jit.h
+new file mode 100644
+index 00000000..e8227412
+--- /dev/null
++++ b/hotspot/src/os_cpu/bsd_aarch64/vm/tcg-apple-jit.h
+@@ -0,0 +1,85 @@
++/*
++ * Apple Silicon APRR functions for JIT handling
++ *
++ * Copyright (c) 2020 osy
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.1 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++/*
++ * Credits to: https://siguza.github.io/APRR/
++ * Reversed from /usr/lib/system/libsystem_pthread.dylib
++ */
++
++#ifndef TCG_APPLE_JIT_H
++#define TCG_APPLE_JIT_H
++
++#if defined(__aarch64__) && defined(__APPLE__)
++
++#define _COMM_PAGE_START_ADDRESS        (0x0000000FFFFFC000ULL) /* In TTBR0 */
++#define _COMM_PAGE_APRR_SUPPORT         (_COMM_PAGE_START_ADDRESS + 0x10C)
++#define _COMM_PAGE_APPR_WRITE_ENABLE    (_COMM_PAGE_START_ADDRESS + 0x110)
++#define _COMM_PAGE_APRR_WRITE_DISABLE   (_COMM_PAGE_START_ADDRESS + 0x118)
++
++static __attribute__((__always_inline__)) bool jit_write_protect_supported(void)
++{
++    /* Access shared kernel page at fixed memory location. */
++    uint8_t aprr_support = *(volatile uint8_t *)_COMM_PAGE_APRR_SUPPORT;
++    return aprr_support > 0;
++}
++
++/* write protect enable = write disable */
++static __attribute__((__always_inline__)) void jit_write_protect(int enabled)
++{
++    /* Access shared kernel page at fixed memory location. */
++    uint8_t aprr_support = *(volatile uint8_t *)_COMM_PAGE_APRR_SUPPORT;
++    if (aprr_support == 0 || aprr_support > 3) {
++        return;
++    } else if (aprr_support == 1) {
++        __asm__ __volatile__ (
++            "mov x0, %0\n"
++            "ldr x0, [x0]\n"
++            "msr S3_4_c15_c2_7, x0\n"
++            "isb sy\n"
++            :: "r" (enabled ? _COMM_PAGE_APRR_WRITE_DISABLE
++                            : _COMM_PAGE_APPR_WRITE_ENABLE)
++            : "memory", "x0"
++        );
++    } else {
++        __asm__ __volatile__ (
++            "mov x0, %0\n"
++            "ldr x0, [x0]\n"
++            "msr S3_6_c15_c1_5, x0\n"
++            "isb sy\n"
++            :: "r" (enabled ? _COMM_PAGE_APRR_WRITE_DISABLE
++                            : _COMM_PAGE_APPR_WRITE_ENABLE)
++            : "memory", "x0"
++        );
++    }
++}
++
++#else /* defined(__aarch64__) && defined(__APPLE__) */
++
++static __attribute__((__always_inline__)) bool jit_write_protect_supported(void)
++{
++    return false;
++}
++
++static __attribute__((__always_inline__)) void jit_write_protect(int enabled)
++{
++}
++
++#endif
++
++#endif /* define TCG_APPLE_JIT_H */
+diff --git a/hotspot/src/share/vm/runtime/os.cpp b/hotspot/src/share/vm/runtime/os.cpp
+index 36d00f9e..76042100 100644
+--- a/hotspot/src/share/vm/runtime/os.cpp
++++ b/hotspot/src/share/vm/runtime/os.cpp
+@@ -80,6 +80,9 @@ long              os::_rand_seed          = 1;
+ int               os::_processor_count    = 0;
+ int               os::_initial_active_processor_count = 0;
+ size_t            os::_page_sizes[os::page_sizes_max];
++address os::GLOBAL_CODE_CACHE_ADDR = NULL;
++uintptr_t os::GLOBAL_CODE_CACHE_DIFF = 0;
++uint32_t os::GLOBAL_CODE_CACHE_SIZE = 0;
+ 
+ #ifndef PRODUCT
+ julong os::num_mallocs = 0;         // # of calls to malloc/realloc
+diff --git a/hotspot/src/share/vm/runtime/os.hpp b/hotspot/src/share/vm/runtime/os.hpp
+index a2bb8804..2b49abb5 100644
+--- a/hotspot/src/share/vm/runtime/os.hpp
++++ b/hotspot/src/share/vm/runtime/os.hpp
+@@ -50,6 +50,7 @@
+ # include <setjmp.h>
+ # ifdef __APPLE__
+ #  include <mach/mach_time.h>
++#  include <sys/mman.h>
+ # endif
+ #endif
+ 
+@@ -346,7 +347,7 @@ class os: AllStatic {
+   // are passed.
+   static void   pretouch_memory(char* start, char* end);
+ 
+-  enum ProtType { MEM_PROT_NONE, MEM_PROT_READ, MEM_PROT_RW, MEM_PROT_RWX };
++  enum ProtType { MEM_PROT_NONE, MEM_PROT_READ, MEM_PROT_RW, MEM_PROT_RWX, MEM_PROT_RX };
+   static bool   protect_memory(char* addr, size_t bytes, ProtType prot,
+                                bool is_committed = true);
+ 
+@@ -475,7 +476,7 @@ class os: AllStatic {
+   // need special-case handling of the primordial thread if it attaches
+   // to the VM.
+   static bool is_primordial_thread(void)
+-#if defined(_WINDOWS) || defined(BSD)
++#if defined(_WINDOWS) //|| defined(BSD)
+     // No way to identify the primordial thread.
+     { return false; }
+ #else
+@@ -959,6 +960,9 @@ class os: AllStatic {
+     bool _done;
+   };
+ 
++  static address GLOBAL_CODE_CACHE_ADDR;
++  static uintptr_t GLOBAL_CODE_CACHE_DIFF;
++  static uint32_t GLOBAL_CODE_CACHE_SIZE;
+   // If the JVM is running in W^X mode, enable write or execute access to
+   // writeable and executable pages. No-op otherwise.
+   static inline void current_thread_enable_wx(WXMode mode) {
+diff --git a/hotspot/src/share/vm/runtime/stubRoutines.hpp b/hotspot/src/share/vm/runtime/stubRoutines.hpp
+index 746f6eac..222a664f 100644
+--- a/hotspot/src/share/vm/runtime/stubRoutines.hpp
++++ b/hotspot/src/share/vm/runtime/stubRoutines.hpp
+@@ -278,7 +278,7 @@ class StubRoutines: AllStatic {
+     TRAPS
+   );
+ 
+-  static CallStub call_stub()                              { return CAST_TO_FN_PTR(CallStub, _call_stub_entry); }
++  static CallStub call_stub()                              { return CAST_TO_FN_PTR(CallStub, _call_stub_entry + os::GLOBAL_CODE_CACHE_DIFF); }
+ 
+   // Exceptions
+   static address forward_exception_entry()                 { return _forward_exception_entry; }
+diff --git a/hotspot/src/share/vm/runtime/virtualspace.cpp b/hotspot/src/share/vm/runtime/virtualspace.cpp
+index 7f12ce6b..88c0d693 100644
+--- a/hotspot/src/share/vm/runtime/virtualspace.cpp
++++ b/hotspot/src/share/vm/runtime/virtualspace.cpp
+@@ -41,6 +41,19 @@
+ #endif
+ #ifdef TARGET_OS_FAMILY_bsd
+ # include "os_bsd.inline.hpp"
++# include "os_bsd.hpp"
++# include <mach/mach.h>
++extern "C" kern_return_t mach_vm_remap(vm_map_t target_task,
++                                   mach_vm_address_t *target_address,
++                                   mach_vm_size_t size,
++                                   mach_vm_offset_t mask,
++                                   int flags,
++                                   vm_map_t src_task,
++                                   mach_vm_address_t src_address,
++                                   boolean_t copy,
++                                   vm_prot_t *cur_protection,
++                                   vm_prot_t *max_protection,
++                                   vm_inherit_t inheritance);
+ #endif
+ 
+ PRAGMA_FORMAT_MUTE_WARNINGS_FOR_GCC
+@@ -357,6 +370,14 @@ ReservedCodeSpace::ReservedCodeSpace(size_t r_size,
+                                      size_t rs_align,
+                                      bool large) :
+   ReservedSpace(r_size, rs_align, large, /*executable*/ true) {
++
++  os::GLOBAL_CODE_CACHE_ADDR = (address)base();
++  os::GLOBAL_CODE_CACHE_SIZE = r_size;
++
++  if (!os::protect_memory(base(), r_size, os::MEM_PROT_RW)) {
++    fatal("cannot protect protection page for jit (rw)");
++  }
++
+   MemTracker::record_virtual_memory_type((address)base(), mtCode);
+ }
+ 
+diff --git a/jdk/make/CompileLaunchers.gmk b/jdk/make/CompileLaunchers.gmk
+index 61973b3b..b2e80582 100644
+--- a/jdk/make/CompileLaunchers.gmk
++++ b/jdk/make/CompileLaunchers.gmk
+@@ -99,7 +99,7 @@ define SetupLauncher
+     endif
+ 
+     $1_LDFLAGS += -Wl,-all_load $(JDK_OUTPUTDIR)/objs/libjli_static.a \
+-        -framework Cocoa -framework Security -framework ApplicationServices \
++        -framework Foundation -framework Security \
+         -sectcreate __TEXT __info_plist $(JDK_TOPDIR)/src/macosx/lib/$$($1_PLIST_FILE)
+         $1_LDFLAGS_SUFFIX += -pthread
+   endif
+@@ -250,8 +250,10 @@ BUILD_LAUNCHERS += $(JDK_OUTPUTDIR)/bin$(OUTPUT_SUBDIR)/java$(EXE_SUFFIX)
+ ifeq ($(ENABLE_DEBUG_SYMBOLS), true)
+   ifneq ($(POST_STRIP_CMD), )
+     ifneq ($(STRIP_POLICY), no_strip)
++    ifneq ($(OPENJDK_TARGET_OS), macosx) # Darwin does not support?
+       BUILD_LAUNCHERS += $(JDK_OUTPUTDIR)/bin$(OUTPUT_SUBDIR)/java$(DEBUGINFO_EXT)
+     endif
++    endif
+   endif
+ endif
+ 
+@@ -571,8 +573,10 @@ BUILD_LAUNCHERS += $(JDK_OUTPUTDIR)/bin$(OUTPUT_SUBDIR)/unpack200$(EXE_SUFFIX)
+ ifeq ($(ENABLE_DEBUG_SYMBOLS), true)
+   ifneq ($(POST_STRIP_CMD), )
+     ifneq ($(STRIP_POLICY), no_strip)
++    ifneq ($(OPENJDK_TARGET_OS), macosx) # Darwin does not support?
+       BUILD_LAUNCHERS += $(JDK_OUTPUTDIR)/bin$(OUTPUT_SUBDIR)/unpack200$(DEBUGINFO_EXT)
+     endif
++    endif
+   endif
+ endif
+ 
+diff --git a/jdk/make/CopyFiles.gmk b/jdk/make/CopyFiles.gmk
+index a132f617..eeafc003 100644
+--- a/jdk/make/CopyFiles.gmk
++++ b/jdk/make/CopyFiles.gmk
+@@ -338,9 +338,15 @@ else
+   ifeq ($(CLIENT_AND_SERVER), true)
+     COPY_JVM_CFG_FILE := true
+   else
+-    # For zero, the default jvm.cfg file is sufficient
++    # For zero, the default jvm.cfg file is sufficient.
+     ifeq ($(JVM_VARIANT_ZERO), true)
+       COPY_JVM_CFG_FILE := true
++    else
++      ifeq ($(OPENJDK_TARGET_CPU), aarch32)
++        ifeq ($(JVM_VARIANT_CORE), true)
++          COPY_JVM_CFG_FILE := true
++        endif
++      endif
+     endif
+   endif
+ endif
+diff --git a/jdk/make/lib/Awt2dLibraries.gmk b/jdk/make/lib/Awt2dLibraries.gmk
+index 01e03690..097ac9f0 100644
+--- a/jdk/make/lib/Awt2dLibraries.gmk
++++ b/jdk/make/lib/Awt2dLibraries.gmk
+@@ -23,6 +23,8 @@
+ # questions.
+ #
+ 
++X_LIBS :=
++
+ WIN_AWT_LIB := $(JDK_OUTPUTDIR)/objs/libawt/awt.lib
+ 
+ ##########################################################################################
+@@ -223,7 +225,7 @@ ifeq ($(OPENJDK_TARGET_OS), windows)
+       $(JDK_TOPDIR)/src/$(OPENJDK_TARGET_OS_API_DIR)/native/sun/windows \
+       $(JDK_TOPDIR)/src/$(OPENJDK_TARGET_OS_API_DIR)/native/sun/java2d/windows \
+       $(JDK_TOPDIR)/src/$(OPENJDK_TARGET_OS_API_DIR)/native/sun/java2d/d3d
+-else ifneq ($(OPENJDK_TARGET_OS), macosx)
++else ifneq ($(OPENJDK_TARGET_OS), macosx_NOTIOS)
+   LIBAWT_DIRS += \
+       $(JDK_TOPDIR)/src/$(OPENJDK_TARGET_OS_API_DIR)/native/sun/java2d/x11
+ endif
+@@ -477,7 +479,8 @@ $(eval $(call SetupNativeCompilation,BUILD_LIBAWT, \
+     LDFLAGS_SUFFIX_linux := -ljvm $(LIBM) $(LIBDL) -ljava, \
+     LDFLAGS_SUFFIX_solaris := -ljvm $(LIBM) $(LIBDL) -ljava -lc, \
+     LDFLAGS_SUFFIX_aix :=-ljvm $(LIBM) $(LIBDL) -ljava -lm,\
+-    LDFLAGS_SUFFIX_macosx := -lmlib_image -ljvm $(LIBM) \
++    LDFLAGS_SUFFIX_macosx := -lmlib_image -ljvm -ljava $(LIBM), \
++    LDFLAGS_SUFFIX_macosx_NOTIOS := -lmlib_image -ljvm $(LIBM) \
+         -framework Cocoa \
+         -framework OpenGL \
+         -framework JavaNativeFoundation \
+@@ -558,7 +561,8 @@ ifeq ($(findstring $(OPENJDK_TARGET_OS),windows macosx),)
+       LIBAWT_XAWT_CFLAGS += -DINTERNAL_BUILD
+     endif
+ 
+-    LIBAWT_XAWT_FILES := \
++    LIBAWT_XAWT_FILES := list.c
++    LIBAWT_XAWT_FILES_Z := \
+         XlibWrapper.c \
+         XWindow.c \
+         XToolkit.c \
+@@ -616,8 +620,8 @@ ifeq ($(findstring $(OPENJDK_TARGET_OS),windows macosx),)
+         sun_awt_X11_GtkFileDialogPeer.c \
+         XRSurfaceData.c \
+         XRBackendNative.c
+-
+-    LIBAWT_XAWT_LDFLAGS_SUFFIX := $(LIBM) -lawt -lXext -lX11 -lXrender $(LIBDL) -lXtst -lXi -ljava -ljvm -lc
++    # -lXext -lX11 -lXrender -lXtst -lXi
++    LIBAWT_XAWT_LDFLAGS_SUFFIX := $(LIBM) -lawt $(LIBDL) -ljava -ljvm -lc
+ 
+     ifeq ($(OPENJDK_TARGET_OS), linux)
+       # To match old build, add this to LDFLAGS instead of suffix.
+@@ -762,9 +766,9 @@ BUILD_LIBRARIES += $(BUILD_LIBJPEG)
+ 
+ ##########################################################################################
+ 
+-ifeq ($(BUILD_HEADLESS), true)
++# ifeq ($(BUILD_HEADLESS), true)
+   # Mac and Windows only use the native AWT lib, do not build libawt_headless
+-  ifeq ($(findstring $(OPENJDK_TARGET_OS), windows macosx),)
++  # ifeq ($(findstring $(OPENJDK_TARGET_OS), windows macosx_NOTIOS),)
+ 
+     LIBAWT_HEADLESS_DIRS := $(JDK_TOPDIR)/src/share/native/sun/font \
+         $(JDK_TOPDIR)/src/share/native/sun/java2d/opengl \
+@@ -773,7 +777,7 @@ ifeq ($(BUILD_HEADLESS), true)
+         $(JDK_TOPDIR)/src/solaris/native/sun/java2d/opengl \
+         $(JDK_TOPDIR)/src/solaris/native/sun/java2d/x11
+ 
+-    ifeq ($(OPENJDK_TARGET_OS), macosx)
++    ifeq ($(OPENJDK_TARGET_OS), macosx_NOTIOS)
+       LIBAWT_HEADLESS_DIRS += $(JDK_TOPDIR)/src/macosx/native/sun/font
+     endif
+ 
+@@ -792,15 +796,29 @@ ifeq ($(BUILD_HEADLESS), true)
+         -I$(JDK_TOPDIR)/src/$(OPENJDK_TARGET_OS_API_DIR)/native/sun/jdga \
+         $(foreach dir, $(LIBAWT_HEADLESS_DIRS), -I$(dir))
+ 
++#        X11Renderer.c
++#        X11PMBlitLoops.c
++#        X11SurfaceData.c
++
++# TODO: Port below to GL4ES/Android GLES renderer.
++#        GLXGraphicsConfig.c
++#        GLXSurfaceData.c
++
++#        awt_DrawingSurface.c
++#        awt_GraphicsEnv.c
++#        awt_UNIXToolkit.c
++
+     LIBAWT_HEADLESS_FILES := \
++        awt_AWTEvent.c \
++        awt_Event.c \
+         awt_Font.c \
++        awt_Insets.c \
++        awt_Robot.c \
++        awt_util.c \
+         HeadlessToolkit.c \
+         fontpath.c \
+         VDrawingArea.c \
+         X11Color.c \
+-        X11Renderer.c \
+-        X11PMBlitLoops.c \
+-        X11SurfaceData.c \
+         X11FontScaler_md.c \
+         X11TextRenderer_md.c \
+         OGLBlitLoops.c \
+@@ -815,8 +833,6 @@ ifeq ($(BUILD_HEADLESS), true)
+         OGLSurfaceData.c \
+         OGLTextRenderer.c \
+         OGLVertexCache.c \
+-        GLXGraphicsConfig.c \
+-        GLXSurfaceData.c \
+         AccelGlyphCache.c \
+         CUPSfuncs.c
+ 
+@@ -840,9 +856,10 @@ ifeq ($(BUILD_HEADLESS), true)
+             $(call SET_SHARED_LIBRARY_ORIGIN), \
+         LDFLAGS_linux := $(call SET_SHARED_LIBRARY_ORIGIN,/..), \
+         LDFLAGS_solaris := $(call SET_SHARED_LIBRARY_ORIGIN,/..), \
+-        LDFLAGS_macosx := $(call SET_SHARED_LIBRARY_ORIGIN)., \
++        LDFLAGS_macosx := $(call SET_SHARED_LIBRARY_ORIGIN,/..), \
+         REORDER := $(LIBAWT_HEADLESS_REORDER), \
+         LDFLAGS_SUFFIX_linux := -ljvm -lawt -lm $(LIBDL) -ljava, \
++        LDFLAGS_SUFFIX_macosx := -ljvm -lawt -ljava,\
+         LDFLAGS_SUFFIX_aix := -ljvm -lawt -ljava,\
+         LDFLAGS_SUFFIX_solaris := $(LIBDL) -ljvm -lawt -lm -ljava $(LIBCXX) -lc, \
+         OBJECT_DIR := $(JDK_OUTPUTDIR)/objs/libawt_headless, \
+@@ -851,9 +868,8 @@ ifeq ($(BUILD_HEADLESS), true)
+     $(BUILD_LIBAWT_HEADLESS): $(BUILD_LIBAWT)
+ 
+     BUILD_LIBRARIES += $(BUILD_LIBAWT_HEADLESS)
+-
+-  endif
+-endif
++#  endif
++#endif
+ 
+ ##########################################################################################
+ 
+@@ -873,7 +889,7 @@ ifeq ($(OPENJDK_TARGET_OS), windows)
+   LIBFONTMANAGER_EXCLUDE_FILES += X11FontScaler.c \
+       X11TextRenderer.c
+   LIBFONTMANAGER_OPTIMIZATION := HIGHEST
+-else ifeq ($(OPENJDK_TARGET_OS), macosx)
++else ifeq ($(OPENJDK_TARGET_OS), macosx_NOTIOS)
+   LIBFONTMANAGER_EXCLUDE_FILES += X11FontScaler.c \
+       X11TextRenderer.c \
+       fontpath.c \
+@@ -914,8 +930,8 @@ $(eval $(call SetupNativeCompilation,BUILD_LIBFONTMANAGER, \
+     EXCLUDE_FILES := $(LIBFONTMANAGER_EXCLUDE_FILES) \
+         AccelGlyphCache.c, \
+     LANG := C++, \
+-    CFLAGS := $(CFLAGS_JDKLIB) $(BUILD_LIBFONTMANAGER_CFLAGS_COMMON), \
+-    CXXFLAGS := $(CXXFLAGS_JDKLIB) $(BUILD_LIBFONTMANAGER_CFLAGS_COMMON), \
++    CFLAGS := $(CFLAGS_JDKLIB) -fno-rtti $(BUILD_LIBFONTMANAGER_CFLAGS_COMMON), \
++    CXXFLAGS := $(CXXFLAGS_JDKLIB) -fno-rtti $(BUILD_LIBFONTMANAGER_CFLAGS_COMMON), \
+     OPTIMIZATION := $(LIBFONTMANAGER_OPTIMIZATION), \
+     CFLAGS_windows = -I$(JDK_TOPDIR)/src/$(OPENJDK_TARGET_OS_API_DIR)/native/sun/windows \
+         -DCC_NOEX, \
+@@ -924,7 +940,7 @@ $(eval $(call SetupNativeCompilation,BUILD_LIBFONTMANAGER, \
+         $(subst -Wl$(COMMA)-z$(COMMA)defs,,$(LDFLAGS_JDKLIB))) $(LDFLAGS_CXX_JDK) \
+         $(call SET_SHARED_LIBRARY_ORIGIN), \
+     LDFLAGS_SUFFIX := $(BUILD_LIBFONTMANAGER_FONTLIB), \
+-    LDFLAGS_SUFFIX_linux := -lawt $(LIBM) $(LIBCXX) -ljava -ljvm -lc, \
++    LDFLAGS_SUFFIX_linux := -lawt -lawt_headless $(LIBM) -lsupc++ -ljava -ljvm -lc, \
+     LDFLAGS_SUFFIX_solaris := -lawt -lawt_headless -lc $(LIBM) $(LIBCXX) -ljava -ljvm, \
+     LDFLAGS_SUFFIX_aix := -lawt -lawt_headless $(LIBM) $(LIBCXX) -ljava -ljvm,\
+     LDFLAGS_SUFFIX_macosx := -lawt $(LIBM) $(LIBCXX) -undefined dynamic_lookup \
+@@ -1044,20 +1060,23 @@ ifeq ($(OPENJDK_TARGET_OS), windows)
+ else # OPENJDK_TARGET_OS not windows
+ 
+   ifeq ($(OPENJDK_TARGET_OS), macosx)
+-    JAWT_FILES := jawt.m
+-    JAWT_LIBS := -lawt_lwawt
++# JAWT_FILES := jawt.m
++# JAWT_LIBS := -lawt_lwawt
++    JAWT_FILES := jawt.c
++    JAWT_LIBS := -lawt_headless
++# maybe -lawt_xawt later?
+   else
+     JAWT_FILES := jawt.c
+     JAWT_LIBS :=
+     ifneq ($(OPENJDK_TARGET_OS), solaris)
+       JAWT_LIBS += -lawt
+     endif
+-    ifndef BUILD_HEADLESS_ONLY
+-      JAWT_LIBS += -lawt_xawt
+-    else
++    # ifndef BUILD_HEADLESS_ONLY
++      # JAWT_LIBS += -lawt_xawt
++    # else
+       JAWT_LIBS += -lawt_headless
+       HEADLESS_CFLAG += -DHEADLESS
+-    endif
++    # endif
+   endif
+ 
+   $(eval $(call SetupNativeCompilation,BUILD_LIBJAWT, \
+@@ -1079,17 +1098,17 @@ else # OPENJDK_TARGET_OS not windows
+       LDFLAGS_SUFFIX_aix := $(JAWT_LIBS) $(LDFLAGS_JDKLIB_SUFFIX),\
+       LDFLAGS_SUFFIX_solaris := $(JAWT_LIBS) $(LDFLAGS_JDKLIB_SUFFIX) -lXrender, \
+       LDFLAGS_SUFFIX_macosx := -Xlinker -rpath -Xlinker @loader_path $(JAWT_LIBS) \
+-          -framework Cocoa $(LDFLAGS_JDKLIB_SUFFIX), \
++          -framework Foundation $(LDFLAGS_JDKLIB_SUFFIX), \
+       OBJECT_DIR := $(JDK_OUTPUTDIR)/objs/libjawt, \
+       DEBUG_SYMBOLS := $(DEBUG_ALL_BINARIES)))
+ 
+-  ifndef BUILD_HEADLESS_ONLY
+-    $(BUILD_LIBJAWT): $(BUILD_LIBAWT_XAWT)
+-  else
++  # ifndef BUILD_HEADLESS_ONLY
++    # $(BUILD_LIBJAWT): $(BUILD_LIBAWT_XAWT)
++  # else
+     $(BUILD_LIBJAWT): $(INSTALL_LIBRARIES_HERE)/$(LIBRARY_PREFIX)awt_headless$(SHARED_LIBRARY_SUFFIX)
+-  endif
++  # endif
+ 
+-  ifeq ($(OPENJDK_TARGET_OS), macosx)
++  ifeq ($(OPENJDK_TARGET_OS), macosx_NOTIOS)
+     $(BUILD_LIBJAWT): $(INSTALL_LIBRARIES_HERE)/$(LIBRARY_PREFIX)awt_lwawt$(SHARED_LIBRARY_SUFFIX)
+   endif
+ 
+@@ -1192,7 +1211,7 @@ ifndef BUILD_HEADLESS_ONLY
+     LIBSPLASHSCREEN_CFLAGS += $(ZLIB_CPPFLAGS)
+   endif
+ 
+-  ifeq ($(OPENJDK_TARGET_OS), macosx)
++  ifeq ($(OPENJDK_TARGET_OS), macosx_NOTIOS)
+     LIBSPLASHSCREEN_LDFLAGS_SUFFIX += $(LIBM) -lpthread -liconv -losxapp \
+         -framework ApplicationServices \
+         -framework Foundation \
+@@ -1225,9 +1244,9 @@ ifndef BUILD_HEADLESS_ONLY
+       OBJECT_DIR := $(JDK_OUTPUTDIR)/objs/libsplashscreen, \
+       DEBUG_SYMBOLS := $(DEBUG_ALL_BINARIES)))
+ 
+-  BUILD_LIBRARIES += $(LIBSPLASHSCREEN)
++  # BUILD_LIBRARIES += $(LIBSPLASHSCREEN)
+ 
+-  ifeq ($(OPENJDK_TARGET_OS), macosx)
++  ifeq ($(OPENJDK_TARGET_OS), macosx_NOTIOS)
+     $(LIBSPLASHSCREEN): $(INSTALL_LIBRARIES_HERE)/$(LIBRARY_PREFIX)osxapp$(SHARED_LIBRARY_SUFFIX)
+   endif
+ 
+@@ -1276,7 +1295,7 @@ endif
+ 
+ ##########################################################################################
+ 
+-ifeq ($(OPENJDK_TARGET_OS), macosx)
++ifeq ($(OPENJDK_TARGET_OS), macosx_NOTIOS)
+ 
+   LIBAWT_LWAWT_FILES := \
+       awt.m \
+@@ -1382,7 +1401,7 @@ ifeq ($(OPENJDK_TARGET_OS), macosx)
+           -I$(JDK_TOPDIR)/src/share/native/sun/awt/debug, \
+       LDFLAGS := $(LDFLAGS_JDKLIB) \
+           $(call SET_SHARED_LIBRARY_ORIGIN), \
+-      LDFLAGS_SUFFIX_macosx := -lawt -lmlib_image -losxapp -ljvm $(LIBM) \
++      LDFLAGS_SUFFIX_macosx := -lawt -lmlib_image -DEXCLUDE_losxapp -ljvm $(LIBM) \
+           -framework Accelerate \
+           -framework ApplicationServices \
+           -framework AudioToolbox \
+@@ -1411,7 +1430,7 @@ endif
+ 
+ ##########################################################################################
+ 
+-ifeq ($(OPENJDK_TARGET_OS), macosx)
++ifeq ($(OPENJDK_TARGET_OS), macosx_NOTIOS)
+ 
+   $(eval $(call SetupNativeCompilation,BUILD_LIBOSXUI, \
+       LIBRARY := osxui, \
+diff --git a/jdk/make/lib/CoreLibraries.gmk b/jdk/make/lib/CoreLibraries.gmk
+index 0d7e3aae..9d3c92b5 100644
+--- a/jdk/make/lib/CoreLibraries.gmk
++++ b/jdk/make/lib/CoreLibraries.gmk
+@@ -415,7 +415,6 @@ LIBJLI_CFLAGS += $(OPENJDK_TARGET_CPU_JLI_CFLAGS)
+ 
+ ifeq ($(OPENJDK_TARGET_OS), macosx)
+   LIBJLI_CFLAGS += -DPACKAGE_PATH=\"$(PACKAGE_PATH)\"
+-  LIBJLI_CFLAGS += -mmacosx-version-min=$(MACOSX_VERSION_MIN)
+ endif
+ 
+ ifneq ($(USE_EXTERNAL_LIBZ), true)
+@@ -449,7 +448,7 @@ $(eval $(call SetupNativeCompilation,BUILD_LIBJLI, \
+         $(call SET_SHARED_LIBRARY_ORIGIN), \
+     LDFLAGS_linux := $(call SET_SHARED_LIBRARY_ORIGIN,/..), \
+     LDFLAGS_solaris := $(call SET_SHARED_LIBRARY_ORIGIN,/..), \
+-    LDFLAGS_macosx := -framework Cocoa -framework Security -framework ApplicationServices -mmacosx-version-min=$(MACOSX_VERSION_MIN), \
++    LDFLAGS_macosx := -framework Foundation -framework Security, \
+     LDFLAGS_SUFFIX_solaris := $(LIBZ) $(LIBDL) -lc, \
+     LDFLAGS_SUFFIX_linux := $(LIBZ) $(LIBDL) -lc -lpthread, \
+     LDFLAGS_SUFFIX_aix := $(LIBZ) $(LIBDL),\
+@@ -509,8 +508,8 @@ else ifeq ($(OPENJDK_TARGET_OS), macosx)
+       INCLUDE_FILES := $(BUILD_LIBJLI_FILES), \
+       LANG := C, \
+       OPTIMIZATION := HIGH, \
+-      CFLAGS := $(CFLAGS_JDKLIB) $(LIBJLI_CFLAGS) -mmacosx-version-min=$(MACOSX_VERSION_MIN), \
+-      LDFLAGS := -nostdlib -r -mmacosx-version-min=$(MACOSX_VERSION_MIN), \
++      CFLAGS := $(CFLAGS_JDKLIB) $(LIBJLI_CFLAGS), \
++      LDFLAGS := -nostdlib -r, \
+       OBJECT_DIR := $(JDK_OUTPUTDIR)/objs/libjli_static, \
+       DEBUG_SYMBOLS := $(DEBUG_ALL_BINARIES)))
+ 
+diff --git a/jdk/make/lib/NioLibraries.gmk b/jdk/make/lib/NioLibraries.gmk
+index 6c9c46a3..11c5e90c 100644
+--- a/jdk/make/lib/NioLibraries.gmk
++++ b/jdk/make/lib/NioLibraries.gmk
+@@ -170,10 +170,14 @@ ifeq ($(OPENJDK_TARGET_OS_API), posix)
+   ifeq (, $(filter $(OPENJDK_TARGET_OS), macosx aix))
+ 
+     # Suppress unused parameters required by exported JNI functions.
+-    SCTP_WERROR := -Werror -Wno-error=unused-parameter
++    # -Werror
++    SCTP_WERROR := -Werror=implicit-function-declaration -Wno-error=unused-parameter
+     ifeq ($(OPENJDK_TARGET_CPU_ARCH), ppc)
+       SCTP_WERROR :=
+     endif
++    ifeq ($(OPENJDK_TARGET_CPU_ARCH), aarch32)
++      SCTP_WERROR :=
++    endif
+ 
+     $(eval $(call SetupNativeCompilation,BUILD_LIBSCTP, \
+         LIBRARY := sctp, \
+diff --git a/jdk/make/lib/PlatformLibraries.gmk b/jdk/make/lib/PlatformLibraries.gmk
+index 49f584b4..9fc79e28 100644
+--- a/jdk/make/lib/PlatformLibraries.gmk
++++ b/jdk/make/lib/PlatformLibraries.gmk
+@@ -23,7 +23,7 @@
+ # questions.
+ #
+ 
+-ifeq ($(OPENJDK_TARGET_OS), macosx)
++ifeq ($(OPENJDK_TARGET_OS), macosx_NOTIOS)
+ 
+   $(eval $(call SetupNativeCompilation,BUILD_LIBAPPLESCRIPTENGINE, \
+       LIBRARY := AppleScriptEngine, \
+@@ -50,7 +50,7 @@ endif
+ 
+ ##########################################################################################
+ 
+-ifeq ($(OPENJDK_TARGET_OS), macosx)
++ifeq ($(OPENJDK_TARGET_OS), macosx_NOTIOS)
+ 
+   $(eval $(call SetupNativeCompilation,BUILD_LIBOSXAPP, \
+       LIBRARY := osxapp, \
+@@ -85,7 +85,7 @@ endif
+ 
+ ##########################################################################################
+ 
+-ifeq ($(OPENJDK_TARGET_OS), macosx)
++ifeq ($(OPENJDK_TARGET_OS), macosx_NOTIOS)
+ 
+   LIBOSX_DIRS := \
+       $(JDK_TOPDIR)/src/macosx/native/com/apple/concurrent \
+diff --git a/jdk/make/lib/SecurityLibraries.gmk b/jdk/make/lib/SecurityLibraries.gmk
+index 84abb7e7..29e55cfb 100644
+--- a/jdk/make/lib/SecurityLibraries.gmk
++++ b/jdk/make/lib/SecurityLibraries.gmk
+@@ -133,6 +133,7 @@ endif
+ ##########################################################################################
+ 
+ ifneq ($(BUILD_CRYPTO), no)
++ifneq ($(BUILD_IOS), 1)
+   BUILD_LIBKRB5_NAME :=
+   ifeq ($(OPENJDK_TARGET_OS), windows)
+     BUILD_LIBKRB5_NAME := w2k_lsa_auth
+@@ -172,6 +173,7 @@ ifneq ($(BUILD_CRYPTO), no)
+     BUILD_LIBRARIES += $(BUILD_LIBKRB5)
+   endif
+ endif
++endif
+ 
+ ##########################################################################################
+ 
+diff --git a/jdk/make/lib/ServiceabilityLibraries.gmk b/jdk/make/lib/ServiceabilityLibraries.gmk
+index c951b118..37399b1d 100644
+--- a/jdk/make/lib/ServiceabilityLibraries.gmk
++++ b/jdk/make/lib/ServiceabilityLibraries.gmk
+@@ -262,7 +262,7 @@ $(eval $(call SetupNativeCompilation,BUILD_LIBINSTRUMENT, \
+     LDFLAGS_linux := $(call SET_SHARED_LIBRARY_ORIGIN,/jli), \
+     LDFLAGS_solaris := $(call SET_SHARED_LIBRARY_ORIGIN,/jli), \
+     LDFLAGS_macosx := -Xlinker -all_load $(JDK_OUTPUTDIR)/objs/libjli_static.a \
+-        -framework Cocoa -framework Security -framework ApplicationServices, \
++        -framework Foundation -framework Security, \
+     LDFLAGS_SUFFIX := $(LIBINSTRUMENT_LDFLAGS_SUFFIX), \
+     LDFLAGS_SUFFIX_macosx := -liconv $(LIBZ), \
+     LDFLAGS_SUFFIX_solaris := $(LIBZ) -L $(INSTALL_LIBRARIES_HERE)/jli -ljli $(LIBDL) -lc, \
+diff --git a/jdk/make/lib/SoundLibraries.gmk b/jdk/make/lib/SoundLibraries.gmk
+index b59a9462..ca2a3ff7 100644
+--- a/jdk/make/lib/SoundLibraries.gmk
++++ b/jdk/make/lib/SoundLibraries.gmk
+@@ -84,6 +84,7 @@ ifeq ($(OPENJDK_TARGET_OS), macosx)
+       -DUSE_PLATFORM_MIDI_IN=TRUE
+   LIBJSOUND_SRC_DIRS += $(JDK_TOPDIR)/src/macosx/native/com/sun/media/sound
+   LIBJSOUND_SRC_FILES += \
++      PLATFORM_API_iPhoneOS_Permission.m \
+       PLATFORM_API_MacOSX_Utils.cpp \
+       PLATFORM_API_MacOSX_PCM.cpp \
+       PLATFORM_API_MacOSX_Ports.cpp \
+@@ -144,6 +145,10 @@ else
+        LIBJSOUND_CFLAGS += -DX_ARCH=X_PPC64LE
+   endif
+ 
++  ifeq ($(OPENJDK_TARGET_CPU), aarch32)
++       LIBJSOUND_CFLAGS += -DX_ARCH=X_AARCH32
++  endif
++
+   ifeq ($(OPENJDK_TARGET_CPU), aarch64)
+ 	LIBJSOUND_CFLAGS += -DX_ARCH=X_AARCH64
+   endif
+@@ -151,6 +156,7 @@ endif
+ 
+ LIBJSOUND_CFLAGS += -DEXTRA_SOUND_JNI_LIBS='"$(EXTRA_SOUND_JNI_LIBS)"'
+ 
++# -framework AudioUnit
+ $(eval $(call SetupNativeCompilation,BUILD_LIBJSOUND, \
+     LIBRARY := jsound, \
+     OUTPUT_DIR := $(INSTALL_LIBRARIES_HERE), \
+@@ -165,7 +171,7 @@ $(eval $(call SetupNativeCompilation,BUILD_LIBJSOUND, \
+     LDFLAGS := $(LDFLAGS_JDKLIB) \
+         $(call SET_SHARED_LIBRARY_ORIGIN), \
+     LDFLAGS_macosx := -framework CoreAudio -framework CoreFoundation \
+-        -framework CoreServices -framework AudioUnit $(LIBCXX) \
++        -framework CoreServices -framework AVFoundation $(LIBCXX) \
+         -framework CoreMIDI -framework AudioToolbox, \
+     LDFLAGS_windows := $(WIN_JAVA_LIB) advapi32.lib winmm.lib, \
+     LDFLAGS_SUFFIX_posix := -ljava -ljvm, \
+@@ -216,7 +222,7 @@ ifneq ($(filter jsoundalsa, $(EXTRA_SOUND_JNI_LIBS)), )
+ 
+   $(BUILD_LIBJSOUNDALSA): $(BUILD_LIBJAVA)
+ 
+-  BUILD_LIBRARIES += $(BUILD_LIBJSOUNDALSA)
++  # BUILD_LIBRARIES += $(BUILD_LIBJSOUNDALSA)
+ 
+ endif
+ 
+diff --git a/jdk/src/macosx/native/com/sun/media/sound/PLATFORM_API_MacOSX_PCM.cpp b/jdk/src/macosx/native/com/sun/media/sound/PLATFORM_API_MacOSX_PCM.cpp
+index 608ee13d..53fee94c 100644
+--- a/jdk/src/macosx/native/com/sun/media/sound/PLATFORM_API_MacOSX_PCM.cpp
++++ b/jdk/src/macosx/native/com/sun/media/sound/PLATFORM_API_MacOSX_PCM.cpp
+@@ -44,6 +44,9 @@
+ extern "C" {
+ #include "Utilities.h"
+ #include "DirectAudio.h"
++#if TARGET_OS_IPHONE
++void DAUDIO_RequestRecordPermission();
++#endif
+ }
+ 
+ #if USE_DAUDIO == TRUE
+@@ -71,6 +74,9 @@ static inline void PrintStreamDesc(const AudioStreamBasicDescription *inDesc) {
+ static DeviceList deviceCache;
+ 
+ INT32 DAUDIO_GetDirectAudioDeviceCount() {
++#ifdef TARGET_OS_IPHONE
++    DAUDIO_RequestRecordPermission();
++#endif
+     deviceCache.Refresh();
+     int count = deviceCache.GetCount();
+     if (count > 0) {
+@@ -635,7 +641,11 @@ static AudioUnit CreateOutputUnit(AudioDeviceID deviceID, int isSource)
+ 
+     AudioComponentDescription desc;
+     desc.componentType         = kAudioUnitType_Output;
++#if !TARGET_OS_IPHONE
+     desc.componentSubType      = (deviceID == 0 && isSource) ? kAudioUnitSubType_DefaultOutput : kAudioUnitSubType_HALOutput;
++#else
++    desc.componentSubType      = kAudioUnitSubType_RemoteIO;
++#endif
+     desc.componentManufacturer = kAudioUnitManufacturer_Apple;
+     desc.componentFlags        = 0;
+     desc.componentFlagsMask    = 0;
+diff --git a/jdk/src/macosx/native/com/sun/media/sound/PLATFORM_API_iPhoneOS_Permission.m b/jdk/src/macosx/native/com/sun/media/sound/PLATFORM_API_iPhoneOS_Permission.m
+new file mode 100644
+index 00000000..4375ef71
+--- /dev/null
++++ b/jdk/src/macosx/native/com/sun/media/sound/PLATFORM_API_iPhoneOS_Permission.m
+@@ -0,0 +1,15 @@
++#import <AVFAudio/AVFAudio.h>
++
++#if TARGET_OS_IPHONE
++void DAUDIO_RequestRecordPermission() {
++  AVAudioSession *session = AVAudioSession.sharedInstance;
++  if ([session respondsToSelector:@selector(requestRecordPermission:)]) {
++    dispatch_group_t group = dispatch_group_create();
++    dispatch_group_enter(group);
++    [session requestRecordPermission:^(BOOL granted) {
++      dispatch_group_leave(group);
++    }];
++    dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
++  }
++}
++#endif
+diff --git a/jdk/src/macosx/native/sun/awt/OSVersion.h b/jdk/src/macosx/native/sun/awt/OSVersion.h
+new file mode 100644
+index 00000000..65d2f2c2
+--- /dev/null
++++ b/jdk/src/macosx/native/sun/awt/OSVersion.h
+@@ -0,0 +1,29 @@
++/*
++ * Copyright (c) 2011, 2012, Oracle and/or its affiliates. All rights reserved.
++ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++ *
++ * This code is free software; you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License version 2 only, as
++ * published by the Free Software Foundation.  Oracle designates this
++ * particular file as subject to the "Classpath" exception as provided
++ * by Oracle in the LICENSE file that accompanied this code.
++ *
++ * This code is distributed in the hope that it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
++ * version 2 for more details (a copy is included in the LICENSE file that
++ * accompanied this code).
++ *
++ * You should have received a copy of the GNU General Public License version
++ * 2 along with this work; if not, write to the Free Software Foundation,
++ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
++ *
++ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
++ * or visit www.oracle.com if you need additional information or have any
++ * questions.
++ */
++
++// Support for detecting Mac OS X versions
++
++double getOSXMajorVersion();
++BOOL isSnowLeopardOrLower();
+diff --git a/jdk/src/macosx/native/sun/awt/OSVersion.m b/jdk/src/macosx/native/sun/awt/OSVersion.m
+new file mode 100644
+index 00000000..93951abe
+--- /dev/null
++++ b/jdk/src/macosx/native/sun/awt/OSVersion.m
+@@ -0,0 +1,61 @@
++/*
++ * Copyright (c) 2011, 2012, Oracle and/or its affiliates. All rights reserved.
++ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++ *
++ * This code is free software; you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License version 2 only, as
++ * published by the Free Software Foundation.  Oracle designates this
++ * particular file as subject to the "Classpath" exception as provided
++ * by Oracle in the LICENSE file that accompanied this code.
++ *
++ * This code is distributed in the hope that it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
++ * version 2 for more details (a copy is included in the LICENSE file that
++ * accompanied this code).
++ *
++ * You should have received a copy of the GNU General Public License version
++ * 2 along with this work; if not, write to the Free Software Foundation,
++ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
++ *
++ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
++ * or visit www.oracle.com if you need additional information or have any
++ * questions.
++ */
++
++// Support for detecting Mac OS X Versions
++
++#include <math.h>
++#include <stdlib.h>
++#include <stdio.h>
++#import <JavaRuntimeSupport/JavaRuntimeSupport.h>
++
++
++// returns 107 for Lion, 106 for SnowLeopard etc.
++int getOSXMajorVersion() {
++    char *ver = JRSCopyOSVersion();
++    if (ver == NULL) {
++        return 0;
++    }
++
++    int len = strlen(ver);
++    int v = 0;
++
++    // Third char must be a '.'
++    if (len >= 3 && ver[2] == '.') {
++        int i;
++
++        v = (ver[0] - '0') * 10 + (ver[1] - '0');
++        for (i = 3; i < len && isdigit(ver[i]); ++i) {
++            v = v * 10 + (ver[i] - '0');
++        }
++    }
++
++    free(ver);
++
++    return v;
++}
++
++BOOL isSnowLeopardOrLower() {
++    return (getOSXMajorVersion() < 107);
++}
+diff --git a/jdk/src/share/classes/sun/security/util/ManifestEntryVerifier.java b/jdk/src/share/classes/sun/security/util/ManifestEntryVerifier.java
+index 303c96d7..aa555cc2 100644
+--- a/jdk/src/share/classes/sun/security/util/ManifestEntryVerifier.java
++++ b/jdk/src/share/classes/sun/security/util/ManifestEntryVerifier.java
+@@ -73,6 +73,18 @@ public class ManifestEntryVerifier {
+ 
+     private CodeSigner[] signers = null;
+ 
++    /**
++     * Create a new ManifestEntryVerifier object.
++     */
++    public ManifestEntryVerifier(Manifest man)
++    {
++        createdDigests = new HashMap<String, MessageDigest>(11);
++        digests = new ArrayList<MessageDigest>();
++        manifestHashes = new ArrayList<byte[]>();
++        this.manifestFileName = "default_name";
++        this.man = man;
++    }
++
+     /**
+      * Create a new ManifestEntryVerifier object.
+      */
+diff --git a/jdk/src/solaris/native/java/lang/java_props_macosx.c b/jdk/src/solaris/native/java/lang/java_props_macosx.c
+index 80dc483b..c62a0c1d 100644
+--- a/jdk/src/solaris/native/java/lang/java_props_macosx.c
++++ b/jdk/src/solaris/native/java/lang/java_props_macosx.c
+@@ -23,14 +23,24 @@
+  * questions.
+  */
+ 
++#include "TargetConditionals.h"
++
+ #include <sys/socket.h>
+ #include <netinet/in.h>
+ #include <arpa/inet.h>
+ #include <objc/objc-runtime.h>
+ 
++#ifndef TARGET_OS_IOS
+ #include <Security/AuthSession.h>
++#endif
+ #include <CoreFoundation/CoreFoundation.h>
++#ifndef TARGET_OS_IOS
+ #include <SystemConfiguration/SystemConfiguration.h>
++#else
++#include <SystemConfiguration/OSXSCSchemaDefinitions.h>
++#include <SystemConfiguration/SCDynamicStore.h>
++CFDictionaryRef SCDynamicStoreCopyProxies(SCDynamicStoreRef	store);
++#endif
+ #include <Foundation/Foundation.h>
+ 
+ #include "java_props_macosx.h"
+@@ -159,6 +169,7 @@ int isInAquaSession() {
+         // if "true" then tell the caller we're in an Aqua session without actually checking
+         return 1;
+     }
++#ifndef TARGET_OS_IOS
+     // Is the WindowServer available?
+     SecuritySessionId session_id;
+     SessionAttributeBits session_info;
+@@ -168,6 +179,7 @@ int isInAquaSession() {
+             return 1;
+         }
+     }
++#endif
+     return 0;
+ }
+ 
+diff --git a/jdk/src/solaris/native/sun/awt/awt.h b/jdk/src/solaris/native/sun/awt/awt.h
+index df5f6030..f2f12852 100644
+--- a/jdk/src/solaris/native/sun/awt/awt.h
++++ b/jdk/src/solaris/native/sun/awt/awt.h
+@@ -34,9 +34,9 @@
+ #include "jni_util.h"
+ #include "debug_util.h"
+ 
+-#if !defined(HEADLESS) && !defined(MACOSX)
++#if defined(__ANDROID__) || (!defined(HEADLESS) && !defined(MACOSX))
+ #include <X11/Intrinsic.h>
+-#endif /* !HEADLESS && !MACOSX */
++#endif /* __ANDROID__ (!HEADLESS && !MACOSX) */
+ 
+ 
+ /* The JVM instance: defined in awt_MToolkit.c */
+@@ -116,9 +116,9 @@ extern void awt_output_flush();
+ #define AWT_NOTIFY()         AWT_NOTIFY_IMPL()
+ #define AWT_NOTIFY_ALL()     AWT_NOTIFY_ALL_IMPL()
+ 
+-#if !defined(HEADLESS) && !defined(MACOSX)
++#if defined(__ANDROID__) || (!defined(HEADLESS) && !defined(MACOSX))
+ extern Display         *awt_display; /* awt_GraphicsEnv.c */
+ extern Boolean          awt_ModLockIsShiftLock; /* XToolkit.c */
+-#endif /* !HEADLESS && !MACOSX */
++#endif /* __ANDROID__ || (!HEADLESS && !MACOSX) */
+ 
+ #endif /* ! _AWT_ */
+diff --git a/jdk/src/solaris/native/sun/awt/awt_AWTEvent.c b/jdk/src/solaris/native/sun/awt/awt_AWTEvent.c
+index 317e346e..9d7031a5 100644
+--- a/jdk/src/solaris/native/sun/awt/awt_AWTEvent.c
++++ b/jdk/src/solaris/native/sun/awt/awt_AWTEvent.c
+@@ -29,11 +29,11 @@
+  * THIS FILE DOES NOT IMPLEMENT ANY OF THE OBSOLETE java.awt.Event
+  * CLASS. SEE awt_Event.[ch] FOR THAT CLASS' IMPLEMENTATION.
+  */
+-
++/*
+ #ifdef HEADLESS
+     #error This file should not be included in headless library
+ #endif
+-
++*/
+ #include "awt_p.h"
+ #include "java_awt_AWTEvent.h"
+ #include "java_awt_event_InputEvent.h"
+diff --git a/jdk/src/solaris/native/sun/awt/awt_DrawingSurface.c b/jdk/src/solaris/native/sun/awt/awt_DrawingSurface.c
+index de7e8488..e3e578c1 100644
+--- a/jdk/src/solaris/native/sun/awt/awt_DrawingSurface.c
++++ b/jdk/src/solaris/native/sun/awt/awt_DrawingSurface.c
+@@ -23,10 +23,15 @@
+  * questions.
+  */
+ 
++/*
+ #ifdef HEADLESS
+     #error This file should not be included in headless library
+ #endif
++*/
+ 
++#ifdef __ANDROID__
++# include "awt.h"
++#endif
+ #include "awt_p.h"
+ #include "java_awt_Component.h"
+ 
+@@ -36,14 +41,27 @@
+ #include <jni_util.h>
+ #include <jawt_md.h>
+ 
++#include "awt_GraphicsEnv.h"
++
++
++// FIXME awt_TopLevel.c not found
++#ifndef __ANDROID__
+ extern struct ComponentIDs componentIDs;
+ 
+-#include "awt_GraphicsEnv.h"
+ extern jfieldID windowID;
+ extern jfieldID targetID;
+ extern jfieldID graphicsConfigID;
+ extern jfieldID drawStateID;
+ extern struct X11GraphicsConfigIDs x11GraphicsConfigIDs;
++#else
++struct ComponentIDs componentIDs;
++
++jfieldID windowID;
++jfieldID targetID;
++jfieldID graphicsConfigID;
++jfieldID drawStateID;
++struct X11GraphicsConfigIDs x11GraphicsConfigIDs;
++#endif
+ 
+ /*
+  * Lock the surface of the target component for native rendering.
+@@ -160,7 +178,11 @@ JNIEXPORT int32_t JNICALL
+             JNU_GetLongFieldAsPtr(env, gc_object,
+                                   x11GraphicsConfigIDs.aData);
+     } else {
++#ifndef __ANDROID__
+         adata = getDefaultConfig(DefaultScreen(awt_display));
++#else
++        adata = getDefaultConfig(0);
++#endif
+     }
+ 
+     result = adata->AwtColorMatch(r, g, b, adata);
+@@ -232,13 +254,29 @@ awt_DrawingSurface_GetDrawingSurfaceInfo(JAWT_DrawingSurface* ds)
+ 
+     /* Set drawable and display */
+     px->drawable = (*env)->GetLongField(env, peer, windowID);
++/*
++#ifdef __ANDROID__
++    Display fake_awt_display;
++    awt_display = &fake_awt_display;
++    awt_display->proto_major_version = 11;
++    awt_display->proto_minor_version = 7;
++    awt_display->vendor = "Android Xlib";
++#endif
++*/
+     px->display = awt_display;
+ 
+     /* Get window attributes to set other values */
++#if !defined(__ANDROID__) && !defined(HEADLESS)
+     XGetWindowAttributes(awt_display, (Window)(px->drawable), &attrs);
+ 
+-    /* Set the other values */
+     px->visualID = XVisualIDFromVisual(attrs.visual);
++#else
++    px->visualID = TrueColor;
++    attrs.colormap = 1; // FIXME!
++    attrs.depth = 24;
++#endif
++
++    /* Set the other values */
+     px->colormapID = attrs.colormap;
+     px->depth = attrs.depth;
+     px->GetAWTColor = awt_GetColor;
+diff --git a/jdk/src/solaris/native/sun/awt/awt_Event.c b/jdk/src/solaris/native/sun/awt/awt_Event.c
+index 64424697..af3df03c 100644
+--- a/jdk/src/solaris/native/sun/awt/awt_Event.c
++++ b/jdk/src/solaris/native/sun/awt/awt_Event.c
+@@ -28,9 +28,12 @@
+  *** awt_AWTEvent.[ch] FOR THE NEWER EVENT CLASSES.
+  ***
+  ***/
++
++/*
+ #ifdef HEADLESS
+     #error This file should not be included in headless library
+ #endif
++*/
+ 
+ #include "java_awt_Event.h"
+ #include "jni_util.h"
+diff --git a/jdk/src/solaris/native/sun/awt/awt_GraphicsEnv.c b/jdk/src/solaris/native/sun/awt/awt_GraphicsEnv.c
+index 94f02281..77439ce6 100644
+--- a/jdk/src/solaris/native/sun/awt/awt_GraphicsEnv.c
++++ b/jdk/src/solaris/native/sun/awt/awt_GraphicsEnv.c
+@@ -886,6 +886,8 @@ Java_sun_awt_X11GraphicsEnvironment_initGLX(JNIEnv *env, jclass x11ge)
+     AWT_UNLOCK();
+ 
+     return glxAvailable;
++#elif defined(__ANDROID)
++    return JNI_TRUE;
+ #else
+     return JNI_FALSE;
+ #endif /* !HEADLESS */
+@@ -900,7 +902,7 @@ JNIEXPORT jint JNICALL
+ Java_sun_awt_X11GraphicsEnvironment_getNumScreens(JNIEnv *env, jobject this)
+ {
+ #ifdef HEADLESS
+-    return (jint)0;
++    return (jint)1;
+ #else
+     return awt_numScreens;
+ #endif /* !HEADLESS */
+diff --git a/jdk/src/solaris/native/sun/awt/awt_LoadLibrary.c b/jdk/src/solaris/native/sun/awt/awt_LoadLibrary.c
+index 59483027..c2298361 100644
+--- a/jdk/src/solaris/native/sun/awt/awt_LoadLibrary.c
++++ b/jdk/src/solaris/native/sun/awt/awt_LoadLibrary.c
+@@ -30,6 +30,7 @@
+ #include <jni.h>
+ #include <jni_util.h>
+ #include <jvm.h>
++#include <stdbool.h>
+ #include "gdefs.h"
+ 
+ #include <sys/param.h>
+@@ -86,8 +87,9 @@ JNIEXPORT jboolean JNICALL AWTIsHeadless() {
+  */
+ 
+ #ifdef MACOSX
+-  #define LWAWT_PATH "/libawt_lwawt.dylib"
+-  #define DEFAULT_PATH LWAWT_PATH
++  #define XAWT_PATH "/libawt_xawt.dylib"
++  #define DEFAULT_PATH XAWT_PATH
++  #define HEADLESS_PATH "/libawt_headless.dylib"
+ #else
+   #define XAWT_PATH "/libawt_xawt.so"
+   #define DEFAULT_PATH XAWT_PATH
+@@ -116,8 +118,13 @@ AWT_OnLoad(JavaVM *vm, void *reserved)
+     jvm = vm;
+ 
+     /* Get address of this library and the directory containing it. */
+-    dladdr((void *)AWT_OnLoad, &dlinfo);
+-    realpath((char *)dlinfo.dli_fname, buf);
++    char *altpath = getenv("JAVA_AWT_PATH");
++    if (altpath != NULL) {
++        realpath(altpath, buf);
++    } else {
++        dladdr((void *)AWT_OnLoad, &dlinfo);
++        realpath((char *)dlinfo.dli_fname, buf);
++    }
+     len = strlen(buf);
+     p = strrchr(buf, '/');
+ 
+@@ -130,7 +137,7 @@ AWT_OnLoad(JavaVM *vm, void *reserved)
+     fmProp = (*env)->NewStringUTF(env, "sun.font.fontmanager");
+     CHECK_EXCEPTION_FATAL(env, "Could not allocate font manager property");
+ 
+-#ifdef MACOSX
++#ifdef MACOSX_NOTIOS
+         fmanager = (*env)->NewStringUTF(env, "sun.font.CFontManager");
+         tk = LWAWT_PATH;
+ #else
+@@ -146,11 +153,9 @@ AWT_OnLoad(JavaVM *vm, void *reserved)
+         CHECK_EXCEPTION_FATAL(env, "Could not allocate set properties");
+     }
+ 
+-#ifndef MACOSX
+     if (AWTIsHeadless()) {
+         tk = HEADLESS_PATH;
+     }
+-#endif
+ 
+     /* Calculate library name to load */
+     strncpy(p, tk, MAXPATHLEN-len-1);
+diff --git a/jdk/src/solaris/native/sun/awt/awt_Robot.c b/jdk/src/solaris/native/sun/awt/awt_Robot.c
+index 35ff9478..b4ff620e 100644
+--- a/jdk/src/solaris/native/sun/awt/awt_Robot.c
++++ b/jdk/src/solaris/native/sun/awt/awt_Robot.c
+@@ -23,9 +23,11 @@
+  * questions.
+  */
+ 
++/*
+ #ifdef HEADLESS
+     #error This file should not be included in headless library
+ #endif
++*/
+ 
+ #include "jvm_md.h"
+ #include <dlfcn.h>
+@@ -68,6 +70,7 @@ static void *xCompositeHandle;
+ static const char* XCOMPOSITE = JNI_LIB_NAME("Xcomposite");
+ static const char* XCOMPOSITE_VERSIONED = VERSIONED_JNI_LIB_NAME("Xcomposite", "1");
+ 
++#ifndef HEADLESS
+ static Bool checkXCompositeFunctions(void) {
+     return (compositeQueryExtension   != NULL   &&
+             compositeQueryVersion     != NULL   &&
+@@ -229,6 +232,7 @@ static XImage *getWindowImage(Display * display, Window window,
+ 
+     return image;
+ }
++#endif
+ 
+ /*********************************************************************************************/
+ 
+@@ -236,6 +240,7 @@ static XImage *getWindowImage(Display * display, Window window,
+ JNIEXPORT void JNICALL
+ Java_sun_awt_X11_XRobotPeer_setup (JNIEnv * env, jclass cls, jint numberOfButtons, jintArray buttonDownMasks)
+ {
++#ifndef HEADLESS
+     int32_t xtestAvailable;
+     jint *tmp;
+     int i;
+@@ -266,6 +271,7 @@ Java_sun_awt_X11_XRobotPeer_setup (JNIEnv * env, jclass cls, jint numberOfButton
+     }
+ 
+     AWT_UNLOCK();
++#endif
+ }
+ 
+ 
+@@ -278,7 +284,7 @@ Java_sun_awt_X11_XRobotPeer_getRGBPixelsImpl( JNIEnv *env,
+                              jint width,
+                              jint height,
+                              jintArray pixelArray) {
+-
++#ifndef HEADLESS
+     XImage *image;
+     jint *ary;               /* Array of jints for sending pixel values back
+                               * to parent process.
+@@ -337,13 +343,14 @@ Java_sun_awt_X11_XRobotPeer_getRGBPixelsImpl( JNIEnv *env,
+     XDestroyImage(image);
+ 
+     AWT_UNLOCK();
++#endif
+ }
+ 
+ JNIEXPORT void JNICALL
+ Java_sun_awt_X11_XRobotPeer_keyPressImpl (JNIEnv *env,
+                          jclass cls,
+                          jint keycode) {
+-
++#ifndef HEADLESS
+     AWT_LOCK();
+ 
+     DTRACE_PRINTLN1("RobotPeer: keyPressImpl(%i)", keycode);
+@@ -356,13 +363,14 @@ Java_sun_awt_X11_XRobotPeer_keyPressImpl (JNIEnv *env,
+     XSync(awt_display, False);
+ 
+     AWT_UNLOCK();
+-
++#endif
+ }
+ 
+ JNIEXPORT void JNICALL
+ Java_sun_awt_X11_XRobotPeer_keyReleaseImpl (JNIEnv *env,
+                            jclass cls,
+                            jint keycode) {
++#ifndef HEADLESS
+     AWT_LOCK();
+ 
+     DTRACE_PRINTLN1("RobotPeer: keyReleaseImpl(%i)", keycode);
+@@ -375,6 +383,7 @@ Java_sun_awt_X11_XRobotPeer_keyReleaseImpl (JNIEnv *env,
+     XSync(awt_display, False);
+ 
+     AWT_UNLOCK();
++#endif
+ }
+ 
+ JNIEXPORT void JNICALL
+@@ -383,7 +392,7 @@ Java_sun_awt_X11_XRobotPeer_mouseMoveImpl (JNIEnv *env,
+                           jobject xgc,
+                           jint root_x,
+                           jint root_y) {
+-
++#ifndef HEADLESS
+     AwtGraphicsConfigDataPtr adata;
+ 
+     AWT_LOCK();
+@@ -397,6 +406,7 @@ Java_sun_awt_X11_XRobotPeer_mouseMoveImpl (JNIEnv *env,
+     XSync(awt_display, False);
+ 
+     AWT_UNLOCK();
++#endif
+ }
+ 
+ /*
+@@ -407,6 +417,7 @@ void mouseAction(JNIEnv *env,
+                  jint buttonMask,
+                  Bool isMousePress)
+ {
++#ifndef HEADLESS
+     AWT_LOCK();
+ 
+     DTRACE_PRINTLN1("RobotPeer: mouseAction(%i)", buttonMask);
+@@ -444,6 +455,7 @@ void mouseAction(JNIEnv *env,
+ 
+     XSync(awt_display, False);
+     AWT_UNLOCK();
++#endif
+ }
+ 
+ JNIEXPORT void JNICALL
+@@ -468,7 +480,7 @@ Java_sun_awt_X11_XRobotPeer_mouseWheelImpl (JNIEnv *env,
+ /* probably could have been hacked into robot_mouseButtonEvent, but it's */
+ /* cleaner to give it its own command type, in case the implementation   */
+ /* needs to be changed later.  -bchristi, 6/20/01                        */
+-
++#ifndef HEADLESS
+     int32_t repeat = abs(wheelAmt);
+     int32_t button = wheelAmt < 0 ? 4 : 5;  /* wheel up:   button 4 */
+                                                  /* wheel down: button 5 */
+@@ -486,9 +498,12 @@ Java_sun_awt_X11_XRobotPeer_mouseWheelImpl (JNIEnv *env,
+     XSync(awt_display, False);
+ 
+     AWT_UNLOCK();
++#endif
+ }
+ 
+ JNIEXPORT void JNICALL
+ Java_sun_awt_X11_XRobotPeer_loadNativeLibraries (JNIEnv *env, jclass cls) {
++#ifndef HEADLESS
+     initXCompositeFunctions();
++#endif
+ }
+diff --git a/jdk/src/solaris/native/sun/awt/awt_p.h b/jdk/src/solaris/native/sun/awt/awt_p.h
+index d2d1d749..df62cf13 100644
+--- a/jdk/src/solaris/native/sun/awt/awt_p.h
++++ b/jdk/src/solaris/native/sun/awt/awt_p.h
+@@ -40,7 +40,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <unistd.h>
+-#ifndef HEADLESS
++#ifndef HEADLESS_Z
+ #include <X11/Intrinsic.h>
+ #include <X11/IntrinsicP.h>
+ #include <X11/Shell.h>
+@@ -49,28 +49,28 @@
+ #include <X11/keysym.h>
+ #include <X11/keysymdef.h>
+ #include <X11/extensions/Xrender.h>
+-#endif /* !HEADLESS */
++#endif /* !HEADLESS_Z */
+ #include "awt.h"
+ #include "awt_util.h"
+ #include "color.h"
+ #include "colordata.h"
+ #include "gdefs.h"
+ 
+-#ifndef HEADLESS
++#ifndef HEADLESS_Z
+ #ifndef min
+ #define min(a,b) ((a) <= (b)? (a):(b))
+ #endif
+ #ifndef max
+ #define max(a,b) ((a) >= (b)? (a):(b))
+ #endif
+-#endif /* !HEADLESS */
++#endif // !HEADLESS_Z
+ 
+ #define RepaintPending_NONE     0
+ #define RepaintPending_REPAINT  (1 << 0)
+ #define RepaintPending_EXPOSE   (1 << 1)
+ #define LOOKUPSIZE 32
+ 
+-#ifndef HEADLESS
++#ifndef HEADLESS_Z
+ 
+ typedef XRenderPictFormat *
+ XRenderFindVisualFormatFunc (Display *dpy, _Xconst Visual *visual);
+@@ -130,12 +130,12 @@ extern struct FontData *awtJNI_GetFontData(JNIEnv *env,jobject font, char **errm
+ 
+ extern AwtGraphicsConfigDataPtr getDefaultConfig(int screen);
+ extern AwtScreenDataPtr getScreenData(int screen);
+-#endif /* !HEADLESS */
++#endif /* !HEADLESS_Z */
+ 
+ /* allocated and initialize a structure */
+ #define ZALLOC(T)       ((struct T *)calloc(1, sizeof(struct T)))
+ 
+-#ifndef HEADLESS
++#ifndef HEADLESS_Z
+ #define XDISPLAY awt_display;
+ 
+ extern int awt_allocate_colors(AwtGraphicsConfigDataPtr);
+@@ -147,5 +147,5 @@ extern int awtJNI_GetColorForVis (JNIEnv *, jobject, AwtGraphicsConfigDataPtr);
+ extern jobject awtJNI_GetColorModel(JNIEnv *, AwtGraphicsConfigDataPtr);
+ extern void awtJNI_CreateColorData (JNIEnv *, AwtGraphicsConfigDataPtr, int lock);
+ 
+-#endif /* !HEADLESS */
++#endif /* !HEADLESS_Z */
+ #endif           /* _AWT_P_H_ */
+diff --git a/jdk/src/solaris/native/sun/awt/awt_util.c b/jdk/src/solaris/native/sun/awt/awt_util.c
+index 13ba3779..36eab248 100644
+--- a/jdk/src/solaris/native/sun/awt/awt_util.c
++++ b/jdk/src/solaris/native/sun/awt/awt_util.c
+@@ -23,9 +23,11 @@
+  * questions.
+  */
+ 
++/*
+ #ifdef HEADLESS
+     #error This file should not be included in headless library
+ #endif
++*/
+ 
+ #include "awt_p.h"
+ #include "color.h"
+diff --git a/jdk/src/solaris/native/sun/awt/color.h b/jdk/src/solaris/native/sun/awt/color.h
+index 92df41ca..5eebb4b0 100644
+--- a/jdk/src/solaris/native/sun/awt/color.h
++++ b/jdk/src/solaris/native/sun/awt/color.h
+@@ -28,13 +28,20 @@
+ #include "awt.h"
+ #include "colordata.h"
+ 
+-#if !defined(HEADLESS) && !defined(MACOSX)
++#if defined(__ANDROID__) || (!defined(HEADLESS_IGNORED) && !defined(MACOSX_NOTIOS))
++
++typedef struct {
++    int depth;
++    int bits_per_pixel;
++    int scanline_pad;
++} XPixmapFormatValues_DUP;
++
+ typedef struct {
+     unsigned int Depth;
+-    XPixmapFormatValues wsImageFormat;
++    XPixmapFormatValues_DUP wsImageFormat;
+     ImgColorData clrdata;
+     ImgConvertFcn *convert[NUM_IMGCV];
+ } awtImageData;
+-#endif /* !HEADLESS && !MACOSX */
++#endif /* __ANDROID__ || (!HEADLESS && !MACOSX) */
+ 
+ #endif           /* _COLOR_H_ */
+diff --git a/jdk/src/solaris/native/sun/awt/fontpath.c b/jdk/src/solaris/native/sun/awt/fontpath.c
+index 4caae37a..28777601 100644
+--- a/jdk/src/solaris/native/sun/awt/fontpath.c
++++ b/jdk/src/solaris/native/sun/awt/fontpath.c
+@@ -501,8 +501,9 @@ static char *getPlatformFontPathChars(JNIEnv *env, jboolean noType1, jboolean is
+ 
+     char **fcdirs = NULL, **x11dirs = NULL, **knowndirs = NULL, *path = NULL;
+ 
++    // mod: NULL -> FALLBACK
+     /* As of 1.5 we try to use fontconfig on both Solaris and Linux.
+-     * If its not available NULL is returned.
++     * If its not available FALLBACK is returned.
+      */
+     fcdirs = getFontConfigLocations();
+ 
+@@ -565,6 +566,7 @@ JNIEXPORT jstring JNICALL Java_sun_awt_FcFontManager_getFontPathNative
+     if (ptr == NULL) {
+         ptr = getPlatformFontPathChars(env, noType1, isX11);
+     }
++
+     ret = (*env)->NewStringUTF(env, ptr);
+     return ret;
+ }
+@@ -734,6 +736,18 @@ typedef FcStrList* (*FcConfigGetCacheDirsFuncType)(FcConfig *config);
+ typedef FcChar8* (*FcStrListNextFuncType)(FcStrList *list);
+ typedef FcChar8* (*FcStrListDoneFuncType)(FcStrList *list);
+ 
++// mod: fallback directories
++static char **getFallbackFontLocations() {
++
++    char **fontdirs = (char**)calloc(3, sizeof(char*));
++    fontdirs[0] = (char *)calloc(1, 4096);
++    fontdirs[1] = (char *)calloc(1, 40);
++    sprintf(fontdirs[0], "%s/lib/fonts", getenv("JAVA_HOME"));
++    sprintf(fontdirs[1], "%s", "/System/Library/Fonts/UnicodeSupport");
++    return fontdirs;
++
++}
++
+ static char **getFontConfigLocations() {
+ 
+     char **fontdirs;
+@@ -759,7 +773,8 @@ static char **getFontConfigLocations() {
+     void* libfontconfig = openFontConfig();
+ 
+     if (libfontconfig == NULL) {
+-        return NULL;
++        return getFallbackFontLocations();
++        // original: NULL
+     }
+ 
+     FcPatternBuild     =
+@@ -806,7 +821,8 @@ static char **getFontConfigLocations() {
+     fontSet = (*FcFontList)(NULL, pattern, objset);
+     if (fontSet == NULL) {
+         /* FcFontList() may return NULL if fonts are not installed. */
+-        fontdirs = NULL;
++        fontdirs = getFallbackFontLocations();
++        // original: NULL
+     } else {
+         fontdirs = (char**)calloc(fontSet->nfont+1, sizeof(char*));
+         for (f=0; f < fontSet->nfont; f++) {
+diff --git a/jdk/src/solaris/native/sun/awt/jawt.c b/jdk/src/solaris/native/sun/awt/jawt.c
+index 64284bc6..176df821 100644
+--- a/jdk/src/solaris/native/sun/awt/jawt.c
++++ b/jdk/src/solaris/native/sun/awt/jawt.c
+@@ -23,6 +23,10 @@
+  * questions.
+  */
+ 
++#ifdef __APPLE__
++#include "TargetConditionals.h"
++#endif
++
+ #include <jawt.h>
+ 
+ #include "awt_DrawingSurface.h"
+@@ -33,7 +37,8 @@
+  */
+ JNIEXPORT jboolean JNICALL JAWT_GetAWT(JNIEnv* env, JAWT* awt)
+ {
+-#if defined(JAVASE_EMBEDDED) && defined(HEADLESS)
++// todo remove check if ios port get x11 support
++#if defined(HEADLESS) || ((defined(__ANDROID__) || defined(TARGET_OS_IOS) || defined(JAVASE_EMBEDDED)) && defined(HEADLESS))
+     /* there are no AWT libs available at all */
+     return JNI_FALSE;
+ #else
+@@ -47,6 +52,7 @@ JNIEXPORT jboolean JNICALL JAWT_GetAWT(JNIEnv* env, JAWT* awt)
+         return JNI_FALSE;
+     }
+ 
++    // TODO still want port below to Android :v
+     awt->GetDrawingSurface = awt_GetDrawingSurface;
+     awt->FreeDrawingSurface = awt_FreeDrawingSurface;
+     if (awt->version >= JAWT_VERSION_1_4) {
+diff --git a/make/common/NativeCompilation.gmk b/make/common/NativeCompilation.gmk
+index 009139fb..0be692d6 100644
+--- a/make/common/NativeCompilation.gmk
++++ b/make/common/NativeCompilation.gmk
+@@ -89,6 +89,12 @@ define add_native_source
+     ifeq (,$$(filter %.s,$2))
+       # And this is the dependency file for this obj file.
+       $1_$2_DEP:=$$(patsubst %$(OBJ_SUFFIX),%.d,$$($1_$2_OBJ))
++
++      ifeq ($(OPENJDK_TARGET_OS), macosx)
++        # Workaround for iOS port: dependency file does not exists.
++        $1_$2_DEP:=""
++      endif
++
+       # Include previously generated dependency information. (if it exists)
+       -include $$($1_$2_DEP)
+ 
+@@ -548,6 +554,12 @@ define SetupNativeCompilation
+       $1_EXTRA_LDFLAGS+="-implib:$$($1_OBJECT_DIR)/$$($1_LIBRARY).lib"
+     endif
+ 
++    ifeq ($(OPENJDK_TARGET_OS), macosx)
++    # iOS workarounds: dynamic lib and rpath
++      $1_EXTRA_LDFLAGS+="-dynamiclib"
++      $1_EXTRA_LDFLAGS+="-Wl,-install_name,@rpath/$$($1_BASENAME)"
++    endif
++
+     $1_EXTRA_LDFLAGS_SUFFIX += $(GLOBAL_LDFLAGS_SUFFIX)
+ 
+     $$($1_TARGET) : $$($1_EXPECTED_OBJS) $$($1_RES) $$($1_REAL_MAPFILE)

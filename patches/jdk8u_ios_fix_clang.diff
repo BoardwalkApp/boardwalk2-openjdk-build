@@ -1,0 +1,127 @@
+diff --git a/hotspot/src/share/vm/code/compiledIC.cpp b/hotspot/src/share/vm/code/compiledIC.cpp
+index 63821c06..054b86d0 100644
+--- a/hotspot/src/share/vm/code/compiledIC.cpp
++++ b/hotspot/src/share/vm/code/compiledIC.cpp
+@@ -222,7 +222,7 @@ bool CompiledIC::set_to_megamorphic(CallInfo* call_info, Bytecodes::Code bytecod
+     assert(bytecode == Bytecodes::_invokeinterface, "");
+     int itable_index = call_info->itable_index();
+     entry = VtableStubs::find_itable_stub(itable_index);
+-    if (entry == false) {
++    if (entry == nullptr) {
+       return false;
+     }
+ #ifdef ASSERT
+diff --git a/hotspot/src/share/vm/code/dependencies.hpp b/hotspot/src/share/vm/code/dependencies.hpp
+index 0392d4e3..9d88d166 100644
+--- a/hotspot/src/share/vm/code/dependencies.hpp
++++ b/hotspot/src/share/vm/code/dependencies.hpp
+@@ -170,7 +170,7 @@ class Dependencies: public ResourceObj {
+     LG2_TYPE_LIMIT = 4,  // assert(TYPE_LIMIT <= (1<<LG2_TYPE_LIMIT))
+ 
+     // handy categorizations of dependency types:
+-    all_types           = ((1 << TYPE_LIMIT) - 1) & ((-1) << FIRST_TYPE),
++    all_types           = ((1 << TYPE_LIMIT) - 1) & ((~0u)<< FIRST_TYPE),
+ 
+     non_klass_types     = (1 << call_site_target_value),
+     klass_types         = all_types & ~non_klass_types,
+diff --git a/hotspot/src/share/vm/oops/cpCache.hpp b/hotspot/src/share/vm/oops/cpCache.hpp
+index a4a6c3f3..e7cd01d2 100644
+--- a/hotspot/src/share/vm/oops/cpCache.hpp
++++ b/hotspot/src/share/vm/oops/cpCache.hpp
+@@ -192,7 +192,7 @@ class ConstantPoolCacheEntry VALUE_OBJ_CLASS_SPEC {
+     field_index_mask           = right_n_bits(field_index_bits),
+     parameter_size_bits        = 8,  // subset of field_index_mask, range is 0..255
+     parameter_size_mask        = right_n_bits(parameter_size_bits),
+-    option_bits_mask           = ~(((-1) << tos_state_shift) | (field_index_mask | parameter_size_mask))
++    option_bits_mask           = ~(((~0u)<< tos_state_shift) | (field_index_mask | parameter_size_mask))
+   };
+ 
+   // specific bit definitions for the indices field:
+diff --git a/jdk/src/share/native/com/sun/java/util/jar/pack/constants.h b/jdk/src/share/native/com/sun/java/util/jar/pack/constants.h
+index f1a1f73e..c3330a48 100644
+--- a/jdk/src/share/native/com/sun/java/util/jar/pack/constants.h
++++ b/jdk/src/share/native/com/sun/java/util/jar/pack/constants.h
+@@ -223,7 +223,7 @@ enum {
+     AO_HAVE_FIELD_FLAGS_HI    = 1<<10,
+     AO_HAVE_METHOD_FLAGS_HI   = 1<<11,
+     AO_HAVE_CODE_FLAGS_HI     = 1<<12,
+-    AO_UNUSED_MBZ             = (-1)<<13, // options bits reserved for future use.
++    AO_UNUSED_MBZ             = (~0u)<<13, // options bits reserved for future use.
+ 
+ #define ARCHIVE_BIT_DO(F) \
+          F(AO_HAVE_SPECIAL_FORMATS) \
+diff --git a/jdk/src/share/native/sun/awt/image/jpeg/jdhuff.c b/jdk/src/share/native/sun/awt/image/jpeg/jdhuff.c
+index 1d0f8d56..25b67ca1 100644
+--- a/jdk/src/share/native/sun/awt/image/jpeg/jdhuff.c
++++ b/jdk/src/share/native/sun/awt/image/jpeg/jdhuff.c
+@@ -444,7 +444,7 @@ jpeg_huff_decode (bitread_working_state * state,
+ 
+ #ifdef AVOID_TABLES
+ 
+-#define HUFF_EXTEND(x,s)  ((x) < (1<<((s)-1)) ? (x) + (((-1)<<(s)) + 1) : (x))
++#define HUFF_EXTEND(x,s)  ((x) < (1<<((s)-1)) ? (x) + (((~0u)<<(s)) + 1) : (x))
+ 
+ #else
+ 
+diff --git a/jdk/src/share/native/sun/awt/image/jpeg/jdphuff.c b/jdk/src/share/native/sun/awt/image/jpeg/jdphuff.c
+index d5af6530..c2073036 100644
+--- a/jdk/src/share/native/sun/awt/image/jpeg/jdphuff.c
++++ b/jdk/src/share/native/sun/awt/image/jpeg/jdphuff.c
+@@ -204,7 +204,7 @@ start_pass_phuff_decoder (j_decompress_ptr cinfo)
+ 
+ #ifdef AVOID_TABLES
+ 
+-#define HUFF_EXTEND(x,s)  ((x) < (1<<((s)-1)) ? (x) + (((-1)<<(s)) + 1) : (x))
++#define HUFF_EXTEND(x,s)  ((x) < (1<<((s)-1)) ? (x) + (((~0u)<<(s)) + 1) : (x))
+ 
+ #else
+ 
+diff --git a/jdk/src/share/native/sun/awt/medialib/mlib_ImageLookUp_Bit.c b/jdk/src/share/native/sun/awt/medialib/mlib_ImageLookUp_Bit.c
+index 7f7c911b..16205d29 100644
+--- a/jdk/src/share/native/sun/awt/medialib/mlib_ImageLookUp_Bit.c
++++ b/jdk/src/share/native/sun/awt/medialib/mlib_ImageLookUp_Bit.c
+@@ -261,7 +261,7 @@ mlib_status mlib_ImageLookUp_Bit_U8_1(const mlib_u8 *src,
+ #ifdef _LITTLE_ENDIAN
+       emask = (mlib_u32)((mlib_s32)(-1)) >> ((4 - (size - i)) * 8);
+ #else
+-      emask = (mlib_s32)(-1) << ((4 - (size - i)) * 8);
++      emask = (mlib_s32)(~0u)<< ((4 - (size - i)) * 8);
+ #endif /* _LITTLE_ENDIAN */
+       ((mlib_u32*)da)[0] = (val1 & emask) | (((mlib_u32*)da)[0] &~ emask);
+ 
+@@ -270,7 +270,7 @@ mlib_status mlib_ImageLookUp_Bit_U8_1(const mlib_u8 *src,
+ #ifdef _LITTLE_ENDIAN
+       mlib_u64 emask = (mlib_u64)((mlib_s64)(-1)) >> ((8 - (size - i)) * 8);
+ #else
+-      mlib_u64 emask = (mlib_s64)(-1) << ((8 - (size - i)) * 8);
++      mlib_u64 emask = (mlib_s64)(~0u)<< ((8 - (size - i)) * 8);
+ #endif /* _LITTLE_ENDIAN */
+ 
+       ((mlib_u64*)da)[0] = (((mlib_u64*)dd_array)[sa[0]] & emask) | (((mlib_u64*)da)[0] &~ emask);
+@@ -397,7 +397,7 @@ mlib_status mlib_ImageLookUp_Bit_U8_2(const mlib_u8 *src,
+ #ifdef _LITTLE_ENDIAN
+       emask = (mlib_u32)((mlib_s32)(-1)) >> ((4 - (size - i)) * 8);
+ #else
+-      emask = (mlib_s32)(-1) << ((4 - (size - i)) * 8);
++      emask = (mlib_s32)(~0u)<< ((4 - (size - i)) * 8);
+ #endif /* _LITTLE_ENDIAN */
+       ((mlib_u32*)da)[0] = (dd1 & emask) | (((mlib_u32*)da)[0] &~ emask);
+ 
+@@ -415,7 +415,7 @@ mlib_status mlib_ImageLookUp_Bit_U8_2(const mlib_u8 *src,
+ #ifdef _LITTLE_ENDIAN
+       emask = (mlib_u64)((mlib_s64)(-1)) >> ((8 - (size - i)) * 8);
+ #else
+-      emask = (mlib_s64)(-1) << ((8 - (size - i)) * 8);
++      emask = (mlib_s64)(~0u)<< ((8 - (size - i)) * 8);
+ #endif /* _LITTLE_ENDIAN */
+       ((mlib_u64*)da)[0] = (dd & emask) | (((mlib_u64*)da)[0] &~ emask);
+ 
+@@ -567,7 +567,7 @@ mlib_status mlib_ImageLookUp_Bit_U8_3(const mlib_u8 *src,
+ #ifdef _LITTLE_ENDIAN
+       emask = (mlib_u32)((mlib_s32)(-1)) >> ((4 - (size - i)) * 8);
+ #else
+-      emask = (mlib_s32)(-1) << ((4 - (size - i)) * 8);
++      emask = (mlib_s32)(~0u)<< ((4 - (size - i)) * 8);
+ #endif /* _LITTLE_ENDIAN */
+       da[0] = (dd & emask) | (da[0] &~ emask);
+     }

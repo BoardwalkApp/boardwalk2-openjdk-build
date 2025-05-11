@@ -1,7 +1,10 @@
 #!/bin/bash
 set -e
-android-ndk-r10e/build/tools/make-standalone-toolchain.sh \
-	--arch=arm \
+
+. setdevkitpath.sh
+  
+$NDK/build/tools/make-standalone-toolchain.sh \
+	--arch=${TARGET_SHORT} \
 	--platform=android-21 \
-	--install-dir=`pwd`/android-ndk-r10e/generated-toolchains/android-arm-toolchain
-cp devkit.info.arm android-ndk-r10e/generated-toolchains/android-arm-toolchain/
+	--install-dir=$NDK/generated-toolchains/android-${TARGET_SHORT}-toolchain
+cp devkit.info.${TARGET_SHORT} $NDK/generated-toolchains/android-${TARGET_SHORT}-toolchain/

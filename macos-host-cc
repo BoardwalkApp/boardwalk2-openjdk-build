@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+
+# hack: remove iOS CFLAGS
+if [ "$(uname -m)" == "x86_64" ]; then
+  args=${@/arm64/x86_64}
+else
+  args=$@
+fi
+args=${args/"-isysroot $thesysroot"/}
+args=${args/"-miphoneos-version-min=14.0"/}
+$thecxx $args --stdlib=libc++ -isysroot $themacsysroot
